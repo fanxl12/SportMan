@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <color name ="colorPrimary">#2196F3</color>
+    <color name ="colorPrimaryDark">#1976D2</color>
+    <color name ="colorAccent">#FF5722</color>
+    <color name="window_background">#FFF5F5F5</color>
+    <color name="light_primary">#BBDEFB</color>
+    <color name="text_color">#FFFFFF</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="divier_color">#B6B6B6</color>
+
+    <color name="red">#FF0000</color>
+    <color name="not_up">#E84E40</color>
+
+    <color name="tab_bgcolor">#eeeeee</color>
+
+
+    <color name="titleColor">#FEED00</color>
+    <color name="transparent">#00000000</color>
+    <color name="btn_gray_normal">#c0c0c0</color>
+
+    <!-- light blue-->
+    <color name = "md_light_blue_50">#e1f5fe</color>
+    <color name = "md_light_blue_100">#b3e5fc</color>
+    <color name = "md_light_blue_200">#81d4fa</color>
+    <color name = "md_light_blue_300">#4fc3f7</color>
+    <color name = "md_light_blue_400">#29b6f6</color>
+    <color name = "md_light_blue_500">#03a9f4</color>
+    <color name = "md_light_blue_600">#039be5</color>
+    <color name = "md_light_blue_700">#0288d1</color>
+    <color name = "md_light_blue_800">#0277bd</color>
+    <color name = "md_light_blue_900">#01579b</color>
+    <color name = "md_light_blue_A100">#80d8ff</color>
+    <color name = "md_light_blue_A200">#40c4ff</color>
+    <color name = "md_light_blue_A400">#00b0ff</color>
+    <color name = "md_light_blue_A700">#0091ea</color>
+
+    <!--grey-->
+    <color name = "md_grey_50">#fafafa</color>
+    <color name = "md_grey_100">#f5f5f5</color>
+    <color name = "md_grey_200">#eeeeee</color>
+    <color name = "md_grey_300">#e0e0e0</color>
+    <color name = "md_grey_400">#bdbdbd</color>
+    <color name = "md_grey_500">#9e9e9e</color>
+    <color name = "md_grey_600">#757575</color>
+    <color name = "md_grey_700">#616161</color>
+    <color name = "md_grey_800">#424242</color>
+    <color name = "md_grey_900">#212121</color>
+    <color name = "md_black_1000">#000000</color>
+    <color name = "md_white_1000">#ffffff</color>
+
+    <!--yellow -->
+    <color name = "md_yellow_50">#fffde7</color>
+    <color name = "md_yellow_100">#fff9c4</color>
+    <color name = "md_yellow_200">#fff59d</color>
+    <color name = "md_yellow_300">#fff176</color>
+    <color name = "md_yellow_400">#ffee58</color>
+    <color name = "md_yellow_500">#ffeb3b</color>
+    <color name = "md_yellow_600">#fdd835</color>
+    <color name = "md_yellow_700">#fbc02d</color>
+    <color name = "md_yellow_800">#f9a825</color>
+    <color name = "md_yellow_900">#f57f17</color>
+    <color name = "md_yellow_A100">#ffff8d</color>
+    <color name = "md_yellow_A200">#ffff00</color>
+    <color name = "md_yellow_A400">#ffea00</color>
+    <color name = "md_yellow_A700">#ffd600</color>
+
+    <!--amber-->
+    <color name = "md_amber_50">#fff8e1</color>
+    <color name = "md_amber_100">#ffecb3</color>
+    <color name = "md_amber_200">#ffe082</color>
+    <color name = "md_amber_300">#ffd54f</color>
+    <color name = "md_amber_400">#ffca28</color>
+    <color name = "md_amber_500">#ffc107</color>
+    <color name = "md_amber_600">#ffb300</color>
+    <color name = "md_amber_700">#ffa000</color>
+    <color name = "md_amber_800">#ff8f00</color>
+    <color name = "md_amber_900">#ff6f00</color>
+    <color name = "md_amber_A100">#ffe57f</color>
+    <color name = "md_amber_A200">#ffd740</color>
+    <color name = "md_amber_A400">#ffc400</color>
+    <color name = "md_amber_A700">#ffab00</color>
+
+    <!--orange-->
+    <color name = "md_orange_50">#fff3e0</color>
+    <color name = "md_orange_100">#ffe0b2</color>
+    <color name = "md_orange_200">#ffcc80</color>
+    <color name = "md_orange_300">#ffb74d</color>
+    <color name = "md_orange_400">#ffa726</color>
+    <color name = "md_orange_500">#ff9800</color>
+    <color name = "md_orange_600">#fb8c00</color>
+    <color name = "md_orange_700">#f57c00</color>
+    <color name = "md_orange_800">#ef6c00</color>
+    <color name = "md_orange_900">#e65100</color>
+    <color name = "md_orange_A100">#ffd180</color>
+    <color name = "md_orange_A200">#ffab40</color>
+    <color name = "md_orange_A400">#ff9100</color>
+    <color name = "md_orange_A700">#ff6d00</color>
+
+
 </resources>
