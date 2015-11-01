@@ -82,11 +82,25 @@
         </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.v7.widget.AppCompatCheckBox
-            android:id="@+id/re_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="记住密码"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="忘记密码?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/re_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="记住密码"/>
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/bt_login"
@@ -98,6 +112,12 @@
             android:textColor="@color/md_white_1000"
             android:textStyle="bold"/>
 
+        <TextView
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:text="注册"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 

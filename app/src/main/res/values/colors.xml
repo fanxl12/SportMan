@@ -99,5 +99,8 @@
     <color name = "md_orange_A400">#ff9100</color>
     <color name = "md_orange_A700">#ff6d00</color>
 
+    <color name="tab_text">#000000</color>
+
+
 
 </resources>

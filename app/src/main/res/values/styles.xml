@@ -8,4 +8,29 @@
         <item name = "colorAccent">@color/colorAccent</item>
         <item name = "android:windowBackground">@color/window_background</item>
     </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabBackground">@color/tab_bgcolor</item>
+        <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="new_member">
+        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:layout_marginRight">40dp</item>
+        <item name="android:background">@drawable/bg_round</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+    <style name="new_member_text">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="new_member_edit">
+        <item name="android:background">@null</item>
+    </style>
 </resources>

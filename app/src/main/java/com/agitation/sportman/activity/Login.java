@@ -1,5 +1,6 @@
 package com.agitation.sportman.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,19 +9,8 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.agitation.sportman.R;
-import com.agitation.sportman.utils.DataHolder;
-import com.agitation.sportman.utils.MapTransformer;
-import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.SharePreferenceUtil;
-import com.agitation.sportman.utils.ToastUtils;
-import com.agitation.sportman.utils.UpdateManager;
 import com.androidquery.AQuery;
-import com.androidquery.auth.BasicHandle;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -55,6 +45,7 @@ public class Login extends AppCompatActivity {
         findViewById(R.id.bt_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(Login.this,MainTabActivity.class));
                 getToLogin();
             }
         });
@@ -88,45 +79,50 @@ public class Login extends AppCompatActivity {
         if (!toLogin){
             focusView.requestFocus();
         }
-        String url = Mark.getServerIp()+"/apilogin";
-        Map<String,Object> param = new HashMap<String,Object>();
-        param.put("userName",name);
-        param.put("passWord",password);
-        aq.transformer(new MapTransformer()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
-            @Override
-            public void callback(String url, Map result, AjaxStatus status) {
-                if (result!=null){
-                    boolean loginResult = Boolean.parseBoolean(result.get("result") + "");
-                    if (loginResult){
 
 
 
-                        isRemeber = re_password.isChecked();
 
-                        if (isRemeber){
-                            SharePreferenceUtil.setValue(Login.this, "name", name);
-                            SharePreferenceUtil.setValue(Login.this, "password", password);
-                        }
-                        SharePreferenceUtil.setValue(Login.this, "isRemeber", isRemeber);
 
-                        DataHolder dataHolder = DataHolder.getInstance();
-                        dataHolder.setBasicHandle(new BasicHandle(name, password));
-//                        startActivity(new Intent(Login.this, MainTabActivity.class));
-                    }else{
-                        ToastUtils.showToast(Login.this, result.get("error") + "");
-                    }
-                }else {
-                    ToastUtils.showToast(Login.this,"登录失败:"+status.getError());
-                }
-            }
-        });
+//        String url = Mark.getServerIp()+"/apilogin";
+//        Map<String,Object> param = new HashMap<String,Object>();
+//        param.put("userName",name);
+//        param.put("passWord",password);
+//        aq.transformer(new MapTransformer()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
+//            @Override
+//            public void callback(String url, Map result, AjaxStatus status) {
+//                if (result!=null){
+//                    boolean loginResult = Boolean.parseBoolean(result.get("result") + "");
+//                    if (loginResult){
+//
+//
+//
+//                        isRemeber = re_password.isChecked();
+//
+//                        if (isRemeber){
+//                            SharePreferenceUtil.setValue(Login.this, "name", name);
+//                            SharePreferenceUtil.setValue(Login.this, "password", password);
+//                        }
+//                        SharePreferenceUtil.setValue(Login.this, "isRemeber", isRemeber);
+//
+//                        DataHolder dataHolder = DataHolder.getInstance();
+//                        dataHolder.setBasicHandle(new BasicHandle(name, password));
+////                        startActivity(new Intent(Login.this, MainTabActivity.class));
+//                    }else{
+//                        ToastUtils.showToast(Login.this, result.get("error") + "");
+//                    }
+//                }else {
+//                    ToastUtils.showToast(Login.this,"登录失败:"+status.getError());
+//                }
+//            }
+//        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        UpdateManager updateManager = new UpdateManager(Login.this);
-        updateManager.checkUpdate();
+//        UpdateManager updateManager = new UpdateManager(Login.this);
+//        updateManager.checkUpdate();
     }
 }

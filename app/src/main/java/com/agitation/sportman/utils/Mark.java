@@ -18,4 +18,6 @@ public class Mark {
             return "http://bug.tsoft.cn:8080/t";
         }
     }
+
+    public static String IMAGE_URL = "";
 }

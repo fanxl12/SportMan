@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/y400"
+        android:background="#ececec" >
+
+        <com.agitation.sportman.widget.ViewFlow
+            android:id="@+id/product_viewFlow"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:padding="3dip" >
+
+            <com.agitation.sportman.widget.CircleFlowIndicator
+                android:id="@+id/product_dot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/md_grey_300"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="@dimen/y10"
+                android:padding="2dip"
+                app:activeColor="#ec407a"
+                app:activeType="fill"
+                app:circleSeparation="20dip"
+                app:inactiveColor="#ffffff"
+                app:inactiveType="fill"
+                app:radius="4dip" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <ListView
+        android:scrollbars="none"
+        android:id="@+id/course_lv"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+    </ListView>
+
+</LinearLayout>
