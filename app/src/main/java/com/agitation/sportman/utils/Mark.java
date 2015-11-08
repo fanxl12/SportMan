@@ -13,7 +13,7 @@ public class Mark {
     //http://192.168.1.200:8088/tickey
     public static String getServerIp(){
         if (TEST){
-            return "http://192.168.1.200:8088/tickey";
+            return "http://192.168.1.200:8083/sport";
         }else {
             return "http://bug.tsoft.cn:8080/t";
         }

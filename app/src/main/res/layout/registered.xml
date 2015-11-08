@@ -34,11 +34,11 @@
         <TextView
             style="@style/new_member_text"
             android:layout_weight="1"
-            android:text="注册VIp:"
+            android:text="注册手机号:"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
         <EditText
-            android:id="@+id/et_new_vip"
+            android:id="@+id/et_new_phone"
             android:layout_weight="1"
             style="@style/new_member_edit"
             android:hint="请输入手机号"

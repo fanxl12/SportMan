@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case GO_TO_MAIN:
-                    startActivity(new Intent(SplashActivity.this, Login.class));
+                    startActivity(new Intent(SplashActivity.this, MainTabActivity.class));
                     SplashActivity.this.finish();
                     break;
                 case GO_TO_LOGIN:
