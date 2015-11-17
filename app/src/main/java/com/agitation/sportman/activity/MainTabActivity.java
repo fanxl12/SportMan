@@ -55,7 +55,7 @@ public class MainTabActivity extends BaseActivity {
                 tab.setCustomView(pagerAdapter.getTabView(i));
             }
         }
-        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(1);
     }
     private void initToolbar() {
         if (toolbar != null) {
@@ -72,7 +72,7 @@ public class MainTabActivity extends BaseActivity {
         private List<Fragment> fragments;
 
         public View getTabView(int position){
-            View v = LayoutInflater.from(context).inflate(R.layout.custom_tab,null);
+            View v = LayoutInflater.from(context).inflate(R.layout.course_tab,null);
             TextView  tv= (TextView) v.findViewById(R.id.textView);
             tv.setText(tabTitles[position]);
             ImageView imageView = (ImageView) v.findViewById(R.id.imageView);

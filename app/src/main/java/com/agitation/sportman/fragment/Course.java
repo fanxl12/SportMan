@@ -13,6 +13,7 @@ import com.agitation.sportman.adapter.CourseAdapter;
 import com.agitation.sportman.adapter.ImageAdapter;
 import com.agitation.sportman.widget.CircleFlowIndicator;
 import com.agitation.sportman.widget.ViewFlow;
+import com.androidquery.AQuery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class Course extends Fragment {
     private List<Map<String,Object>> courseList;
     private ListView course_lv;
     private CourseAdapter courseAdapter;
+    private AQuery aq;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -25,6 +25,7 @@
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.Registered"/>
         <activity android:name=".activity.CenterDataEdit"/>
+        <activity android:name=".activity.Course_Appointment"/>
     </application>
 
 </manifest>

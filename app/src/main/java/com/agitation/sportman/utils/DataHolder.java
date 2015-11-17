@@ -20,7 +20,7 @@ public class DataHolder {
         }
         return dataHolder;
     }
-    public BasicHandle basicHandle;
+    private BasicHandle basicHandle;
 
     public BasicHandle getBasicHandle() {
         return basicHandle;

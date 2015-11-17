@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.agitation.sportman.R;
 import com.agitation.sportman.activity.CenterDataEdit;
+import com.agitation.sportman.activity.Course_Appointment;
 import com.agitation.sportman.activity.Login;
 import com.agitation.sportman.widget.CircleImageView;
 
@@ -37,6 +38,8 @@ public class MyCenter extends Fragment implements View.OnClickListener {
         mycenter_head = (CircleImageView) rootView.findViewById(R.id.mycenter_head);
         mycenter_head.setOnClickListener(this);
         rootView.findViewById(R.id.mycenter_data_edit).setOnClickListener(this);
+        rootView.findViewById(R.id.mycenter_bt_course).setOnClickListener(this);
+        rootView.findViewById(R.id.mycenter_bt_match).setOnClickListener(this);
     }
 
     @Override
@@ -47,6 +50,12 @@ public class MyCenter extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mycenter_data_edit:
                 startActivity(new Intent(getActivity(), CenterDataEdit.class));
+                break;
+            case R.id.mycenter_bt_course:
+                startActivity(new Intent(getActivity(), Course_Appointment.class));
+                break;
+            case R.id.mycenter_bt_match:
+                startActivity(new Intent(getActivity(), Course_Appointment.class));
                 break;
 
         }

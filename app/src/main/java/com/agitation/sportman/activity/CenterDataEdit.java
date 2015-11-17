@@ -81,7 +81,7 @@ public class CenterDataEdit extends BaseActivity implements View.OnClickListener
             case R.id.mycenter_edit_name:
                 break;
             case R.id.mycenter_edit_sex:
-                chooseSexDialog();
+                modiftSex();
                 break;
             case R.id.mycenter_edit_age:
                 break;
@@ -91,9 +91,11 @@ public class CenterDataEdit extends BaseActivity implements View.OnClickListener
                 break;
         }
     }
-
-    public void chooseSexDialog(){
-        final String[] sex = new String[]{"男","女","保密"};
+    /**
+     * 选择性别
+     */
+    public void modiftSex(){
+        final String[] sex = new String[]{"男","女"};
         AlertDialog.Builder sexDialog = new AlertDialog.Builder(this);
         sexDialog.setTitle("请选择性别");
         sexDialog.setItems(sex, new DialogInterface.OnClickListener() {
@@ -101,7 +103,8 @@ public class CenterDataEdit extends BaseActivity implements View.OnClickListener
             public void onClick(DialogInterface dialogInterface, int i) {
                 ToastUtils.showToast(CenterDataEdit.this,"选择的是："+sex[i]);
                 Map<String,Object> param = new HashMap<String, Object>();
-                param.put("updateSex",sex[i]);
+                param.put("action", "updateSex");
+                param.put("sex",sex[i]);
                 chooseSex(param);
 
             }
@@ -114,23 +117,30 @@ public class CenterDataEdit extends BaseActivity implements View.OnClickListener
         sexDialog.show();
     }
 
-    /**
-     * 选择性别
-     */
     public void chooseSex(Map<String,Object> param){
         String url = Mark.getServerIp()+"/baseApi/updateUser";
-        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
+        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
+                .ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map result, AjaxStatus status) {
-                if (result!=null){
-                    boolean isResult = Boolean.parseBoolean(result.get("result")+"");
-                    if (isResult){
-                        ToastUtils.showToast(CenterDataEdit.this,"修改成功");
+                if (result != null) {
+                    boolean isResult = Boolean.parseBoolean(result.get("result") + "");
+                    if (isResult) {
+                        ToastUtils.showToast(CenterDataEdit.this, "修改成功");
 //                        edit_sex.setText("");
                     }
                 }
             }
         });
     }
+
+//    public void modiftName(){
+//        new MaterialDialog.Builder(this).title(R.string.dialog_tip)
+//                .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
+//                .input(R.string.hint_midift_name,new MaterialDialog.InputCallback()
+//
+//
+//                )
+//    }
 
 }
