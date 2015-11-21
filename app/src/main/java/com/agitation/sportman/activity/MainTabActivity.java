@@ -15,8 +15,10 @@ import android.widget.TextView;
 import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.fragment.Course;
-import com.agitation.sportman.fragment.Match;
 import com.agitation.sportman.fragment.MyCenter;
+import com.agitation.sportman.fragment.TestMatch;
+import com.agitation.sportman.utils.DataHolder;
+import com.agitation.sportman.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +30,16 @@ public class MainTabActivity extends BaseActivity {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private DataHolder dataHolder=DataHolder.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_activity);
+        if (!dataHolder.isLogin()){
+            ToastUtils.showToast(MainTabActivity.this,"请登录");
+        }
         initToolbar();
         initView();
-
     }
 
     private void initView() {
@@ -43,7 +48,7 @@ public class MainTabActivity extends BaseActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new Course());
-        fragments.add(new Match());
+        fragments.add(new TestMatch());
         fragments.add(new MyCenter());
 
         SampleFragmentPagerAdapter pagerAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager(),this,fragments);
@@ -55,7 +60,7 @@ public class MainTabActivity extends BaseActivity {
                 tab.setCustomView(pagerAdapter.getTabView(i));
             }
         }
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(0);
     }
     private void initToolbar() {
         if (toolbar != null) {

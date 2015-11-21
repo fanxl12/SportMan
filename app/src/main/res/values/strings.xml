@@ -2,5 +2,5 @@
     <string name="app_name">SportMan</string>
 
     <string name="hint_midift_name">请输入你要修改的名称</string>
-    <string name="dialog_tip">提示:</string>
+    <string name="dialog_tip">"提示:"</string>
 </resources>

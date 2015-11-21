@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 
     <application
@@ -24,7 +25,7 @@
         <activity android:name=".activity.MainTabActivity"/>
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.Registered"/>
-        <activity android:name=".activity.CenterDataEdit"/>
+        <activity android:name=".activity.UserInfoEdit"/>
         <activity android:name=".activity.Course_Appointment"/>
     </application>
 

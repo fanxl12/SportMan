@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.agitation.sportman.R;
+import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MyViewHolder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -24,12 +25,13 @@ public class CourseAdapter extends BaseAdapter {
     private Context context;
     private ImageLoader imageLoader;
     private LayoutInflater inflater;
-
+    private String imageProfix;
     private CourseAdapter(){}
 
     public CourseAdapter(Context context,List<Map<String,Object>> courseList){
         this.context=context;
         this.courseList=courseList;
+        this.imageProfix = DataHolder.getInstance().getImageProfix();
         inflater = LayoutInflater.from(context);
         this.imageLoader=ImageLoader.getInstance();
     }
@@ -56,11 +58,11 @@ public class CourseAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view==null){
-            view = inflater.inflate(R.layout.course_item,null);
+            view = inflater.inflate(R.layout.course_item, null);
         }
         Map<String,Object> item = courseList.get(i);
         ImageView course_image = MyViewHolder.get(view,R.id.course_image);
-        String image_url = item.get("ImaSre")+"";
+        String image_url = imageProfix + item.get("url");
         imageLoader.displayImage(image_url,course_image);
         TextView course_name = MyViewHolder.get(view,R.id.course_name);
         course_name.setText(item.get("name")+"");

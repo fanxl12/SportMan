@@ -14,7 +14,6 @@ import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.SharePreferenceUtil;
 import com.agitation.sportman.utils.ToastUtils;
 import com.androidquery.AQuery;
-import com.androidquery.auth.BasicHandle;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
@@ -28,7 +27,7 @@ public class Registered extends BaseActivity {
 
     private AQuery aq;
     private EditText et_new_phone,et_new_password,et_new_password_again;
-    private String newPhone,password;
+    private String userName,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +55,8 @@ public class Registered extends BaseActivity {
     }
 
     private void goToRegistered() {
-        newPhone = et_new_phone.getText().toString().trim();
-        if (TextUtils.isEmpty(newPhone)){
+        userName = et_new_phone.getText().toString().trim();
+        if (TextUtils.isEmpty(userName)){
             ToastUtils.showToast(this, "手机号不能为空");
             return;
         }
@@ -77,14 +76,14 @@ public class Registered extends BaseActivity {
         }
         String url = Mark.getServerIp()+"/baseApi/register";
         Map<String,Object> param = new HashMap<>();
-        param.put("userName",newPhone);
+        param.put("userName", userName);
         param.put("passWord",password);
         aq.transformer(new MapTransformer()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
             @Override
             public void callback(String url, Map result, AjaxStatus status) {
                 if (result!=null){
-                boolean isRegistered = Boolean.parseBoolean(result.get("result")+"");
-                    if (isRegistered){
+                    if (Boolean.parseBoolean(result.get("result")+"")){
+                        SharePreferenceUtil.setValue(Registered.this, Login.IS_RM_PW, false);
                         toLogin();
                     }else {
                         ToastUtils.showToast(Registered.this,"注册失败"+"," + result.get("error"));
@@ -113,19 +112,18 @@ public class Registered extends BaseActivity {
     public void toLogin(){
         String url = Mark.getServerIp()+"/baseApi/login";
         Map<String,Object> param = new HashMap<>();
-        param.put("userName",newPhone);
+        param.put("userName", userName);
         param.put("passWord",password);
         aq.transformer(new MapTransformer()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
             @Override
             public void callback(String url, Map result, AjaxStatus status) {
                 if (result!=null){
-                    boolean isRegistered = Boolean.parseBoolean(result.get("result")+"");
-                    if (isRegistered){
-                        SharePreferenceUtil.setValue(Registered.this,"name",newPhone);
-                        SharePreferenceUtil.setValue(Registered.this,"passWord",password);
+                    if (Boolean.parseBoolean(result.get("result")+"")){
                         DataHolder dataHolder = DataHolder.getInstance();
-                        dataHolder.setBasicHandle(new BasicHandle(newPhone,password));
+                        dataHolder.setBasicHandle(userName, password);
+                        dataHolder.setUserData((Map<String, Object>) result.get("retData"));
                         startActivity(new Intent(Registered.this, MainTabActivity.class));
+                        finish();
                     }else {
                         ToastUtils.showToast(Registered.this,"注册失败"+"," + result.get("error"));
                     }

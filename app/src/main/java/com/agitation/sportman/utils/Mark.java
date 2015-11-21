@@ -1,6 +1,8 @@
 package com.agitation.sportman.utils;
 
 
+import android.os.Environment;
+
 import com.agitation.sportman.BuildConfig;
 
 /**
@@ -14,10 +16,15 @@ public class Mark {
     public static String getServerIp(){
         if (TEST){
             return "http://192.168.1.200:8083/sport";
+//            return "http://www.fanxl.cn:8080/sport";
         }else {
-            return "http://bug.tsoft.cn:8080/t";
+            return "http://www.fanxl.cn:8080/sport";
         }
     }
 
-    public static String IMAGE_URL = "";
+    //APP文件和数据存放位置
+    public static String getFilePath(){
+        return Environment.getExternalStorageDirectory() + "/HighSport";
+    }
+
 }

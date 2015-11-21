@@ -15,7 +15,6 @@ import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.SharePreferenceUtil;
 import com.agitation.sportman.utils.ToastUtils;
 import com.androidquery.AQuery;
-import com.androidquery.auth.BasicHandle;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
@@ -35,6 +34,7 @@ public class Login extends BaseActivity {
     public static final String IS_RM_PW="IS_RM_PW";
     public static final String LOGIN_UN_NAME="LOGIN_UN_NAME";
     public static final String LOGIN_PW_NAME="LOGIN_PW_NAME";
+    public DataHolder dataHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class Login extends BaseActivity {
     }
 
     private void initVarible() {
+        dataHolder = DataHolder.getInstance();
         aq = new AQuery(this);
     }
 
@@ -78,18 +79,18 @@ public class Login extends BaseActivity {
         findViewById(R.id.login_to_registered).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Login.this,Registered.class));
+                startActivity(new Intent(Login.this, Registered.class));
             }
         });
 
-        isRemeber = SharePreferenceUtil.getBoolean(this, "isRemeber", false);
+        isRemeber = SharePreferenceUtil.getBoolean(this,IS_RM_PW, false);
         re_password.setChecked(isRemeber);
 
         if (isRemeber){
-            String password = SharePreferenceUtil.getString(Login.this, "passWord", "");
+            String password = SharePreferenceUtil.getString(Login.this,LOGIN_PW_NAME, "");
             login_password.getEditText().setText(password);
         }
-        String name = SharePreferenceUtil.getString(Login.this, "name", "");
+        String name = SharePreferenceUtil.getString(Login.this,LOGIN_UN_NAME, "");
         login_username.getEditText().setText(name);
     }
 
@@ -112,12 +113,12 @@ public class Login extends BaseActivity {
             focusView.requestFocus();
         }
 
-
         String url = Mark.getServerIp()+"/baseApi/login";
         Map<String,Object> param = new HashMap<>();
         param.put("userName",name);
         param.put("passWord", password);
-        aq.transformer(new MapTransformer()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
+        aq.transformer(new MapTransformer())
+                .ajax(url, param, Map.class,new AjaxCallback<Map>(){
             @Override
             public void callback(String url, Map result, AjaxStatus status) {
                 if (result!=null){
@@ -125,15 +126,17 @@ public class Login extends BaseActivity {
                     if (isRegistered){
                         isRemeber = re_password.isChecked();
                         if (isRemeber){
-                            SharePreferenceUtil.setValue(Login.this,"passWord",password);
+                            SharePreferenceUtil.setValue(Login.this,LOGIN_PW_NAME,password);
+                            dataHolder.setIsLogin(isRemeber);
                         }
-                        SharePreferenceUtil.setValue(Login.this,"name",name);
-                        SharePreferenceUtil.setValue(Login.this,"isRemeber",isRemeber);
-                        DataHolder dataHolder = DataHolder.getInstance();
-                        dataHolder.setBasicHandle(new BasicHandle(name,password));
+                        SharePreferenceUtil.setValue(Login.this, LOGIN_UN_NAME, name);
+                        SharePreferenceUtil.setValue(Login.this, IS_RM_PW, isRemeber);
+                        dataHolder.setBasicHandle(name, password);
+                        dataHolder.setUserData((Map<String, Object>) result.get("retData"));
                         startActivity(new Intent(Login.this, MainTabActivity.class));
+                        finish();
                     }else {
-                        ToastUtils.showToast(Login.this, "注册失败" + "," + result.get("error"));
+                        ToastUtils.showToast(Login.this, "登录失败" + "," + result.get("error"));
                     }
                 }
             }

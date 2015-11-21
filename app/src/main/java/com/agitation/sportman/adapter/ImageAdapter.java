@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.agitation.sportman.R;
+import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MyViewHolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -27,10 +28,12 @@ public class ImageAdapter extends BaseAdapter {
 	protected ImageLoader imageLoader = null;
 //	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	private DisplayImageOptions options = null;
+	private String imageProfix;
 
 	public ImageAdapter(Context context, List<Map<String, Object>> images) {
 		this.mContext = context;
 		this.images=images;
+		this.imageProfix = DataHolder.getInstance().getImageProfix();
 		imageLoader = ImageLoader.getInstance();
 		options = new DisplayImageOptions.Builder()
 		.showImageOnLoading(R.drawable.pictures_no) //设置图片在下载期间显示的图片
@@ -74,7 +77,8 @@ public class ImageAdapter extends BaseAdapter {
 		ImageView home_image = MyViewHolder.get(view, R.id.home_image_item);
 		if(images.size()==0)return view;
 		final Map<String, Object> itemData = images.get(position % images.size());
-		imageLoader.displayImage(itemData.get("ImgSrc")+"", home_image, options , null);
+		String img_url = imageProfix + itemData.get("url");
+		imageLoader.displayImage(img_url, home_image, options , null);
 //		imageLoader.displayImage(itemData.get("ImgSrc")+"", home_image);
 		
 		view.setOnClickListener(new OnClickListener() {
