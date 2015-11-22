@@ -18,7 +18,6 @@ import com.agitation.sportman.fragment.Course;
 import com.agitation.sportman.fragment.MyCenter;
 import com.agitation.sportman.fragment.TestMatch;
 import com.agitation.sportman.utils.DataHolder;
-import com.agitation.sportman.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +34,6 @@ public class MainTabActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_activity);
-        if (!dataHolder.isLogin()){
-            ToastUtils.showToast(MainTabActivity.this,"请登录");
-        }
         initToolbar();
         initView();
     }

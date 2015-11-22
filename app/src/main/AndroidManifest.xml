@@ -27,6 +27,7 @@
         <activity android:name=".activity.Registered"/>
         <activity android:name=".activity.UserInfoEdit"/>
         <activity android:name=".activity.Course_Appointment"/>
+        <activity android:name=".activity.UserAddress"/>
     </application>
 
 </manifest>

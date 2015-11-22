@@ -61,10 +61,10 @@ public class SplashActivity extends AppCompatActivity {
                         dataHolder.setBasicHandle(userName, passWord);
                         dataHolder.setUserData((Map<String, Object>) result.get("retData"));
                         dataHolder.setIsLogin(true);
-                        startActivity(new Intent(SplashActivity.this, MainTabActivity.class));
-                        SplashActivity.this.finish();
                     }
                 }
+                startActivity(new Intent(SplashActivity.this, MainTabActivity.class));
+                SplashActivity.this.finish();
             }
         });
     }

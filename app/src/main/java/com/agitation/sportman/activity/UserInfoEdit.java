@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -35,6 +34,7 @@ import com.agitation.sportman.widget.CircleImageView;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -57,11 +57,13 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
     private final int CHOOSE_FROM_CAMERA = 2;
     private final int CHOOSE_FROM_ALBUM = 1;
     private final int CHOOSE_FROM_CROP = 3;
+    public static final int CHOOSE_FROM_ADDRESS = 145;
     private File file = null;
     private File takePhotoFile = null;
     private CircleImageView head_portrait;
     private static final int DIALOG_DATE_ID = 0;
     private int Year,Month,Day;
+    private ImageLoader imageLoader;
 
     //上传文件
     private FormFile formFile;
@@ -92,11 +94,12 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.center_data_edit);
             initToorbar();
-            intView();
             initVarble();
+            initView();
+            setUserData();
     }
 
-    private void intView() {
+    private void initView() {
         centerUserSex = (TextView) findViewById(R.id.edit_sex);
         centerUserName = (TextView) findViewById(R.id.user_data_name_edit);
         centerUserAge = (TextView) findViewById(R.id.user_data__age_edit);
@@ -122,24 +125,13 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
     }
 
     private void initVarble() {
+        imageLoader = ImageLoader.getInstance();
         aq = new AQuery(this);
         dataHolder = DataHolder.getInstance();
         Calendar calendar = Calendar.getInstance();
         Year = calendar.get(calendar.YEAR);
         Month = calendar.get(calendar.MONTH);
         Day = calendar.get(calendar.DAY_OF_MONTH);
-        if (dataHolder.getUserData()!=null){
-            centerUserName.setText(dataHolder.getUserData().get("name")+"");
-            centerUserAge.setText("16");
-            centerUserAddress.setText(dataHolder.getUserData().get("address")+"");
-            centerUserPhone.setText(dataHolder.getUserData().get("phoneNumber")+"");
-            if (dataHolder.getUserData().get("sex").equals("true")){
-                centerUserSex.setText("男");
-            }else {
-                centerUserSex.setText("女");
-            }
-        }
-
     }
 
     private void initToorbar() {
@@ -160,6 +152,22 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
             }
         });
     }
+    public void setUserData(){
+        if (dataHolder.getUserData()!=null){
+            centerUserName.setText(dataHolder.getUserData().get("name")+"");
+            centerUserAge.setText(dataHolder.getUserData().get("age")+"");
+            centerUserAddress.setText(dataHolder.getUserData().get("address") + "");
+            centerUserPhone.setText(dataHolder.getUserData().get("phoneNumber") + "");
+            String headImg = dataHolder.getImageProfix() + dataHolder.getUserData().get("head")+"";
+            imageLoader.displayImage(headImg,head_portrait);
+            if (Boolean.parseBoolean(dataHolder.getUserData().get("sex")+"")){
+                centerUserSex.setText("男");
+            }else {
+                centerUserSex.setText("女");
+            }
+        }
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -180,7 +188,7 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
                 modiftPhone();
                 break;
             case R.id.mycenter_edit_address:
-
+                startActivityForResult(new Intent(UserInfoEdit.this,UserAddress.class),130);
                 break;
             case R.id.exit_landing:
                 dataHolder.setIsLogin(false);
@@ -302,17 +310,6 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
                 })
                 .show();
     }
-
-    /*
-    选择收货地址
-     */
-
-    public void modiftAddress(){
-        
-
-
-    }
-
     /*
     想后台提交修改的内容
      */
@@ -327,19 +324,24 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
                             boolean isResult = Boolean.parseBoolean(result.get("result") + "");
                             if (isResult) {
                                 ToastUtils.showToast(UserInfoEdit.this, "修改成功");
-                                String action = param.get("action")+"";
-                                if (action.equals("updateName")){
+                                String action = param.get("action") + "";
+                                if (action.equals("updateName")) {
                                     centerUserName.setText(param.get("name") + "");
-                                }else if (action.equals("updateSex")){
-                                    if(Boolean.parseBoolean(param.get("sex")+"")){
+                                    dataHolder.getUserData().put("name",param.get("name"));
+                                } else if (action.equals("updateSex")) {
+                                    if (Boolean.parseBoolean(param.get("sex") + "")) {
                                         centerUserSex.setText("男");
-                                    }else {
+                                        dataHolder.getUserData().put("sex", "true");
+                                    } else {
                                         centerUserSex.setText("女");
+                                        dataHolder.getUserData().put("sex", "false");
                                     }
-                                }else if (action.equals("updateAge")){
+                                } else if (action.equals("updateAge")) {
                                     centerUserAge.setText(param.get("age") + "");
-                                }else if (action.equals("updatePhoneNumber")){
-                                    centerUserPhone.setText(param.get("phoneNumber") +"");
+                                    dataHolder.getUserData().put("age", param.get("age"));
+                                } else if (action.equals("updatePhoneNumber")) {
+                                    centerUserPhone.setText(param.get("phoneNumber") + "");
+                                    dataHolder.getUserData().put("phoneNumber", param.get("phoneNumber"));
                                 }
                             }
                         }
@@ -368,6 +370,7 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
             default:
                 break;
         }
+        if (resultCode==CHOOSE_FROM_ADDRESS)centerUserAddress.setText(dataHolder.getUserData().get("address") + "");
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -395,8 +398,7 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
 
     private Bitmap decodeUriAsBitmap(Uri uri){
 
-        Log.e("uri.toString", uri.toString());
-
+//        Log.e("uri.toString", uri.toString());
         Bitmap bitmap = null;
         try {
             bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
@@ -409,6 +411,9 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void saveNewHeadImage(Intent picdata) {
+
+        if(picdata.getData()==null)return;
+
         Bitmap bitmap = decodeUriAsBitmap(picdata.getData());//decode bitmap
         head_portrait.setImageBitmap(bitmap);
         dataHolder.setCenterHeadBit(bitmap);

@@ -3,6 +3,7 @@ package com.agitation.sportman.fragment;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -69,10 +70,12 @@ public class MyCenter extends Fragment implements View.OnClickListener {
 
         if (dataHolder.isLogin()){
             String headImg = dataHolder.getImageProfix() + dataHolder.getUserData().get("head")+"";
-
             setCenterHead(headImg);
-
             userName.setText(dataHolder.getUserData().get("name") + "");
+        }else {
+            Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.default_head);
+            setHeadImage(bitmap);
+            userName.setText("未登录");
         }
 
 
@@ -149,9 +152,6 @@ public class MyCenter extends Fragment implements View.OnClickListener {
     private void setHeadImage(Bitmap loadedImage){
         mycenter_head.setImageBitmap(loadedImage);
         second_bg.setImageBitmap(loadedImage);
-        second_bg.buildDrawingCache();
-        Bitmap bmp = second_bg.getDrawingCache();
-        blur(bmp, second_bg);
     }
 
     /*
