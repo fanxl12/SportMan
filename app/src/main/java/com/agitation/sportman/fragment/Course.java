@@ -1,5 +1,6 @@
 package com.agitation.sportman.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.agitation.sportman.R;
+import com.agitation.sportman.activity.CourseSubCatalog;
 import com.agitation.sportman.adapter.CourseAdapter;
 import com.agitation.sportman.adapter.ImageAdapter;
 import com.agitation.sportman.utils.DataHolder;
@@ -33,9 +35,9 @@ public class Course extends Fragment {
 
     private View rootView;
     private ViewFlow course_viewFlow;
-    private List<Map<String,Object>> parentCatalogsList;
     private ListView course_lv;
     private CourseAdapter courseAdapter;
+    private List<Map<String,Object>> parentCatalogsList;
     private AQuery aq;
     private DataHolder dataHolder;
     @Nullable
@@ -62,7 +64,10 @@ public class Course extends Fragment {
         course_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.showToast(getContext(),position+"");
+                ToastUtils.showToast(getContext(), parentCatalogsList.get(position).get("name").toString());
+                Intent intent = new Intent(getContext(), CourseSubCatalog.class);
+                intent.putExtra("parentCatalogId",parentCatalogsList.get(position).get("id")+"");
+                startActivity(intent);
             }
         });
     }
@@ -95,5 +100,4 @@ public class Course extends Fragment {
             }
         });
     }
-
 }

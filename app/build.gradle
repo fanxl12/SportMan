@@ -11,16 +11,35 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    //配置keystore签名
+    signingConfigs {
+        release {
+            storeFile file("sportMan.jks")
+            storePassword "sport13120752269"
+            keyAlias "sport"
+            keyPassword "sport13120752269"
+        }
+    }
+
     buildTypes {
 
         debug{
             buildConfigField('boolean','TEST','true')
+            signingConfig signingConfigs.release
         }
 
         release {
             buildConfigField('boolean','TEST','false')
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 
@@ -42,6 +61,8 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -60,4 +81,5 @@ dependencies {
     compile('com.afollestad.material-dialogs:core:0.8.3.0@aar') {
         transitive = true
     }
+    compile files('libs/BaiduLBS_Android.jar')
 }

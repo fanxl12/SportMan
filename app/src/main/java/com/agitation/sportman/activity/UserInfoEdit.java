@@ -193,6 +193,7 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
             case R.id.exit_landing:
                 dataHolder.setIsLogin(false);
                 startActivity(new Intent(UserInfoEdit.this, Login.class));
+                finish();
                 break;
         }
     }

@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Created by fanwl on 2015/9/18.
  */
-public class Login extends BaseActivity {
+public class Login extends BaseActivity implements View.OnClickListener {
 
     private TextInputLayout login_username,login_password;
     private AppCompatCheckBox re_password;
@@ -68,20 +68,9 @@ public class Login extends BaseActivity {
         login_username = (TextInputLayout) findViewById(R.id.login_username);
         login_password = (TextInputLayout) findViewById(R.id.login_password);
         re_password = (AppCompatCheckBox) findViewById(R.id.re_password);
-
-        findViewById(R.id.bt_login).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getToLogin();
-//                startActivity(new Intent(Login.this,MainTabActivity.class));
-            }
-        });
-        findViewById(R.id.login_to_registered).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Login.this, Registered.class));
-            }
-        });
+        findViewById(R.id.forget_password).setOnClickListener(this);
+        findViewById(R.id.bt_login).setOnClickListener(this);
+        findViewById(R.id.login_to_registered).setOnClickListener(this);
 
         isRemeber = SharePreferenceUtil.getBoolean(this,IS_RM_PW, false);
         re_password.setChecked(isRemeber);
@@ -149,5 +138,20 @@ public class Login extends BaseActivity {
 
 //        UpdateManager updateManager = new UpdateManager(Login.this);
 //        updateManager.checkUpdate();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt_login:
+                getToLogin();
+                break;
+            case R.id.forget_password:
+                startActivity(new Intent(Login.this, ForgetPassword.class));
+                break;
+            case R.id.login_to_registered:
+                startActivity(new Intent(Login.this, Registered.class));
+                break;
+        }
     }
 }

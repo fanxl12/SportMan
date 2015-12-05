@@ -27,4 +27,8 @@ public class Mark {
         return Environment.getExternalStorageDirectory() + "/HighSport";
     }
 
+    public static int phoneWidth = 0; //设备屏幕的宽度
+
+    public static int phoneHeight = 0; //设备屏幕的高度
+
 }

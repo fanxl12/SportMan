@@ -32,59 +32,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:background="@drawable/registered_user"
             style="@style/new_member_text"
             android:layout_weight="1"
-            android:text="注册手机号:"
+            android:text="用户名:"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
         <EditText
             android:id="@+id/et_new_phone"
-            android:layout_weight="1"
+            android:layout_weight="3"
             style="@style/new_member_edit"
             android:hint="请输入手机号"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
     </LinearLayout>
-    <LinearLayout
-        style="@style/new_member"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/new_member_text"
-            android:layout_weight="1"
-            android:text="设置密码:"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <EditText
-            android:id="@+id/et_new_password"
-            android:inputType="textPassword"
-            android:layout_weight="1"
-            style="@style/new_member_edit"
-            android:hint="请输入密码"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/new_member"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/new_member_text"
-            android:layout_weight="1"
-            android:text="确认密码:"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <EditText
-            android:id="@+id/et_new_password_again"
-            android:inputType="textPassword"
-            android:layout_weight="1"
-            style="@style/new_member_edit"
-            android:hint="请再次输入密码"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+
     <LinearLayout
         style="@style/new_member"
         android:layout_width="match_parent"
@@ -107,60 +69,52 @@
             android:layout_width="0dp"
             android:layout_height="match_parent" />
     </LinearLayout>
-    <RadioGroup
-        android:id="@+id/rg_gender"
-        style="@style/new_member"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            style="@style/new_member_text"
-            android:layout_weight="2"
-            android:text="性别:"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <RadioButton
-            android:checked="true"
-            android:id="@+id/rb_body"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:text="男"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <RadioButton
-            android:id="@+id/rb_gril"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:text="女"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-    </RadioGroup>
     <LinearLayout
         style="@style/new_member"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:paddingLeft="30dp"
+            android:background="@drawable/registered_user"
             style="@style/new_member_text"
-            android:text="生日:"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-        <TextView
             android:layout_weight="1"
-            style="@style/new_member_text"
-            android:id="@+id/tv_brithday"
-            android:text="2015/9/11"
+            android:text="密码:"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
-        <Button
-            android:id="@+id/bt_brithday"
+        <EditText
+            android:id="@+id/et_new_password"
+            android:inputType="textPassword"
+            android:layout_weight="3"
             style="@style/new_member_edit"
-            android:text="选择生日"
-            android:layout_width="wrap_content"
+            android:hint="请输入密码"
+            android:layout_width="0dp"
             android:layout_height="match_parent" />
     </LinearLayout>
+    <LinearLayout
+        style="@style/new_member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:background="@drawable/registered_user"
+            style="@style/new_member_text"
+            android:layout_weight="1"
+            android:text="确认密码:"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/et_new_password_again"
+            android:inputType="textPassword"
+            android:layout_weight="3"
+            style="@style/new_member_edit"
+            android:hint="请再次输入密码"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
     <Button
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_round"
         android:id="@+id/bt_confirm_menber"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"

@@ -29,6 +29,7 @@
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/md_white_1000</item>
     </style>
     <style name="new_member_edit">
         <item name="android:background">@null</item>
@@ -59,4 +60,32 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@drawable/right_arrow</item>
     </style>
+
+
+    <!--水平分割线style-->
+    <style name="common_horizontal_division_line_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">#dddddd</item>
+    </style>
+    <!--垂直分割线style-->
+    <style name="common_vertical_division_line_style">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#dddddd</item>
+    </style>
+
+    <style name="comment_text">
+        <item name="android:layout_margin">10dp</item>
+
+    </style>
+    
+    <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/food_rating_bar_full</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="android:maxHeight">44dp</item>
+    </style>
+
+
 </resources>

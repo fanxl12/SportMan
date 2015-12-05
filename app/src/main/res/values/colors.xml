@@ -4,6 +4,7 @@
     <color name ="colorPrimary">#2196F3</color>
     <color name ="colorPrimaryDark">#1976D2</color>
     <color name ="colorAccent">#FF5722</color>
+
     <color name="window_background">#FFF5F5F5</color>
     <color name="light_primary">#BBDEFB</color>
     <color name="text_color">#FFFFFF</color>
@@ -101,6 +102,8 @@
 
     <color name="tab_text">#000000</color>
 
+    <item name="green" type="color">#FF3BBD79</item>
+    <color name="font_black_content">#222222</color>
 
 
 </resources>

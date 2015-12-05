@@ -19,9 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.agitation.sportman.R;
-import com.agitation.sportman.activity.UserInfoEdit;
-import com.agitation.sportman.activity.Course_Appointment;
+import com.agitation.sportman.activity.Collection;
+import com.agitation.sportman.activity.Comment;
+import com.agitation.sportman.activity.CourseOrder;
 import com.agitation.sportman.activity.Login;
+import com.agitation.sportman.activity.UserInfoEdit;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.FastBlur;
 import com.agitation.sportman.widget.CircleImageView;
@@ -53,6 +55,8 @@ public class MyCenter extends Fragment implements View.OnClickListener {
             rootView = inflater.inflate(R.layout.my_center, container, false);
             initVarible();
             initView();
+
+
         }
         return rootView;
     }
@@ -63,10 +67,23 @@ public class MyCenter extends Fragment implements View.OnClickListener {
     }
 
     private void initView() {
+        rootView.findViewById(R.id.mycenter_collection).setOnClickListener(this);
         userName = (TextView)rootView.findViewById(R.id.center_userName);
         mycenter_head = (CircleImageView) rootView.findViewById(R.id.mycenter_head);
         second_bg = (ImageView)rootView.findViewById(R.id.second_bg);
         mycenter_head.setOnClickListener(this);
+        rootView.findViewById(R.id.mycenter_bt_course).setOnClickListener(this);
+        rootView.findViewById(R.id.mycenter_bt_match).setOnClickListener(this);
+        second_bg.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                second_bg.getViewTreeObserver().removeOnPreDrawListener(this);
+                second_bg.buildDrawingCache();
+                Bitmap bmp = second_bg.getDrawingCache();
+                blur(bmp, second_bg);
+                return true;
+            }
+        });
 
         if (dataHolder.isLogin()){
             String headImg = dataHolder.getImageProfix() + dataHolder.getUserData().get("head")+"";
@@ -78,20 +95,6 @@ public class MyCenter extends Fragment implements View.OnClickListener {
             userName.setText("未登录");
         }
 
-
-        rootView.findViewById(R.id.mycenter_bt_course).setOnClickListener(this);
-        rootView.findViewById(R.id.mycenter_bt_match).setOnClickListener(this);
-        second_bg.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                second_bg.getViewTreeObserver().removeOnPreDrawListener(this);
-                second_bg.buildDrawingCache();
-
-                Bitmap bmp = second_bg.getDrawingCache();
-                blur(bmp, second_bg);
-                return true;
-            }
-        });
     }
 
     @Override
@@ -106,17 +109,20 @@ public class MyCenter extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.mycenter_head:
-                if (dataHolder.getUserData()!=null){
+                if (dataHolder.isLogin()){
                     startActivityForResult(new Intent(getActivity(), UserInfoEdit.class), 100);
                 }else {
                     startActivity(new Intent(getActivity(), Login.class));
                 }
                 break;
             case R.id.mycenter_bt_course:
-                startActivity(new Intent(getActivity(), Course_Appointment.class));
+                startActivity(new Intent(getActivity(), CourseOrder.class));
                 break;
             case R.id.mycenter_bt_match:
-                startActivity(new Intent(getActivity(), Course_Appointment.class));
+                startActivity(new Intent(getActivity(), Collection.class));
+                break;
+            case R.id.mycenter_collection:
+                startActivity(new Intent(getActivity(),Comment.class));
                 break;
 
         }
@@ -152,6 +158,12 @@ public class MyCenter extends Fragment implements View.OnClickListener {
     private void setHeadImage(Bitmap loadedImage){
         mycenter_head.setImageBitmap(loadedImage);
         second_bg.setImageBitmap(loadedImage);
+        second_bg.buildDrawingCache();
+        Bitmap bmp = second_bg.getDrawingCache();
+        if (bmp!=null){
+            blur(bmp, second_bg);
+        }
+
     }
 
     /*

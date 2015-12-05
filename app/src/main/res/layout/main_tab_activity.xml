@@ -7,21 +7,17 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPage"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scrollbars="none">
-    </android.support.v4.view.ViewPager>
+    <FrameLayout
+        android:id="@+id/main_fragmentlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        style="@style/MyCustomTabLayout"
+    <android.support.v4.app.FragmentTabHost
+        android:id="@+id/main_tabhost"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="fixed">
-    </android.support.design.widget.TabLayout>
+        android:layout_height="60dp">
+    </android.support.v4.app.FragmentTabHost>
 
 
 </LinearLayout>
