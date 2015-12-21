@@ -64,6 +64,7 @@
         <activity android:name=".activity.CourseDetail"/>
         <activity android:name=".activity.Comment"/>
         <activity android:name=".activity.Collection"/>
+        <activity android:name=".activity.Setting"/>
     </application>
 
 </manifest>

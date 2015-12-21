@@ -56,7 +56,10 @@ public class DataHolder {
 
     public void setUserData(Map<String, Object> userData) {
         this.userData = userData;
-        this.imageProfix = userData.get("imageProfix")+"";
+    }
+
+    public void setImageProfix(String imageProfix) {
+        this.imageProfix = imageProfix;
     }
 
     public String getImageProfix() {

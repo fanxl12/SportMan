@@ -33,8 +33,8 @@
         android:orientation="horizontal">
         <TextView
             android:background="@drawable/registered_user"
-            style="@style/new_member_text"
             android:layout_weight="1"
+            style="@style/userNmaePW"
             android:text="用户名:"
             android:layout_width="0dp"
             android:layout_height="match_parent" />

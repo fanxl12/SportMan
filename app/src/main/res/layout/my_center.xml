@@ -129,7 +129,6 @@
             android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/login_img" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -140,7 +139,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"

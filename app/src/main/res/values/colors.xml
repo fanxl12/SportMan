@@ -105,5 +105,7 @@
     <item name="green" type="color">#FF3BBD79</item>
     <color name="font_black_content">#222222</color>
 
+    <color name="time_round">#FFD9AC</color>
+
 
 </resources>

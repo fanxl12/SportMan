@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -225,6 +226,9 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
                         ToastUtils.showToast(UserInfoEdit.this, charSequence.toString());
+                        if (TextUtils.isEmpty(charSequence)){
+                            return;
+                        }
                         Map<String, Object> param = new HashMap<String, Object>();
                         param.put("action", "updateName");
                         param.put("name", charSequence.toString());

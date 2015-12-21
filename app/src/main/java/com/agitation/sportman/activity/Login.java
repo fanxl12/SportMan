@@ -127,6 +127,8 @@ public class Login extends BaseActivity implements View.OnClickListener {
                     }else {
                         ToastUtils.showToast(Login.this, "登录失败" + "," + result.get("error"));
                     }
+                }else {
+                    ToastUtils.showToast(Login.this, "登录失败" + "," + result.get("error"));
                 }
             }
         });

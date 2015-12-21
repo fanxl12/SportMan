@@ -20,9 +20,9 @@ import android.widget.TextView;
 
 import com.agitation.sportman.R;
 import com.agitation.sportman.activity.Collection;
-import com.agitation.sportman.activity.Comment;
 import com.agitation.sportman.activity.CourseOrder;
 import com.agitation.sportman.activity.Login;
+import com.agitation.sportman.activity.Setting;
 import com.agitation.sportman.activity.UserInfoEdit;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.FastBlur;
@@ -74,6 +74,7 @@ public class MyCenter extends Fragment implements View.OnClickListener {
         mycenter_head.setOnClickListener(this);
         rootView.findViewById(R.id.mycenter_bt_course).setOnClickListener(this);
         rootView.findViewById(R.id.mycenter_bt_match).setOnClickListener(this);
+        rootView.findViewById(R.id.mycenter_setting).setOnClickListener(this);
         second_bg.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -119,10 +120,13 @@ public class MyCenter extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), CourseOrder.class));
                 break;
             case R.id.mycenter_bt_match:
-                startActivity(new Intent(getActivity(), Collection.class));
+
                 break;
             case R.id.mycenter_collection:
-                startActivity(new Intent(getActivity(),Comment.class));
+                startActivity(new Intent(getActivity(), Collection.class));
+                break;
+            case R.id.mycenter_setting:
+                startActivity(new Intent(getActivity(), Setting.class));
                 break;
 
         }

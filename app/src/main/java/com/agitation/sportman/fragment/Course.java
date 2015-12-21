@@ -87,9 +87,9 @@ public class Course extends Fragment {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
                 if (info!=null){
-                boolean result = Boolean.parseBoolean(info.get("result")+"");
-                if (result){
+                if (Boolean.parseBoolean(info.get("result")+"")){
                     Map<String,Object> retData = (Map<String, Object>) info.get("retData");
+                    dataHolder.setImageProfix(retData.get("imageProfix")+ "");
                     parentCatalogsList = (List<Map<String, Object>>) retData.get("parentCatalogs");
                     List<Map<String,Object>> adversitementsList = (List<Map<String, Object>>) retData.get("adversitements");
                     courseAdapter.setCourse(parentCatalogsList);

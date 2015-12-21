@@ -16,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -93,84 +92,14 @@ public class UtilsHelper {
         return screenHeight;
     }
 
-    public static String getPriority(Object object){
-        int priority = Integer.parseInt(object.toString());
-        switch (priority){
-            case 0:
-                return "无";
-            case 2:
-                return "低";
-            case 4:
-                return "中";
-            case 6:
-                return "高";
-            case 8:
-                return "加急";
-            case 10:
-                return "特急";
-        }
-        return "无";
-    }
 
-    public static String getSeriousness(Object object){
-        int priority = Integer.parseInt(object.toString());
-        switch (priority){
-            case 0:
-                return "无";
-            case 2:
-                return "细节";
-            case 4:
-                return "小调整";
-            case 6:
-                return "新功能";
-            case 8:
-                return "小错误";
-            case 10:
-                return "很严重";
-            case 12:
-                return "崩溃";
-        }
-        return "无";
-    }
 
-    public static String getUploadDate(String uploadDay, String uploadDate){
-        int day = Integer.parseInt(uploadDay);
-        if (day>=3 && day<=30){
-            return uploadDay+"天前 "+uploadDate;
-        }else{
-            return uploadDate;
-        }
-    }
 
-    public static String getFinishDate(String finishDay, String finishDate){
-        int day = Integer.parseInt(finishDay);
-        if (day>=3){
-            return finishDate+" "+ finishDay +"天后";
-        }else if (day<0){
-            return finishDate+" "+ Math.abs(day) +"天前";
-        }else{
-            return finishDate;
-        }
-    }
 
-//    public static String formatDate(String dateTime){
-//        if (dateTime==null || TextUtils.isEmpty(dateTime) || "null".equals(dateTime))return "";
-//        Date date = null;
-//        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-//        SimpleDateFormat sourceSf = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss a", Locale.US);
-//        try {
-//            date = sourceSf.parse(dateTime);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        if (date==null)return "";
-//        return sf.format(date);
-//    }
-
-    public static String formatDate(Date dateTime){
-        if (dateTime==null)return "";
-        SimpleDateFormat sourceSf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-        return sourceSf.format(dateTime);
+    public static String formatDateToHour(Date time){
+        if (time==null)return "";
+        SimpleDateFormat sourceSf = new SimpleDateFormat("yyyy.MM.dd HH.mm");
+        return sourceSf.format(time);
     }
     /*
     获取当前系统时间

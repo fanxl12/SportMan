@@ -26,17 +26,17 @@ public class CourseAdapter extends BaseAdapter {
     private ImageLoader imageLoader;
     private LayoutInflater inflater;
     private String imageProfix;
-    private CourseAdapter(){}
 
     public CourseAdapter(Context context,List<Map<String,Object>> courseList){
         this.context=context;
         this.courseList=courseList;
-        this.imageProfix = DataHolder.getInstance().getImageProfix();
+
         inflater = LayoutInflater.from(context);
         this.imageLoader=ImageLoader.getInstance();
     }
     public void setCourse(List<Map<String,Object>> courseList){
         this.courseList=courseList;
+        this.imageProfix = DataHolder.getInstance().getImageProfix();
         notifyDataSetChanged();
     }
 

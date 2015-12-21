@@ -31,4 +31,9 @@ public class Mark {
 
     public static int phoneHeight = 0; //设备屏幕的高度
 
+    public static final int ORDER_STATUS_UNPAY = 0;
+    public static final int ORDER_STATUS_PAYED = 1;
+    public static final int ORDER_STATUS_UNADVICES = 2;
+    public static final int ORDER_STATUS_DONE = 3;
+
 }

@@ -10,6 +10,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.agitation.sportman.utils.DataHolder;
+import com.androidquery.AQuery;
+
 /**
  * Created by fanwl on 2015/10/25.
  */
@@ -19,12 +22,15 @@ public class BaseActivity extends AppCompatActivity {
     private LinearLayout rootLayout;
     protected Toolbar toolbar;
     protected TextView title;
-
+    public AQuery aq;
+    public DataHolder dataHolder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 这句很关键，注意是调用父类的方法
         super.setContentView(R.layout.activity_base);
+        dataHolder = DataHolder.getInstance();
+        aq = new AQuery(this);
         // 经测试在代码里直接声明透明状态栏更有效
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
