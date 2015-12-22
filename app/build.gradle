@@ -82,5 +82,8 @@ dependencies {
         transitive = true
     }
     compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/alipaySDK-20150818.jar')
+    compile files('libs/libammsdk.jar')
+    compile files('libs/libpingpp-2.0.6.jar')
     compile files('libs/android-viewbadger.jar')
 }
