@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/course_menu"
+        android:orderInCategory="1"
+        android:title="课程"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/public_course_menu"
+        android:orderInCategory="1"
+        android:title="公开课"
+        app:showAsAction="always"
+        />
+
+
+</menu>

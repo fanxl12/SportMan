@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="horizontal"
+      android:id="@+id/list_item"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/course_order_match_name"
+            android:text="羽毛球正手"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/course_order_match_time"
+            android:paddingBottom="10dp"
+            android:text="时间:2015-10-20 9:30-10:30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/course_order_match_address"
+            android:paddingBottom="10dp"
+            android:text="地址:上海市闵行区鹤庆路100号顶星羽毛馆"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/course_order_bt_pay"
+        android:text="支付"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+</LinearLayout>

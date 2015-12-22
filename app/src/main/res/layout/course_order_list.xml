@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.agitation.sportman.widget.RefreshLayout
+        android:id="@+id/course_list_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:layout_margin="4dp">
+
+        <ListView
+            android:id="@+id/course_list_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="10dp"
+            android:divider="@android:color/transparent"
+            android:scrollbars="none">
+        </ListView>
+</com.agitation.sportman.widget.RefreshLayout>
+</FrameLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:background="@color/md_light_blue_200"
+        android:padding="10dp"
+        android:id="@+id/text_address"
+        android:text="上海市"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ListView
+        android:id="@+id/lv_address"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"></ListView>
+    <EditText
+        android:gravity="top"
+        android:id="@+id/et_address"
+        android:lines="3"
+        android:hint="详细地址:"
+        android:layout_width="match_parent"
+        android:layout_height="80dp" />
+    <Button
+        android:id="@+id/bt_address"
+        android:text="提交地址"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
