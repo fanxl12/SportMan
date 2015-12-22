@@ -14,6 +14,7 @@
         android:layout_weight="1" />
 
     <android.support.v4.app.FragmentTabHost
+        android:background="@color/tab_bg"
         android:id="@+id/main_tabhost"
         android:layout_width="match_parent"
         android:layout_height="60dp">

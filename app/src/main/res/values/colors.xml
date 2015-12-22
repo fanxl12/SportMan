@@ -107,5 +107,7 @@
 
     <color name="time_round">#FFD9AC</color>
 
+    <color name="tab_bg">#EBEBEB</color>
+
 
 </resources>

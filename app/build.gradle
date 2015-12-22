@@ -82,4 +82,5 @@ dependencies {
         transitive = true
     }
     compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/android-viewbadger.jar')
 }
