@@ -31,9 +31,24 @@ public class Collection extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collection);
+        initToolbar();
         initVarible();
         initView();
         getCollectionInfo();
+    }
+
+    private void initToolbar() {
+        if (toolbar!=null){
+            title.setText("我的收藏");
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initVarible() {

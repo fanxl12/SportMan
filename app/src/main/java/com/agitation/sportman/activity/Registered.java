@@ -144,6 +144,10 @@ public class Registered extends BaseActivity {
                         DataHolder dataHolder = DataHolder.getInstance();
                         dataHolder.setBasicHandle(userName, password);
                         dataHolder.setUserData((Map<String, Object>) result.get("retData"));
+                        ToastUtils.showToast(Registered.this, "注册成功");
+                        dataHolder.setIsLogin(true);
+                        SharePreferenceUtil.setValue(Registered.this, Login.IS_RM_PW, true);
+                        Registered.this.setResult(Login.Registered_SUCCEED);
                         startActivity(new Intent(Registered.this, MainTabActivity.class));
                         finish();
                     } else {

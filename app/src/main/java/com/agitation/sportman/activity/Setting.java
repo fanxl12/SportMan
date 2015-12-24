@@ -1,6 +1,7 @@
 package com.agitation.sportman.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.agitation.sportman.BaseActivity;
@@ -17,8 +18,24 @@ public class Setting extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
+        initToolbar();
         initView();
 
+    }
+
+
+    private void initToolbar() {
+        if (toolbar!=null){
+            title.setText("我的收藏");
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initView() {

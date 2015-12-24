@@ -19,7 +19,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/test"
+            android:src="@drawable/bg"
             android:layout_marginTop="32dp"
             app:border_color="@color/background_floating_material_light"
             app:border_width="4dp"/>
@@ -55,8 +55,7 @@
         <EditText
             android:inputType="number"
             android:id="@+id/et_verification_code"
-            style="@style/new_member_text"
-            android:background="@null"
+            style="@style/new_member_edit"
             android:layout_weight="1"
             android:hint="请输入验证码"
             android:layout_width="0dp"
@@ -113,13 +112,9 @@
     </LinearLayout>
 
     <Button
-        android:layout_marginTop="20dp"
         android:background="@drawable/bg_round"
         android:id="@+id/bt_confirm_menber"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        style="@style/new_member_btn"
         android:text="确认注册"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

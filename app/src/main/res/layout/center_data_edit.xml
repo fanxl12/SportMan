@@ -25,7 +25,7 @@
         <com.agitation.sportman.widget.CircleImageView
             android:layout_marginRight="10dp"
             android:id="@+id/head_portrait"
-            android:src="@drawable/test"
+            android:src="@drawable/default_head"
             android:layout_width="46dp"
             android:layout_height="46dp" />
 

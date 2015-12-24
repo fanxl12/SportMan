@@ -63,6 +63,8 @@ public class MyCenter extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
+
+
     private void initVarible() {
         dataHolder=DataHolder.getInstance();
         imageLoader = ImageLoader.getInstance();

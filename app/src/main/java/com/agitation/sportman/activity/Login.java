@@ -35,6 +35,8 @@ public class Login extends BaseActivity implements View.OnClickListener {
     public static final String LOGIN_UN_NAME="LOGIN_UN_NAME";
     public static final String LOGIN_PW_NAME="LOGIN_PW_NAME";
     public DataHolder dataHolder;
+    public static final int Registered_SUCCEED = 100;
+    public static final int Registered_FAILED = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,8 +154,17 @@ public class Login extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(Login.this, ForgetPassword.class));
                 break;
             case R.id.login_to_registered:
-                startActivity(new Intent(Login.this, Registered.class));
+                Intent registeredIntent = new Intent(Login.this, Registered.class);
+                startActivityForResult(registeredIntent, 100);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode ==Registered_SUCCEED){
+            this.finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

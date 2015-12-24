@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -87,8 +86,6 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
 
         }
     };
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,8 +201,6 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
      */
 
     public void uploadHead(){
-
-
         String url = Mark.getServerIp() + "/baseApi/updateUserHead";
 
         Map<String, String> param = new HashMap<>();
@@ -225,8 +220,8 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
                 .input("请输入你要修改的昵称", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
-                        ToastUtils.showToast(UserInfoEdit.this, charSequence.toString());
-                        if (TextUtils.isEmpty(charSequence)){
+                        if (charSequence.toString().equals("")){
+                            ToastUtils.showToast(UserInfoEdit.this,"昵称不能为空");
                             return;
                         }
                         Map<String, Object> param = new HashMap<String, Object>();
@@ -248,7 +243,6 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
         sexDialog.setItems(sex, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ToastUtils.showToast(UserInfoEdit.this,"选择的是："+sex[i]);
                 Map<String,Object> param = new HashMap<String, Object>();
                 param.put("action", "updateSex");
                 param.put("sex", i==0?true:false);
@@ -306,7 +300,10 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
                 .input("请输入你要修改的手机号", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
-                        ToastUtils.showToast(UserInfoEdit.this, charSequence.toString());
+                        if (charSequence.toString().equals("")){
+                            ToastUtils.showToast(UserInfoEdit.this,"手机号不能为空");
+                            return;
+                        }
                         Map<String, Object> param = new HashMap<String, Object>();
                         param.put("action", "updatePhoneNumber");
                         param.put("phoneNumber", charSequence.toString());

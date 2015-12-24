@@ -12,11 +12,11 @@
             android:id="@+id/second_bg"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/head"
+            android:src="@drawable/default_head"
             android:scaleType="centerCrop"/>
         <com.agitation.sportman.widget.CircleImageView
             android:layout_gravity="center"
-            android:src="@drawable/head"
+            android:src="@drawable/default_head"
             android:id="@+id/mycenter_head"
             android:layout_width="96dp"
             android:layout_height="96dp" />
@@ -63,12 +63,12 @@
             android:layout_height="28dp"
             android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/login_img" />
+            android:src="@drawable/my_collection" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:text="我的收藏" />
 
         <TextView
@@ -96,12 +96,12 @@
             android:layout_height="28dp"
             android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/login_img" />
+            android:src="@drawable/preferential_code" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:text="优惠码" />
 
         <TextView
@@ -129,11 +129,11 @@
             android:layout_height="28dp"
             android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/login_img" />
+            android:src="@drawable/setting" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:text="设置" />
 
         <TextView
