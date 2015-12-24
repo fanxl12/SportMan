@@ -22,9 +22,9 @@ public class CourseSubCatalog extends AppCompatActivity implements View.OnClickL
     private CourseSubFragment courseSubFragment;
     private PublicCourseFragment publicCourseFragment;
 
-    private TextView title_course,public_course;
+    private TextView title_course, public_course, sourse_sub_subtitle;
     private android.app.FragmentManager fragmentManager;
-    private String parentCatalogId;
+    private String parentCatalogId, subTitle;
     private Bundle bundle;
 
     @Override
@@ -33,6 +33,7 @@ public class CourseSubCatalog extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.course_sub);
         Intent intent = getIntent();
         parentCatalogId = intent.getStringExtra("parentCatalogId");
+        subTitle = intent.getStringExtra("subTitle");
         initVarible();
         initView();
         fragmentManager = getFragmentManager();
@@ -48,6 +49,8 @@ public class CourseSubCatalog extends AppCompatActivity implements View.OnClickL
         back.setOnClickListener(this);
         title_course = (TextView)findViewById(R.id.title_course);
         public_course = (TextView)findViewById(R.id.public_course);
+        sourse_sub_subtitle = (TextView)findViewById(R.id.sourse_sub_subtitle);
+        sourse_sub_subtitle.setText(subTitle);
         title_course.setOnClickListener(this);
         public_course.setOnClickListener(this);
     }

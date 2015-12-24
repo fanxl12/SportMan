@@ -401,6 +401,8 @@ public class CatalogList extends AppCompatActivity {
         param.put("childCatalogId",childCatalogId);
         param.put("latitude ",latitude );
         param.put("longitude",lontitude);
+        param.put("pageNumber","1");
+        param.put("pageSize","10");
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {

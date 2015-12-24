@@ -20,6 +20,7 @@ import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,10 @@ public class PublicCourseFragment extends Fragment {
     //获取公开课列表
     private void getOpenCourse(){
         String url = Mark.getServerIp()+ "/api/v1/course/getOpenCourse";
-        aq.transformer(new MapTransformer()).ajax(url, Map.class, new AjaxCallback<Map>(){
+        Map<String, Object> param = new HashMap<>();
+        param.put("pageNumber","1");
+        param.put("pageSize","10");
+        aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>(){
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
                 if (info!=null){

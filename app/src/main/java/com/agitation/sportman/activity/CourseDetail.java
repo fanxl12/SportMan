@@ -40,7 +40,7 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
     private View payView,fastPayView;
     private PopupWindow payWindow,fastPayWindow;
     private Button bt_enrolled,bt_fast_pay;
-    private int shareIconS[] = {R.drawable.course, R.drawable.course, R.drawable.course};
+    private int shareIconS[] = {R.drawable.course_icon, R.drawable.course_icon, R.drawable.course_icon};
     private FragmentTabHost pay_successed_tabhost;
     private LayoutInflater inflater;
     private String courseId;
@@ -48,15 +48,17 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
     private Map<String, Object> courseDetailInfo;
     private TextView buy_number, end_time, surplus_number, course_state, favorable_price, orginalPrice,
             start_time, address, course_introduction, coursr_type, notice, teacher_name, teacher_honor
-            , tx_count;
+            , tx_count, unit_price, subtotal_money, total_money;
 
     private int count = 1;
-    private double totailMoney;
     private DataHolder dataHolder;
     private ListView lv_comment;
     private List<Map<String, Object>> commentList;
     private CommentAdapter commentAdapter;
 
+
+    private double unitPrice=0.00;
+    private double subMoney =0.00;
 
 
     @Override
@@ -106,6 +108,11 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
         payView.findViewById(R.id.iv_add_num).setOnClickListener(this);
         payView.findViewById(R.id.iv_del_num).setOnClickListener(this);
         tx_count = (TextView) payView.findViewById(R.id.tx_count);
+
+        unit_price = (TextView) payView.findViewById(R.id.unit_price);
+        subtotal_money = (TextView) payView.findViewById(R.id.subtotal_money);
+        total_money = (TextView) payView.findViewById(R.id.total_money);
+
         payWindow.setBackgroundDrawable(new BitmapDrawable());
         bt_fast_pay.setOnClickListener(this);
         payWindow.setOutsideTouchable(true);
@@ -137,11 +144,16 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_enrolled:
+                unitPrice = Double.parseDouble(courseDetailInfo.get("price")+"");
+                unit_price.setText(unitPrice+"元/人");
+                subMoney = unitPrice*1;
+                subtotal_money.setText(subMoney+"");
+                total_money.setText(subMoney+"");
+
                 payWindow.showAtLocation(bt_enrolled, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
                 break;
             case R.id.bt_fast_pay:
                 payWindow.dismiss();
-                totailMoney = Double.parseDouble(courseDetailInfo.get("price")+"") * count;
                 commintCourseOrder();
                 break;
             case R.id.iv_del_num:
@@ -149,11 +161,15 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
                 if (countDel==0)countDel=countDel + 1;
                 count = countDel;
                 tx_count.setText(countDel+"");
+                subMoney = unitPrice * count;
+                subtotal_money.setText(subMoney+"");
                 break;
             case R.id.iv_add_num:
                 int countAdd = Integer.parseInt(tx_count.getText().toString()) + 1;
                 count = countAdd;
                 tx_count.setText(countAdd+"");
+                subMoney = unitPrice * count;
+                subtotal_money.setText(subMoney+"");
                 break;
         }
     }
@@ -165,7 +181,7 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
         param.put("name",courseDetailInfo.get("name")+"");
         param.put("startTime",courseDetailInfo.get("startTime")+"");
         param.put("count",count);
-        param.put("totalMoney",totailMoney);
+        param.put("totalMoney",subMoney);
         param.put("payWay","支付宝");
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).
                 ajax(url, param, Map.class, new AjaxCallback<Map>() {
@@ -202,6 +218,8 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
         String url = Mark.getServerIp() + "/api/v1/advice/getAdviceList";
         Map<String, Object> param = new HashMap<>();
         param.put("courseId",courseId);
+        param.put("pageNumber","1");
+        param.put("pageSize","10");
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
@@ -217,7 +235,7 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-
+    //重新测量listview的item的高度
     private void setListViewHeight(ListView lv){
         //获取ListView对应的Adapter
         ListAdapter listAdapter = lv.getAdapter();
@@ -267,8 +285,6 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setCourseDetailInfo(Map<String, Object> item){
-
-
 
         buy_number.setText(item.get("buyNumber") + "");
 

@@ -17,7 +17,6 @@ import com.agitation.sportman.adapter.ImageAdapter;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
-import com.agitation.sportman.utils.ToastUtils;
 import com.agitation.sportman.widget.CircleFlowIndicator;
 import com.agitation.sportman.widget.ViewFlow;
 import com.androidquery.AQuery;
@@ -64,9 +63,9 @@ public class Course extends Fragment {
         course_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.showToast(getContext(), parentCatalogsList.get(position).get("name").toString());
                 Intent intent = new Intent(getContext(), CourseSubCatalog.class);
                 intent.putExtra("parentCatalogId",parentCatalogsList.get(position).get("id")+"");
+                intent.putExtra("subTitle",parentCatalogsList.get(position).get("name")+"");
                 startActivity(intent);
             }
         });

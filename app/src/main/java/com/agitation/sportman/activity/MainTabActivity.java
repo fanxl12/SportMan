@@ -30,8 +30,7 @@ public class MainTabActivity extends AppCompatActivity {
     private LayoutInflater inflater;
     private Class<?> fragmentArray[] = {Course.class,TestMatch.class,MyCenter.class};
     private String mTextviewArray[] = {"课程", "比赛", "我的"};
-    private int iconS[] = {R.drawable.course, R.drawable.course, R.drawable.course};
-
+    private int iconS[] = {R.drawable.course_icon, R.drawable.match_icon, R.drawable.mycenter_icon};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

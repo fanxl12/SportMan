@@ -43,7 +43,7 @@
         android:id="@+id/framelayout"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/y400"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="16dp"
         android:background="#ececec" >
 
         <com.agitation.sportman.widget.ViewFlow
