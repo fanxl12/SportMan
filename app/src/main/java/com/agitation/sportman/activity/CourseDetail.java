@@ -1,10 +1,13 @@
 package com.agitation.sportman.activity;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +25,11 @@ import com.agitation.sportman.adapter.CommentAdapter;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
+import com.agitation.sportman.utils.ToastUtils;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.pingplusplus.android.PaymentActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,8 +61,6 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
     private ListView lv_comment;
     private List<Map<String, Object>> commentList;
     private CommentAdapter commentAdapter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,9 +143,8 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
                 payWindow.showAtLocation(bt_enrolled, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
                 break;
             case R.id.bt_fast_pay:
-                payWindow.dismiss();
                 totailMoney = Double.parseDouble(courseDetailInfo.get("price")+"") * count;
-                commintCourseOrder();
+                pay(totailMoney);
                 break;
             case R.id.iv_del_num:
                 int countDel = Integer.parseInt(tx_count.getText().toString()) - 1;
@@ -298,4 +300,103 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
 
 //        teacher_honor.setText("" + item.get("buy_number"));
     }
+
+
+    /**
+     * 微信支付渠道
+     */
+    private final String CHANNEL_WECHAT = "wx";
+    /**
+     * 支付支付渠道
+     */
+    private final String CHANNEL_ALIPAY = "alipay";
+    private String payType = null;
+    private static final int REQUEST_CODE_PAYMENT = 1;
+
+    private void pay(double payMoney){
+
+        payType = CHANNEL_ALIPAY;
+
+        payMoney = 0.01;
+
+        long bill = System.currentTimeMillis();
+
+        Map<String, Object> params = new HashMap<>();
+        //支付金额 单位为分
+        params.put("amount", (int)(payMoney*100));
+        //商品的标题，该参数最长为 32 个 Unicode 字符，银联全渠道（upacp/upacp_wap）限制在 32 个字节。
+        params.put("subject", "High运动");
+        //商品的描述信息，该参数最长为 128 个 Unicode 字符，yeepay_wap 对于该参数长度限制为 100 个 Unicode 字符。
+        params.put("body", "课程订单"+":"+"201548751");
+        //商户订单号，适配每个渠道对此参数的要求，必须在商户系统内唯一。推荐使用 8-20 位，要求数字或字母，不允许特殊字符
+        params.put("order_no", bill);
+        //支付渠道
+        params.put("channel", payType);
+        //发起支付请求终端的 ip 地址
+        params.put("client_ip", "192.168.1.200");
+
+        String url = Mark.getServerIp() + "/api/v1/drp/pay";
+        aq.transformer(new MapTransformer()).auth(DataHolder.getInstance().getBasicHandle())
+                .ajax(url, params, Map.class, new AjaxCallback<Map>() {
+
+                    @Override
+                    public void callback(String url, Map json, AjaxStatus status) {
+
+                        if (json != null) {
+                            if (Boolean.parseBoolean(json.get("result")+"")){
+                                String result = ((Map<String, Object>)json.get("retData")).get("charge")+"";
+                                Intent intent = new Intent();
+                                String packageName = CourseDetail.this.getPackageName();
+                                ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
+                                intent.setComponent(componentName);
+                                intent.putExtra(PaymentActivity.EXTRA_CHARGE, result);
+                                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                            }else{
+                                ToastUtils.showToast(CourseDetail.this, json.get("error") + "");
+                            }
+                        } else {
+                            ToastUtils.showToast(CourseDetail.this, "服务器请求错误:"
+                                    + status.getCode());
+                            Log.e("ProductList请求错误", status.getCode() + "");
+                        }
+                    }
+                });
+
+    }
+
+    /**
+     * onActivityResult 获得支付结果，如果支付成功，服务器会收到ping++ 服务器发送的异步通知。
+     * 最终支付成功根据异步通知为准
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CODE_PAYMENT){
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                String error  = data.getExtras().getString("error_msg");
+                String extra_msg  = data.getExtras().getString("extra_msg");
+                /* 处理返回值
+                 * "success" - payment succeed
+                 * "fail"    - payment failed
+                 * "cancel"  - user canceld
+                 * "invalid" - payment plugin not installed
+                 */
+                if ("success".equals(result)){
+                    ToastUtils.showToast(CourseDetail.this, "支付成功");
+                    payWindow.dismiss();
+                    commintCourseOrder();
+                }else if("user_cancelled".equals(result)){
+                    ToastUtils.showToast(CourseDetail.this, "支付取消");
+                }else {
+//                    Logger.show("error_msg", error);
+//                    Logger.show("extra_msg", extra_msg);
+                    ToastUtils.showToast(CourseDetail.this, error+"-----"+extra_msg);
+                }
+//                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+//                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+            }
+        }
+    }
+
+
 }
