@@ -158,8 +158,7 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
                 payWindow.showAtLocation(bt_enrolled, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
                 break;
             case R.id.bt_fast_pay:
-                totailMoney = Double.parseDouble(courseDetailInfo.get("price")+"") * count;
-                pay(totailMoney);
+                pay(subMoney);
                 break;
             case R.id.iv_del_num:
                 int countDel = Integer.parseInt(tx_count.getText().toString()) - 1;
