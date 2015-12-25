@@ -26,7 +26,9 @@ public class Setting extends BaseActivity {
 
     private void initToolbar() {
         if (toolbar!=null){
-            title.setText("我的收藏");
+
+//            title.setText("我的收藏");
+            linear_toobar.setVisibility(View.VISIBLE);
             setSupportActionBar(toolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

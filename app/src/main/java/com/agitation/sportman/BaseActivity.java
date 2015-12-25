@@ -19,7 +19,7 @@ import com.androidquery.AQuery;
 public class BaseActivity extends AppCompatActivity {
 
 
-    private LinearLayout rootLayout;
+    protected LinearLayout rootLayout, linear_toobar;
     protected Toolbar toolbar;
     protected TextView title;
     public AQuery aq;
@@ -43,6 +43,7 @@ public class BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         title = (TextView)toolbar.findViewById(R.id.base_tv_title);
+        linear_toobar = (LinearLayout) toolbar.findViewById(R.id.linear_toobar);
     }
 
     @Override
