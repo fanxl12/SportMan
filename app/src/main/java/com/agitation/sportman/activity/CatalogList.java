@@ -53,7 +53,7 @@ public class CatalogList extends AppCompatActivity {
     private static final int ID_ORDER_PUBLISH_TIME = 49;
     private static final int ID_ORDER_HOT = 53;
 
-    ListView listView,catalog_list_lv;
+    ListView catalog_list_lv;
     View mask;
     DropdownButton chooseType, chooseLabel, chooseOrder;
     DropdownListView dropdownType, dropdownLabel, dropdownOrder;
@@ -120,7 +120,6 @@ public class CatalogList extends AppCompatActivity {
 
     private void initView() {
         catalog_list_lv = (ListView) findViewById(R.id.catalog_list_lv);
-        listView = (ListView) findViewById(R.id.listView);
         mask = findViewById(R.id.mask);
         chooseType = (DropdownButton) findViewById(R.id.chooseType);
         chooseLabel = (DropdownButton) findViewById(R.id.chooseLabel);
