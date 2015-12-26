@@ -47,7 +47,6 @@
         <TextView
             android:id="@+id/course_item_score"
             android:layout_marginTop="10dp"
-            android:text="9分"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView

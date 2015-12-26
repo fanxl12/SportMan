@@ -144,7 +144,7 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
         choose_db_time.setChecked(false);
         choose_db_type.setText("类型");
         choose_db_type.setChecked(false);
-        choose_db_positon.setText("位置");
+        choose_db_positon.setText("全城");
         choose_db_positon.setChecked(false);
         choose_db_sort.setText("默认");
         choose_db_sort.setChecked(false);
@@ -289,8 +289,8 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
                         currentDb.setText(rightList.get(position).get("showName")+"");
                         break;
                     case R.id.choose_db_positon:
-                        if ("0".equals(rightList.get(position).get("value"))){
-                            param.remove("aredId");
+                        if (position==0){
+                            param.remove("areaId");
                         }
                         param.put("range", rightList.get(position).get("value"));
                         currentDb.setText(rightList.get(position).get("name")+"");

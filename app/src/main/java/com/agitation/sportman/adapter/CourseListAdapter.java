@@ -40,11 +40,12 @@ public class CourseListAdapter extends CommonAdapter<Map<String, Object>> {
         helper.setText(R.id.course_name, item.get("name")+"");
         helper.setText(R.id.course_address, item.get("address") + "");
         helper.setText(R.id.course_time, item.get("startTime") + "");
+        helper.setText(R.id.course_item_score, item.get("totalScore") + "分");
         String distanceStr = "";
         if (item.get("distance")!=null && !TextUtils.isEmpty(item.get("distance")+"")){
             double distance = Double.parseDouble(item.get("distance")+"");
             if (distance>1000){
-                distanceStr = UtilsHelper.format1Decimal(distance/1000)+"km";
+                distanceStr = UtilsHelper.format1Decimal(distance / 1000)+"km";
             }else {
                 distanceStr = UtilsHelper.format1Decimal(distance) + "m";
             }
