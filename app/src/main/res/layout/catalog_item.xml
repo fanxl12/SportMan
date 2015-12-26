@@ -45,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent">
         <TextView
-            android:id="@+id/course_distance"
+            android:id="@+id/course_item_score"
             android:layout_marginTop="10dp"
             android:text="9分"
             android:layout_width="wrap_content"
@@ -79,8 +79,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <TextView
-
             android:text="1.6Km"
+            android:id="@+id/course_item_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <View

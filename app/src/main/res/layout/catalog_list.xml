@@ -2,90 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/md_grey_300"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <com.agitation.sportman.widget.DropdownButton
-            android:id="@+id/chooseType"
+            android:id="@+id/choose_db_time"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <View
-            android:layout_width="0.5dp"
+            android:layout_width="1dp"
             android:layout_height="18dp"
             android:background="#dddddd" />
 
         <com.agitation.sportman.widget.DropdownButton
-            android:id="@+id/chooseLabel"
+            android:id="@+id/choose_db_type"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <View
-            android:layout_width="0.5dp"
+            android:layout_width="1dp"
             android:layout_height="18dp"
             android:background="#dddddd" />
 
         <com.agitation.sportman.widget.DropdownButton
-            android:id="@+id/chooseOrder"
+            android:id="@+id/choose_db_positon"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#dddddd" />
+
+        <com.agitation.sportman.widget.DropdownButton
+            android:id="@+id/choose_db_sort"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/md_grey_300" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/lv_list_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
         <View
-            android:id="@+id/mask"
+            android:id="@+id/choose_bg"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#80000000" />
-
-        <com.agitation.sportman.widget.DropdownListView
-            android:id="@+id/dropdownType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-        <com.agitation.sportman.widget.DropdownListView
-            android:id="@+id/dropdownLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-        <com.agitation.sportman.widget.DropdownListView
-            android:id="@+id/dropdownOrder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
     </FrameLayout>
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/catalog_list_lv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
 
 
 </LinearLayout>

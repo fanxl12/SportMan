@@ -109,5 +109,11 @@
 
     <color name="tab_bg">#EBEBEB</color>
 
+    <color name="popup_left_bg">#eee</color>
+    <color name="popup_right_bg">#FFFFFF</color>
+    <color name="left_menu_pressed">#e0e0e0</color>
+    <color name="popup_right_bg_selected">#ccc</color>
+    <color name="div_gray">#ccc</color>
+
 
 </resources>

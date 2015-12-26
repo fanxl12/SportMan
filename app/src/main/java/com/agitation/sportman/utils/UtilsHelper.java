@@ -3,15 +3,13 @@ package com.agitation.sportman.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
-import android.view.Display;
-import android.view.WindowManager;
 
 import org.josql.Query;
 import org.josql.QueryExecutionException;
 import org.josql.QueryParseException;
 import org.josql.QueryResults;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,29 +76,14 @@ public class UtilsHelper {
         return null;
     }
 
-    private static int screenWidth = 0;
-    private static int screenHeight = 0;
-
-    public static int getScreenHeight(Context c) {
-        if (screenHeight == 0) {
-            WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
-            Display display = wm.getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-            screenHeight = size.y;
-        }
-        return screenHeight;
-    }
-
-
-
-
-
     public static String formatDateToHour(Date time){
         if (time==null)return "";
-        SimpleDateFormat sourceSf = new SimpleDateFormat("yyyy.MM.dd HH.mm");
+        SimpleDateFormat sourceSf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
         return sourceSf.format(time);
     }
+
+
+
     /*
     获取当前系统时间
      */
@@ -137,6 +120,16 @@ public class UtilsHelper {
             mWay ="六";
         }
         return mYear + "年" + mMonth + "月" + mDay+"日"+"/星期"+mWay;
+    }
+
+    /**
+     * 把一个Double类型的数字格式化两位小数
+     * @param number
+     * @return formatResult
+     */
+    public static double format1Decimal(double number){
+        BigDecimal format = new BigDecimal(number);
+        return format.setScale(1, BigDecimal.ROUND_HALF_DOWN).doubleValue();
     }
 
 

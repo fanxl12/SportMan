@@ -2,6 +2,7 @@ package com.agitation.sportman.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,12 +46,12 @@ public class DropdownButton extends RelativeLayout {
     public void setChecked(boolean checked) {
         Drawable icon;
         if (checked) {
-            icon = getResources().getDrawable(R.drawable.ic_dropdown_actived);
-            textView.setTextColor(getResources().getColor(R.color.green));
+            icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_dropdown_actived);
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
             bottomLine.setVisibility(VISIBLE);
         } else {
-            icon = getResources().getDrawable(R.drawable.ic_dropdown_normal);
-            textView.setTextColor(getResources().getColor(R.color.font_black_content));
+            icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_dropdown_normal);
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.font_black_content));
             bottomLine.setVisibility(GONE);
         }
         textView.setCompoundDrawablesWithIntrinsicBounds(null, null, icon, null);

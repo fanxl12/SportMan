@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.agitation.sportman.R;
-import com.agitation.sportman.adapter.CourseCatalogAdapter;
+import com.agitation.sportman.adapter.CourseListAdapter;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
@@ -32,7 +32,7 @@ public class PublicCourseFragment extends Fragment {
     private View rootView;
     private ListView public_course_lv;
     private List<Map<String,Object>> courseCatalogInfoList;
-    private CourseCatalogAdapter courseCatalogAdapter;
+    private CourseListAdapter courseCatalogAdapter;
     private AQuery aq;
     private DataHolder dataHolder;
     @Nullable
@@ -54,7 +54,7 @@ public class PublicCourseFragment extends Fragment {
         aq = new AQuery(getActivity());
         dataHolder = DataHolder.getInstance();
         courseCatalogInfoList = new ArrayList<>();
-        courseCatalogAdapter = new CourseCatalogAdapter(courseCatalogInfoList,getActivity());
+        courseCatalogAdapter = new CourseListAdapter(getActivity(), courseCatalogInfoList, R.layout.catalog_item);
     }
 
     private void initView() {
@@ -66,7 +66,7 @@ public class PublicCourseFragment extends Fragment {
                 
             }
         });
-        courseCatalogAdapter.setOnCollectionClickListener(new CourseCatalogAdapter.OnCollectionClickListener() {
+        courseCatalogAdapter.setOnCollectionClickListener(new CourseListAdapter.OnCollectionClickListener() {
             @Override
             public void onCollectionClickListener(Map<String, Object> item, int position) {
 
@@ -85,7 +85,7 @@ public class PublicCourseFragment extends Fragment {
                 if (info!=null){
                     Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                     courseCatalogInfoList = (List<Map<String, Object>>) retData.get("courseList");
-                    courseCatalogAdapter.setCourseCatalogInfo(courseCatalogInfoList);
+                    courseCatalogAdapter.setData(courseCatalogInfoList);
                 }
             }
         });

@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.agitation.sportman.R;
-import com.agitation.sportman.activity.CatalogList;
+import com.agitation.sportman.activity.CourseList;
 import com.agitation.sportman.adapter.CourseAdapter;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MapTransformer;
@@ -61,7 +61,7 @@ public class CourseSubFragment extends Fragment {
         course_sub_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent catalogIntent = new Intent(getActivity(), CatalogList.class);
+                Intent catalogIntent = new Intent(getActivity(), CourseList.class);
                 catalogIntent.putExtra("childCatalogId",parentCatalogsSubList.get(position).get("id")+"");
                 startActivity(catalogIntent);
             }
