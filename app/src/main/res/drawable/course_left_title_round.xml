@@ -2,14 +2,14 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <corners
-        android:bottomLeftRadius="14dp"
-        android:topLeftRadius="14dp"
+        android:bottomLeftRadius="20dp"
+        android:topLeftRadius="20dp"
         android:topRightRadius="0dp"
         android:bottomRightRadius="0dp"/>
 
     <stroke
-        android:width="0.2dp"
-        android:color="#00BB9C"></stroke>
+        android:width="0.5dp"
+        android:color="@color/md_white_1000"></stroke>
 
-    <solid android:color="@color/md_amber_A200" />
+    <solid android:color="@color/toolbar_course_bg" />
 </shape>

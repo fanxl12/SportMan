@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.fragment.CourseSubFragment;
 import com.agitation.sportman.fragment.PublicCourseFragment;
@@ -16,13 +14,12 @@ import com.agitation.sportman.fragment.PublicCourseFragment;
 /**
  * Created by fanwl on 2015/11/23.
  */
-public class CourseSubCatalog extends AppCompatActivity implements View.OnClickListener {
+public class CourseSubCatalog extends BaseActivity implements View.OnClickListener {
 
 
     private CourseSubFragment courseSubFragment;
     private PublicCourseFragment publicCourseFragment;
 
-    private TextView title_course, public_course, sourse_sub_subtitle;
     private android.app.FragmentManager fragmentManager;
     private String parentCatalogId, subTitle;
     private Bundle bundle;
@@ -34,10 +31,25 @@ public class CourseSubCatalog extends AppCompatActivity implements View.OnClickL
         Intent intent = getIntent();
         parentCatalogId = intent.getStringExtra("parentCatalogId");
         subTitle = intent.getStringExtra("subTitle");
+        initToolbar();
         initVarible();
         initView();
         fragmentManager = getFragmentManager();
         setTabSelection(0);
+    }
+
+    private void initToolbar() {
+        if (toolbar!=null){
+            linear_toobar.setVisibility(View.VISIBLE);
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initVarible() {
@@ -45,11 +57,6 @@ public class CourseSubCatalog extends AppCompatActivity implements View.OnClickL
     }
 
     private void initView() {
-        ImageView  back = (ImageView) findViewById(R.id.back);
-        back.setOnClickListener(this);
-        title_course = (TextView)findViewById(R.id.title_course);
-        public_course = (TextView)findViewById(R.id.public_course);
-        sourse_sub_subtitle = (TextView)findViewById(R.id.sourse_sub_subtitle);
         sourse_sub_subtitle.setText(subTitle);
         title_course.setOnClickListener(this);
         public_course.setOnClickListener(this);
@@ -63,9 +70,6 @@ public class CourseSubCatalog extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.public_course:
                 setTabSelection(1);
-                break;
-            case R.id.back:
-                onBackPressed();
                 break;
         }
     }

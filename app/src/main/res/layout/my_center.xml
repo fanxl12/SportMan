@@ -41,6 +41,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content" />
         <Button
+            android:background="#FF0000"
+            android:textColor="@color/md_black_1000"
             android:id="@+id/mycenter_bt_match"
             android:text="比赛"
             android:layout_weight="1"
@@ -84,7 +86,7 @@
             android:src="@drawable/right_arrow" />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/mycenter_discount_code"
+        android:id="@+id/mycenter_preferentail_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bg"

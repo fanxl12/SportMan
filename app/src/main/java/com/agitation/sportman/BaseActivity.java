@@ -18,10 +18,9 @@ import com.androidquery.AQuery;
  */
 public class BaseActivity extends AppCompatActivity {
 
-
     protected LinearLayout rootLayout, linear_toobar;
     protected Toolbar toolbar;
-    protected TextView title;
+    protected TextView title, title_course, public_course,sourse_sub_subtitle;
     public AQuery aq;
     public DataHolder dataHolder;
     @Override
@@ -43,6 +42,10 @@ public class BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         title = (TextView)toolbar.findViewById(R.id.base_tv_title);
+        title = (TextView)toolbar.findViewById(R.id.base_tv_title);
+        title_course = (TextView)toolbar.findViewById(R.id.title_course);
+        sourse_sub_subtitle = (TextView)toolbar.findViewById(R.id.sourse_sub_subtitle);
+        public_course = (TextView)toolbar.findViewById(R.id.public_course);
         linear_toobar = (LinearLayout) toolbar.findViewById(R.id.linear_toobar);
     }
 

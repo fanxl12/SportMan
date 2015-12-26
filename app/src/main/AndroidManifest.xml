@@ -83,6 +83,9 @@
         <activity android:name=".activity.Comment"/>
         <activity android:name=".activity.Collection"/>
         <activity android:name=".activity.Setting"/>
+        <activity android:name=".activity.CommentList"/>
+        <activity android:name=".activity.PreferentialCode"/>
+
     </application>
 
 </manifest>

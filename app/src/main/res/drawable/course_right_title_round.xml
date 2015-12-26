@@ -4,12 +4,12 @@
     <corners
         android:bottomLeftRadius="0dp"
         android:topLeftRadius="0dp"
-        android:topRightRadius="14dp"
-        android:bottomRightRadius="14dp"/>
+        android:topRightRadius="20dp"
+        android:bottomRightRadius="20dp"/>
 
     <stroke
-        android:width="0.2dp"
-        android:color="#00BB9C"></stroke>
+        android:width="0.5dp"
+        android:color="@color/md_white_1000"></stroke>
 
-    <solid android:color="@color/md_amber_A200" />
+    <solid android:color="@color/toolbar_course_bg" />
 </shape>

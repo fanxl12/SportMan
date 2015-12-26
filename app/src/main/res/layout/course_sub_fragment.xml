@@ -6,7 +6,7 @@
 
     <ListView
         android:divider="@color/md_white_1000"
-        android:dividerHeight="20dp"
+        android:dividerHeight="16dp"
         android:scrollbars="none"
         android:id="@+id/course_sub_listview"
         android:layout_weight="1"

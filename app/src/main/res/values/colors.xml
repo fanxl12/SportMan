@@ -115,5 +115,14 @@
     <color name="popup_right_bg_selected">#ccc</color>
     <color name="div_gray">#ccc</color>
 
+    <color name="toolbar_course_bg">#90F8AF7A</color>
+
+    <color name="preferential_code_bt">#FEAC1C</color>
+
+    <color name="registered_code">#FFD35C</color>
+
+    <color name="registered_password">#D7D3D2</color>
+
+    <color name="registered_green">#47CEAD</color>
 
 </resources>

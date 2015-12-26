@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.CommentAdapter;
 import com.agitation.sportman.utils.DataHolder;
@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * Created by fanwl on 2015/11/27.
  */
-public class CourseDetail extends AppCompatActivity implements View.OnClickListener {
+public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
 
     private View payView,fastPayView;
@@ -61,7 +61,6 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
     private List<Map<String, Object>> commentList;
     private CommentAdapter commentAdapter;
 
-
     private double unitPrice=0.00;
     private double subMoney =0.00;
 
@@ -72,10 +71,25 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.course_detail);
         Intent intent = getIntent();
         courseId = intent.getStringExtra("courseId");
+        initToolbar();
         initVarible();
         initView();
         getCourseDetailInfo();
         getAdviceList();
+    }
+
+    private void initToolbar() {
+        if (toolbar!=null){
+            title.setText("羽毛球正手");
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initVarible() {
@@ -298,7 +312,7 @@ public class CourseDetail extends AppCompatActivity implements View.OnClickListe
 
         end_time.setText("" + item.get("endTime"));
 
-//        course_state.setText("" + item.get("buy_number"));
+        course_state.setText("" + item.get("buy_number"));
 
         favorable_price.setText("￥" + item.get("price") + "/");
 

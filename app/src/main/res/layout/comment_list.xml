@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/id_course"
-        android:layout_weight="1"
+    <ListView
+        android:id="@+id/lv_comment_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
-    </FrameLayout>
+        android:layout_height="wrap_content">
+    </ListView>
 
 </LinearLayout>

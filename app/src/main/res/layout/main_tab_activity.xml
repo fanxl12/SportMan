@@ -20,5 +20,4 @@
         android:layout_height="60dp">
     </android.support.v4.app.FragmentTabHost>
 
-
 </LinearLayout>

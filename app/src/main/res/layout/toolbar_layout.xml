@@ -24,28 +24,29 @@
         android:id="@+id/linear_toobar"
         android:visibility="gone"
         android:padding="10dp"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="60dp">
 
         <TextView
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
         <TextView
+            android:textColor="@color/text_color"
             android:background="@drawable/course_left_title_round"
             style="@style/course_sub_title"
             android:id="@+id/title_course"
             android:text="课程"
-            android:layout_width="60dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content" />
         <TextView
+            android:textColor="@color/text_color"
             android:id="@+id/public_course"
             android:background="@drawable/course_right_title_normal_round"
             style="@style/course_sub_title"
             android:text="公开课"
-            android:layout_width="60dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_weight="1"
@@ -53,7 +54,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/sourse_sub_subtitle"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/text_color"
             android:textSize="14sp"
             android:text="羽毛球"

@@ -70,7 +70,7 @@ public class CollectionAdapter extends BaseAdapter {
         name.setText(item.get("name")+"");
         address.setText(item.get("address") + "");
 
-        icon.setImageResource(R.drawable.zambia_selected);
+        icon.setImageResource(R.drawable.collection_icon_selected);
         icon.setTag(item);
         icon.setOnClickListener(new View.OnClickListener() {
             @Override

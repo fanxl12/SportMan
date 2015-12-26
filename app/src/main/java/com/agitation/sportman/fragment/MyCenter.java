@@ -23,6 +23,7 @@ import com.agitation.sportman.R;
 import com.agitation.sportman.activity.Collection;
 import com.agitation.sportman.activity.CourseOrder;
 import com.agitation.sportman.activity.Login;
+import com.agitation.sportman.activity.PreferentialCode;
 import com.agitation.sportman.activity.Setting;
 import com.agitation.sportman.activity.UserInfoEdit;
 import com.agitation.sportman.utils.DataHolder;
@@ -57,14 +58,9 @@ public class MyCenter extends Fragment implements View.OnClickListener {
             rootView = inflater.inflate(R.layout.my_center, container, false);
             initVarible();
             initView();
-
-
         }
         return rootView;
     }
-
-
-
     private void initVarible() {
         dataHolder=DataHolder.getInstance();
         imageLoader = ImageLoader.getInstance();
@@ -88,6 +84,9 @@ public class MyCenter extends Fragment implements View.OnClickListener {
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         badge.setBadgeBackgroundColor(android.graphics.Color.parseColor("#FFA200"));
         badge.show();
+
+
+        rootView.findViewById(R.id.mycenter_preferentail_code).setOnClickListener(this);
 
 
         rootView.findViewById(R.id.mycenter_setting).setOnClickListener(this);
@@ -139,6 +138,9 @@ public class MyCenter extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mycenter_collection:
                 startActivity(new Intent(getActivity(), Collection.class));
+                break;
+            case R.id.mycenter_preferentail_code:
+                startActivity(new Intent(getActivity(), PreferentialCode.class));
                 break;
             case R.id.mycenter_setting:
                 startActivity(new Intent(getActivity(), Setting.class));
