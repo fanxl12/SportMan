@@ -3,7 +3,6 @@ package com.agitation.sportman.activity;
 import android.content.Intent;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,6 +12,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.CourseListAdapter;
 import com.agitation.sportman.adapter.LeftMenuAdapter;
@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * Created by fanwl on 2015/11/25.
  */
-public class CourseList extends AppCompatActivity implements View.OnClickListener {
+public class CourseList extends BaseActivity implements View.OnClickListener {
 
     private ListView lv_list_course;
     View choose_bg;
@@ -54,7 +54,6 @@ public class CourseList extends AppCompatActivity implements View.OnClickListene
     private DataHolder dataHolder;
     private String childCatalogId;
     private List<Map<String,Object>> catalogStoreList;
-//    private CourseCatalogAdapter storeAdapter;
     private CourseListAdapter courseListAdapter;
 
     //定位操作
@@ -85,6 +84,7 @@ public class CourseList extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.catalog_list);
         Intent intent = getIntent();
         childCatalogId = intent.getStringExtra("childCatalogId");
+        initToolbar();
         initVarible();
         initView();
         initPopup();
@@ -93,6 +93,20 @@ public class CourseList extends AppCompatActivity implements View.OnClickListene
         getLocation();
     }
 
+
+    private void initToolbar() {
+        if (toolbar!=null){
+            title.setText("正手");
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
     private void initVarible() {
         param = new HashMap<>();
         param.put("childCatalogId",childCatalogId);

@@ -53,9 +53,9 @@ public class CourseListAdapter extends CommonAdapter<Map<String, Object>> {
         helper.setText(R.id.course_money, item.get("price") + "");
         ImageButton bt_collection = helper.getView(R.id.bt_collection);
         if (item.get("collectionId")==null){
-            bt_collection.setImageResource(R.drawable.zambia_normal);
+            bt_collection.setImageResource(R.drawable.collection_icon_normal);
         }else {
-            bt_collection.setImageResource(R.drawable.zambia_selected);
+            bt_collection.setImageResource(R.drawable.collection_icon_selected);
         }
         bt_collection.setTag(item);
         bt_collection.setOnClickListener(new View.OnClickListener() {
