@@ -7,9 +7,6 @@ import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemor
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.utils.StorageUtils;
-
-import java.io.File;
 
 /**
  * Created by fanxl on 2015/7/15.
@@ -30,7 +27,7 @@ public class BaseApplication extends Application {
     private void initImageLoader() {
 
 		//缓存目录
-		File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "imageloader/Cache");
+//		File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "imageloader/Cache");
 
         @SuppressWarnings("deprecation")
         ImageLoaderConfiguration config = new ImageLoaderConfiguration
@@ -40,12 +37,10 @@ public class BaseApplication extends Application {
                 .threadPriority(Thread.NORM_PRIORITY - 2) //缓存池的优先级
                 .denyCacheImageMultipleSizesInMemory()
                 .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024)) // You can pass your own memory cache implementation/你可以通过自己的内存缓存实现
-                .memoryCacheSize(2 * 1024 * 1024)
                 .discCacheSize(10 * 1024 * 1024)
-                .discCacheFileCount(100) //缓存的文件数量
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
 				.discCacheFileNameGenerator(new Md5FileNameGenerator())//将保存的时候的URI名称用MD5 加密
-//                .discCache(new UnlimitedDiscCache(cacheDir)) //设置自定义的缓存目录
+//                .discCache() //设置自定义的缓存目录
                 .build();
 		//Initialize ImageLoader with configuration
 		ImageLoader.getInstance().init(config);

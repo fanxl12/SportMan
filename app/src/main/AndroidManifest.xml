@@ -85,6 +85,7 @@
         <activity android:name=".activity.Setting"/>
         <activity android:name=".activity.CommentList"/>
         <activity android:name=".activity.PreferentialCode"/>
+        <activity android:name=".activity.WebActivity"/>
 
     </application>
 

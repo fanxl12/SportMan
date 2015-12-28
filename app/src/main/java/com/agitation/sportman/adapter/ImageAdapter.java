@@ -2,6 +2,7 @@ package com.agitation.sportman.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.agitation.sportman.R;
+import com.agitation.sportman.activity.WebActivity;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MyViewHolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -40,7 +42,7 @@ public class ImageAdapter extends BaseAdapter {
 		.showImageForEmptyUri(R.drawable.pictures_no) //设置图片Uri为空或是错误的时候显示的图片  
 		.showImageOnFail(R.drawable.pictures_no) //设置图片加载/解码过程中错误时候显示的图片
 		.cacheInMemory(true)//设置下载的图片是否缓存在内存中  
-		.cacheOnDisc(true) //设置下载的图片是否缓存在SD卡中
+		.cacheOnDisk(true) //设置下载的图片是否缓存在SD卡中
 		.bitmapConfig(Bitmap.Config.ARGB_8888)
 		.displayer(new FadeInBitmapDisplayer(100))//是否图片加载好后渐入的动画时间  
 		.build();
@@ -84,9 +86,11 @@ public class ImageAdapter extends BaseAdapter {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String url = itemData.get("RediredctUrl")+"";
+				String url = itemData.get("website")+"";
 				if(TextUtils.isEmpty(url) || "null".equals(url))return;
-				
+				Intent intent = new Intent(mContext, WebActivity.class);
+				intent.putExtra(WebActivity.URL_NAME, url);
+				mContext.startActivity(intent);
 			}
 		});
 		
