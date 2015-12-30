@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.agitation.sportman.widget.ExpandTabView
+        android:id="@+id/expandtab_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
     <ListView
         android:id="@+id/public_course_lv"
         android:layout_width="match_parent"

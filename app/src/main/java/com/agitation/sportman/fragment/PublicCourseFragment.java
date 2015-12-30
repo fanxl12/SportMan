@@ -4,6 +4,7 @@ package com.agitation.sportman.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,17 @@ import com.agitation.sportman.adapter.CourseListAdapter;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
+import com.agitation.sportman.utils.ToastUtils;
+import com.agitation.sportman.widget.ExpandTabView;
+import com.agitation.sportman.widget.ViewLeft;
+import com.agitation.sportman.widget.ViewMiddle;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +41,20 @@ public class PublicCourseFragment extends Fragment {
     private CourseListAdapter courseCatalogAdapter;
     private AQuery aq;
     private DataHolder dataHolder;
+
+    private ArrayList<View> mViewArray = new ArrayList<View>();
+    private ExpandTabView expandTabView;
+    private ViewMiddle timeChoiseView;
+    private ViewLeft typeChoiseView;
+    private ViewMiddle distanceChoiseView;
+    private ViewLeft defaultChoiseView;
+    private String[] items = new String[]{ "时间", "item2", "item3", "item4", "item5", "item6", "item7", "item8" };
+    private String[] itemsVaule = new String[]{ "item1", "item2", "item3", "item4", "item5", "item6", "item7", "item8" };
+
+    private ArrayList<String> groups = new ArrayList<String>();
+    private SparseArray<LinkedList<String>> children = new SparseArray<LinkedList<String>>();
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,11 +66,28 @@ public class PublicCourseFragment extends Fragment {
            initVarible();
            initView();
            getOpenCourse();
+           initListener();
        }
         return rootView;
     }
 
     private void initVarible() {
+
+        for(int i=0;i<10;i++){
+            groups.add(i+"行");
+            LinkedList<String> tItem = new LinkedList<String>();
+            for(int j=0;j<15;j++){
+
+                tItem.add(i+"行"+j+"列");
+
+            }
+            children.put(i, tItem);
+        }
+
+        timeChoiseView = new ViewMiddle(getActivity(), groups,  children);
+        typeChoiseView = new ViewLeft(getActivity(), items, itemsVaule);
+        distanceChoiseView = new ViewMiddle(getActivity(), groups,  children);
+        defaultChoiseView = new ViewLeft(getActivity(), items, itemsVaule);
         aq = new AQuery(getActivity());
         dataHolder = DataHolder.getInstance();
         courseCatalogInfoList = new ArrayList<>();
@@ -58,6 +95,25 @@ public class PublicCourseFragment extends Fragment {
     }
 
     private void initView() {
+
+        expandTabView = (ExpandTabView) rootView.findViewById(R.id.expandtab_view);
+
+        mViewArray.add(timeChoiseView);
+        mViewArray.add(typeChoiseView);
+        mViewArray.add(distanceChoiseView);
+        mViewArray.add(defaultChoiseView);
+        ArrayList<String> mTextArray = new ArrayList<String>();
+        mTextArray.add("时间");
+        mTextArray.add("类型");
+        mTextArray.add("区域");
+        mTextArray.add("默认");
+        expandTabView.setValue(mTextArray, mViewArray);
+        expandTabView.setTitle(timeChoiseView.getShowText(), 0);
+        expandTabView.setTitle(typeChoiseView.getShowText(), 1);
+        expandTabView.setTitle(distanceChoiseView.getShowText(), 2);
+        expandTabView.setTitle(defaultChoiseView.getShowText(), 3);
+
+
         public_course_lv = (ListView)rootView.findViewById(R.id.public_course_lv);
         public_course_lv.setAdapter(courseCatalogAdapter);
         public_course_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -90,4 +146,65 @@ public class PublicCourseFragment extends Fragment {
             }
         });
     }
+
+    private void initListener() {
+
+        timeChoiseView.setOnSelectListener(new ViewMiddle.OnSelectListener() {
+
+            @Override
+            public void getValue(String showText) {
+
+                onRefresh(timeChoiseView,showText);
+
+            }
+        });
+
+        typeChoiseView.setOnSelectListener(new ViewLeft.OnSelectListener() {
+
+            @Override
+            public void getValue(String distance, String showText) {
+                onRefresh(typeChoiseView, showText);
+            }
+        });
+
+        distanceChoiseView.setOnSelectListener(new ViewMiddle.OnSelectListener() {
+
+            @Override
+            public void getValue(String showText) {
+
+                onRefresh(distanceChoiseView,showText);
+
+            }
+        });
+
+        defaultChoiseView.setOnSelectListener(new ViewLeft.OnSelectListener() {
+
+            @Override
+            public void getValue(String distance, String showText) {
+                onRefresh(defaultChoiseView, showText);
+            }
+        });
+    }
+
+    private void onRefresh(View view, String showText) {
+
+        expandTabView.onPressBack();
+        int position = getPositon(view);
+        if (position >= 0 && !expandTabView.getTitle(position).equals(showText)) {
+            expandTabView.setTitle(showText, position);
+        }
+        ToastUtils.showToast(getActivity(), showText);
+
+    }
+
+    private int getPositon(View tView) {
+        for (int i = 0; i < mViewArray.size(); i++) {
+            if (mViewArray.get(i) == tView) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
 }

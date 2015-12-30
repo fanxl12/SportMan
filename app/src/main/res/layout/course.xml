@@ -1,86 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_listview_refresh"
     android:layout_width="match_parent"
     android:background="@color/md_white_1000"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:background="@drawable/title_bg"
-        android:padding="10dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:textSize="18sp"
-            android:textColor="@color/text_color"
-            android:text="上海"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/bg_round"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:paddingLeft="30dp"
-            android:textSize="14sp"
-            android:textColorHint="@color/tab_bg"
-            android:hint="请输入课程名称"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </LinearLayout>
-
-
-    <FrameLayout
-        android:id="@+id/framelayout"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/y400"
-        android:layout_marginBottom="16dp"
-        android:background="#ececec" >
-
-        <com.agitation.sportman.widget.ViewFlow
-            android:id="@+id/product_viewFlow"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:padding="3dip" >
-
-            <com.agitation.sportman.widget.CircleFlowIndicator
-                android:id="@+id/product_dot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/md_grey_300"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="@dimen/y10"
-                android:padding="2dip"
-                app:activeColor="#ec407a"
-                app:activeType="fill"
-                app:circleSeparation="20dip"
-                app:inactiveColor="#ffffff"
-                app:inactiveType="fill"
-                app:radius="4dip" />
-        </LinearLayout>
-    </FrameLayout>
+    android:layout_height="match_parent">
 
     <ListView
         android:scrollbars="none"
         android:id="@+id/course_lv"
         android:layout_weight="1"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="0dp">
     </ListView>
 
-</LinearLayout>
+</cn.bingoogolapple.refreshlayout.BGARefreshLayout>

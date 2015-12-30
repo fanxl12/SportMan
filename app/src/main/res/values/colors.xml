@@ -125,4 +125,15 @@
 
     <color name="registered_green">#47CEAD</color>
 
+    <!--start-tabViewColor-->
+    <color name="popup_main_background">#b0000000</color>
+    <color name="black">#000000</color>
+    <color name="choose_eara_item_press_color">#D7D3D2</color>
+    <color name="white">#ffffff</color>
+    <color name="no_color">#00000000</color>
+    <!--end-tabViewColor-->
+
+    <color name="custom_imoocstyle">#eb4f38</color>
+    <color name="imoocstyle">#CA0612</color>
+
 </resources>

@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -48,6 +50,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private int shareIconS[] = {R.drawable.course_icon, R.drawable.course_icon, R.drawable.course_icon};
     private FragmentTabHost pay_successed_tabhost;
     private LayoutInflater inflater;
+    private CheckBox alipy_pay, weixin_pay;
     private String courseId;
     private AQuery aq;
     private Map<String, Object> courseDetailInfo;
@@ -81,6 +84,13 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private void initToolbar() {
         if (toolbar!=null){
             title.setText("羽毛球正手");
+            right_title.setVisibility(View.VISIBLE);
+            right_title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ToastUtils.showToast(CourseDetail.this, "分享");
+                }
+            });
             setSupportActionBar(toolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -131,6 +141,25 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         unit_price = (TextView) payView.findViewById(R.id.unit_price);
         subtotal_money = (TextView) payView.findViewById(R.id.subtotal_money);
         total_money = (TextView) payView.findViewById(R.id.total_money);
+
+        alipy_pay = (CheckBox) payView.findViewById(R.id.alipy_pay);
+        weixin_pay = (CheckBox) payView.findViewById(R.id.weixin_pay);
+        alipy_pay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    weixin_pay.setChecked(false);
+                }
+            }
+        });
+        weixin_pay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    alipy_pay.setChecked(false);
+                }
+            }
+        });
 
         payWindow.setBackgroundDrawable(new BitmapDrawable());
         bt_fast_pay.setOnClickListener(this);
@@ -429,6 +458,8 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
             }
         }
     }
+
+//    分享操作
 
 
 }

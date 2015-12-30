@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.fragment.Course;
 import com.agitation.sportman.fragment.MyCenter;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by fanwl on 2015/10/25.
  */
-public class MainTabActivity extends AppCompatActivity {
+public class MainTabActivity extends BaseActivity {
 
     private FragmentTabHost main_tabhost;
     private LayoutInflater inflater;

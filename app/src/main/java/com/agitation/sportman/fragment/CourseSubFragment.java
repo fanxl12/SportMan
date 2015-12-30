@@ -81,8 +81,8 @@ public class CourseSubFragment extends Fragment {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
                 if (info != null) {
-                    if (Boolean.parseBoolean(info.get("result")+"")){
-                        Map<String,Object> retData = (Map<String, Object>) info.get("retData");
+                    if (Boolean.parseBoolean(info.get("result") + "")) {
+                        Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                         parentCatalogsSubList = (List<Map<String, Object>>) retData.get("childCatalogs");
                         courseAdapter.setCourse(parentCatalogsSubList);
                     }

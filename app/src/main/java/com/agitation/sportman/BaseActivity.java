@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.agitation.sportman.utils.DataHolder;
 import com.androidquery.AQuery;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * Created by fanwl on 2015/10/25.
  */
@@ -20,9 +22,11 @@ public class BaseActivity extends AppCompatActivity {
 
     protected LinearLayout rootLayout, linear_toobar;
     protected Toolbar toolbar;
-    protected TextView title, title_course, public_course,sourse_sub_subtitle;
+    protected TextView title, title_course, public_course,sourse_sub_subtitle, right_title;
     public AQuery aq;
     public DataHolder dataHolder;
+    private SweetAlertDialog mLoadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,8 @@ public class BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         title = (TextView)toolbar.findViewById(R.id.base_tv_title);
-        title = (TextView)toolbar.findViewById(R.id.base_tv_title);
+        right_title = (TextView) toolbar.findViewById(R.id.base_tv_right_title);
+
         title_course = (TextView)toolbar.findViewById(R.id.title_course);
         sourse_sub_subtitle = (TextView)toolbar.findViewById(R.id.sourse_sub_subtitle);
         public_course = (TextView)toolbar.findViewById(R.id.public_course);
@@ -60,6 +65,22 @@ public class BaseActivity extends AppCompatActivity {
         if (rootLayout == null) return;
         rootLayout.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         initBaseToolbar();
+    }
+
+    public void showLoadingDialog() {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+            mLoadingDialog.getProgressHelper().setBarColor(getResources().getColor(R.color.colorPrimary));
+            mLoadingDialog.setCancelable(false);
+            mLoadingDialog.setTitleText("数据加载中...");
+        }
+        mLoadingDialog.show();
+    }
+
+    public void dismissLoadingDialog() {
+        if (mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
+        }
     }
 
 
