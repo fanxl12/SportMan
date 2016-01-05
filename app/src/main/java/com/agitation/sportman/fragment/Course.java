@@ -102,6 +102,7 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
         mRefreshLayout.setDelegate(this);
     }
 
+
     /*
     获取课程首页广告和课程的数据
      */

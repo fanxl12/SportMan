@@ -2,6 +2,15 @@
 
     <style name = "AppTheme" parent = "Base.AppTheme"></style>
 
+    <style name="MatchWarp">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="WarpWarp">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name = "Base.AppTheme" parent = "Theme.AppCompat.Light.NoActionBar">
         <item name = "colorPrimary">@color/colorPrimary</item>
         <item name = "colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -96,13 +105,12 @@
 
     <style name="comment_text">
         <item name="android:layout_margin">10dp</item>
-
     </style>
-    
+
     <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/food_rating_bar_full</item>
-        <item name="android:minHeight">30dp</item>
-        <item name="android:maxHeight">30dp</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="android:maxHeight">44dp</item>
     </style>
 
     <style name="course_sub_title">
@@ -113,6 +121,35 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="CourseDetailTiamAddressLinear" parent="MatchWarp">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/md_grey_200</item>
+    </style>
+    <style name="CourseDetailTiamAddress" parent="MatchWarp">
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
 
+    <style name="CourseDetailEndTime" parent="WarpWarp">
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="CourseDetailSubHead" parent="WarpWarp">
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingBottom">6dp</item>
+    </style>
+
+    <style name="CourseDetailSubHeadLinear">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:background">@color/md_white_1000</item>
+        <item name="android:orientation">vertical</item>
+    </style>
 
 </resources>

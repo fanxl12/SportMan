@@ -33,7 +33,6 @@
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
                     <TextView
                         android:textColor="@color/registered_green"
                         android:id="@+id/buy_number"
@@ -46,13 +45,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="20dp"
                         android:text="人购买过" />
 
                 </LinearLayout>
-
-
                 <LinearLayout
+                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -61,45 +59,30 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
-
-                    <LinearLayout
-                        android:orientation="horizontal"
+                    <TextView
+                        android:textColor="@color/md_white_1000"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:textColor="@color/md_white_1000"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="报名截止" />
-                        <TextView
-                            android:textColor="@color/md_white_1000"
-                            android:id="@+id/end_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10.27" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        android:text="报名截止" />
+                    <TextView
+                        android:textColor="@color/md_white_1000"
+                        android:id="@+id/end_time"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:textColor="@color/md_white_1000"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="剩余" />
-                        <TextView
-                            android:textColor="@color/md_orange_A400"
-                            android:id="@+id/surplus_number"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:text="20" />
-                    </LinearLayout>
-
-
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="10.27" />
+                    <TextView
+                        android:textColor="@color/md_white_1000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="剩余" />
+                    <TextView
+                        android:textColor="@color/md_orange_A400"
+                        android:id="@+id/surplus_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="20" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -107,10 +90,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <ImageView
                     android:layout_marginLeft="40dp"
+                    android:src="@drawable/non_refundable"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+                <TextView
+                    android:layout_marginLeft="6dp"
                     android:id="@+id/course_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,7 +112,7 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textColor="@color/md_orange_A400"
                     android:id="@+id/favorable_price"
                     android:layout_width="wrap_content"
@@ -130,6 +120,7 @@
                     android:text="￥35" />
 
                 <TextView
+                    android:layout_marginLeft="6dp"
                     android:layout_marginRight="20dp"
                     android:textSize="14sp"
                     android:id="@+id/orginal_price"
@@ -138,14 +129,23 @@
                     android:text="/￥35" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/start_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/md_grey_300"
-                android:padding="10dp"
-                android:text="时间:10月22日(星期四)09:45-10:45" />
+            <LinearLayout
+                style="@style/CourseDetailTiamAddressLinear">
+
+                <ImageView
+                    android:layout_marginLeft="40dp"
+                    android:src="@drawable/iconfont_dian"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:id="@+id/start_time"
+                    style="@style/CourseDetailTiamAddress"
+                    android:text="时间:10月22日(星期四)09:45-10:45" />
+            </LinearLayout>
+
+
+
 
             <TextView
                 android:id="@+id/address"
