@@ -45,6 +45,7 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
     private static final int COURSE_REFRESH_SUCCEED = 120;
     private boolean isAutomaticRefresh = false;
 
+
     private Handler refreshHandler  = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -105,10 +106,12 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
     获取课程首页广告和课程的数据
      */
     public void CourseParentCatalog(){
+        if (!isAutomaticRefresh)mActivity.showLoadingDialog();
         String url = Mark.getServerIp()+"/api/v1/course/getCourseParentCatalog";
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).ajax(url, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
+                if (!isAutomaticRefresh)mActivity.dismissLoadingDialog();
                 if (info!=null){
                 if (Boolean.parseBoolean(info.get("result")+"")){
                     Map<String,Object> retData = (Map<String, Object>) info.get("retData");

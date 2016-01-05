@@ -73,7 +73,6 @@
 
         <activity android:name=".activity.Login"/>
         <activity android:name=".activity.MainTabActivity"/>
-        <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.Registered"/>
         <activity android:name=".activity.UserInfoEdit"/>
         <activity android:name=".activity.CourseOrder"/>

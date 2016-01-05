@@ -60,6 +60,16 @@ public class MainTabActivity extends BaseActivity {
             main_tabhost.addTab(tabSpec, fragmentArray[i], null);
         }
         main_tabhost.setCurrentTab(0);
+        main_tabhost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                if (mTextviewArray[2].equals(tabId)){
+                    toolbar.setVisibility(View.GONE);
+                }else{
+                    toolbar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
     /**
      * 给Tab按钮设置图标和文字

@@ -2,6 +2,7 @@ package com.agitation.sportman;
 
 import android.app.Application;
 
+import com.agitation.sportman.utils.ImageOptHelper;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -40,6 +41,7 @@ public class BaseApplication extends Application {
                 .discCacheSize(10 * 1024 * 1024)
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
 				.discCacheFileNameGenerator(new Md5FileNameGenerator())//将保存的时候的URI名称用MD5 加密
+                .defaultDisplayImageOptions(ImageOptHelper.getImgOptions())
 //                .discCache() //设置自定义的缓存目录
                 .build();
 		//Initialize ImageLoader with configuration

@@ -4,8 +4,9 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="该功能尚在开发中。。。"
+        android:text="该功能尚在开发中..."
         android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content" />
 
 

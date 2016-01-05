@@ -15,8 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.agitation.sportman.R;
@@ -28,11 +28,12 @@ import com.agitation.sportman.activity.Setting;
 import com.agitation.sportman.activity.UserInfoEdit;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.FastBlur;
+import com.agitation.sportman.utils.ScreenUtils;
+import com.agitation.sportman.widget.BadgeView;
 import com.agitation.sportman.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.readystatesoftware.viewbadger.BadgeView;
 
 /**
  * Created by fanwl on 2015/10/25.
@@ -46,7 +47,7 @@ public class MyCenter extends Fragment implements View.OnClickListener {
     private DataHolder dataHolder;
     public static final int EDIT_PHOTO = 125;
     private ImageLoader imageLoader;
-    private Button mycenter_bt_course, mycenter_bt_match;
+    private TextView mycenter_bt_course, mycenter_bt_match;
 
     @Nullable
     @Override
@@ -72,20 +73,24 @@ public class MyCenter extends Fragment implements View.OnClickListener {
         mycenter_head = (CircleImageView) rootView.findViewById(R.id.mycenter_head);
         second_bg = (ImageView)rootView.findViewById(R.id.second_bg);
         mycenter_head.setOnClickListener(this);
-        mycenter_bt_course = (Button) rootView.findViewById(R.id.mycenter_bt_course);
+        mycenter_bt_course = (TextView) rootView.findViewById(R.id.mycenter_bt_course);
         mycenter_bt_course.setOnClickListener(this);
 
-        mycenter_bt_match = (Button) rootView.findViewById(R.id.mycenter_bt_match);
+        mycenter_bt_match = (TextView) rootView.findViewById(R.id.mycenter_bt_match);
         mycenter_bt_match.setOnClickListener(this);
 
-        BadgeView badge = new BadgeView(getContext(), mycenter_bt_match);
+        int width = ScreenUtils.getScreenW(getActivity());
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mycenter_bt_course.getLayoutParams();
+        params.width = width/2;
+        mycenter_bt_course.setLayoutParams(params);
+        mycenter_bt_match.setLayoutParams(params);
+
+        BadgeView badge = new BadgeView(getActivity(), mycenter_bt_match);
         badge.setText("2");
-        badge.setTextSize(12);
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         badge.setBadgeBackgroundColor(android.graphics.Color.parseColor("#FFA200"));
         badge.show();
-
-
         rootView.findViewById(R.id.mycenter_preferentail_code).setOnClickListener(this);
 
 
@@ -110,6 +115,7 @@ public class MyCenter extends Fragment implements View.OnClickListener {
             setHeadImage(bitmap);
             userName.setText("未登录");
         }
+
     }
 
     @Override

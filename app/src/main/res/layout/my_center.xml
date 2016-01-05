@@ -1,53 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/md_white_1000"
     android:layout_height="match_parent"
+    android:background="@color/md_white_1000"
     android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/second_bg"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/default_head"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_head" />
+
         <com.agitation.sportman.widget.CircleImageView
-            android:layout_gravity="center"
-            android:src="@drawable/default_head"
             android:id="@+id/mycenter_head"
             android:layout_width="96dp"
-            android:layout_height="96dp" />
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:src="@drawable/default_head" />
+
         <TextView
-            android:layout_marginTop="158dp"
             android:id="@+id/center_userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="158dp"
             android:text="未登录"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff" />
     </FrameLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
             android:id="@+id/mycenter_bt_course"
-            android:text="课程"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <Button
-            android:background="#FF0000"
-            android:textColor="@color/md_black_1000"
+            android:layout_width="100dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="课程" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/md_grey_300"/>
+
+        <TextView
             android:id="@+id/mycenter_bt_match"
-            android:text="比赛"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="比赛" />
 
     </LinearLayout>
 
@@ -58,7 +70,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/line_bg"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="25dp"
@@ -85,13 +97,14 @@
             android:scaleType="fitCenter"
             android:src="@drawable/right_arrow" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/mycenter_preferentail_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bg"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="25dp"
@@ -118,13 +131,14 @@
             android:scaleType="fitCenter"
             android:src="@drawable/right_arrow" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/mycenter_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/line_bg"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="25dp"
@@ -132,6 +146,7 @@
             android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/setting" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -142,6 +157,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -149,5 +165,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/right_arrow" />
     </LinearLayout>
+
 
 </LinearLayout>

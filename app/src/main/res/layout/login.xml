@@ -28,7 +28,7 @@
             android:layout_height="96dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="48dp"
-            android:src="@drawable/icon"
+            android:src="@drawable/default_head"
             app:border_color="@color/background_floating_material_light"
             app:border_width="4dp"/>
 
