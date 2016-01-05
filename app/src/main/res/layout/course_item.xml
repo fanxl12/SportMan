@@ -11,7 +11,7 @@
         android:scaleType="centerCrop"/>
 
     <TextView
-        android:textColor="#ffffff"
+        android:textColor="@color/text_color"
         android:textSize="18sp"
         android:id="@+id/course_name"
         android:layout_width="wrap_content"

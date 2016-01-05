@@ -135,7 +135,7 @@
     <style name="CourseDetailEndTime" parent="WarpWarp">
         <item name="android:textColor">@color/text_color</item>
     </style>
-
+    <!--课程详情课程条件信息-->
     <style name="CourseDetailSubHead" parent="WarpWarp">
         <item name="android:textSize">18sp</item>
         <item name="android:paddingBottom">6dp</item>
@@ -150,6 +150,11 @@
         <item name="android:layout_marginBottom">16dp</item>
         <item name="android:background">@color/md_white_1000</item>
         <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="CourseDetailLeftDivider">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">10dp</item>
     </style>
 
 </resources>

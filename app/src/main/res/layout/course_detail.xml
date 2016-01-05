@@ -41,9 +41,7 @@
                         android:layout_marginBottom="6dp"
                         android:text="36" />
                     <TextView
-                        android:textColor="@color/md_white_1000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CourseDetailEndTime"
                         android:layout_marginBottom="6dp"
                         android:layout_marginRight="20dp"
                         android:text="人购买过" />
@@ -60,25 +58,19 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
                     <TextView
-                        android:textColor="@color/md_white_1000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CourseDetailEndTime"
                         android:text="报名截止" />
                     <TextView
-                        android:textColor="@color/md_white_1000"
                         android:id="@+id/end_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CourseDetailEndTime"
                         android:layout_marginRight="10dp"
                         android:text="10.27" />
                     <TextView
-                        android:textColor="@color/md_white_1000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CourseDetailEndTime"
                         android:text="剩余" />
                     <TextView
-                        android:textColor="@color/md_orange_A400"
                         android:id="@+id/surplus_number"
+                        android:textColor="@color/md_orange_A400"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
@@ -94,7 +86,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="20dp"
                     android:src="@drawable/non_refundable"
                     android:layout_width="20dp"
                     android:layout_height="20dp" />
@@ -129,52 +121,48 @@
                     android:text="/￥35" />
             </LinearLayout>
 
+                <LinearLayout
+                    style="@style/CourseDetailTiamAddressLinear">
+
+                    <ImageView
+                        android:layout_marginLeft="18dp"
+                        android:src="@drawable/iconfont_dian"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp" />
+
+                    <TextView
+                        android:id="@+id/start_time"
+                        style="@style/CourseDetailTiamAddress"
+                        android:text="时间:10月22日(星期四)09:45-10:45" />
+            </LinearLayout>
             <LinearLayout
                 style="@style/CourseDetailTiamAddressLinear">
 
                 <ImageView
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="18dp"
                     android:src="@drawable/iconfont_dian"
                     android:layout_width="10dp"
                     android:layout_height="10dp" />
 
                 <TextView
-                    android:id="@+id/start_time"
+                    android:id="@+id/address"
                     style="@style/CourseDetailTiamAddress"
-                    android:text="时间:10月22日(星期四)09:45-10:45" />
+                    android:text="地址:上海市闵行会易健身会所(老闵行分馆)" />
             </LinearLayout>
 
-
-
-
-            <TextView
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/md_grey_300"
-                android:padding="10dp"
-                android:text="地址:上海市闵行会易健身会所(老闵行分馆)" />
-
             <LinearLayout
-                android:showDividers="end"
-                android:divider="@drawable/divider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent"
+                    style="@style/CourseDetailLeftDivider"
                     android:background="@color/md_light_blue_400" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
+                    style="@style/CourseDetailSubHeadLinear">
                     <TextView
+                        android:textColor="@color/md_light_blue_400"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="课程介绍"
@@ -196,23 +184,16 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent"
+                    style="@style/CourseDetailLeftDivider"
                     android:background="@color/md_yellow_400" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:background="@color/md_white_1000"
-                    android:orientation="vertical">
+                    style="@style/CourseDetailSubHeadLinear">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="课程人数"
-                        android:textSize="18sp" />
+                        android:textColor="@color/md_yellow_800"
+                        style="@style/CourseDetailSubHead"
+                        android:text="课程人数"/>
 
                     <TextView
                         android:id="@+id/coursr_type"
@@ -228,22 +209,16 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent"
+                    style="@style/CourseDetailLeftDivider"
                     android:background="@color/md_light_blue_400" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    style="@style/CourseDetailSubHeadLinear">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="购买须知"
-                        android:textSize="18sp" />
+                        android:textColor="@color/md_light_blue_400"
+                        style="@style/CourseDetailSubHead"
+                        android:text="购买须知"/>
 
                     <TextView
                         android:id="@+id/notice"
@@ -264,22 +239,16 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent"
+                    style="@style/CourseDetailLeftDivider"
                     android:background="@color/md_yellow_400" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    style="@style/CourseDetailSubHeadLinear">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="教学信息"
-                        android:textSize="18sp" />
+                        android:textColor="@color/md_yellow_800"
+                        style="@style/CourseDetailSubHead"
+                        android:text="教学信息"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -287,7 +256,7 @@
                         android:orientation="horizontal">
 
                         <com.agitation.sportman.widget.CircleImageView
-                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:src="@drawable/default_head" />

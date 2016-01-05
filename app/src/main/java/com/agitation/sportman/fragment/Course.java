@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,11 +135,6 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
             }
         });
     }
-
-    private void testFan(){
-        Log.i("tag", "fanxl12测试代码冲突");
-    }
-
     /**
      * 添加轮播广告数据
      * @param datas
