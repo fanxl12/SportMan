@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.agitation.sportman.R;
+import com.agitation.sportman.utils.MyViewHolder;
 
 import java.util.List;
 import java.util.Map;
@@ -56,7 +59,17 @@ public class CommentAdapter extends BaseAdapter {
         if (view==null){
             view = LayoutInflater.from(context).inflate(R.layout.comment_item,null);
         }
-
+        Map<String, Object> item = commentList.get(position);
+        TextView comment_name = MyViewHolder.get(view, R.id.comment_name);
+        comment_name.setText(item.get("name")+"");
+        TextView comment_time = MyViewHolder.get(view, R.id.comment_time);
+        comment_time.setText(item.get("time")+"");
+        TextView comment_content = MyViewHolder.get(view, R.id.comment_content);
+        comment_content.setText(item.get("content")+"");
+        TextView comment_num = MyViewHolder.get(view, R.id.comment_num);
+        comment_num.setText(item.get("score")+"");
+        RatingBar ratingbar = MyViewHolder.get(view, R.id.ratingbar);
+//        ratingbar.setRating((Float) item.get("score"));
         return view;
     }
 }
