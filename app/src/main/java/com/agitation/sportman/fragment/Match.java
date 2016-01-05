@@ -58,7 +58,7 @@ public class Match extends Fragment {
             }
             courseList.add(item);
         }
-        courseAdapter = new CourseAdapter(getActivity(),courseList);
+        courseAdapter = new CourseAdapter(getActivity(), courseList, R.layout.course_item);
         course_lv.setAdapter(courseAdapter);
     }
 

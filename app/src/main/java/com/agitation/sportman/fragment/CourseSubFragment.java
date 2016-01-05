@@ -71,7 +71,7 @@ public class CourseSubFragment extends Fragment {
         aq = new AQuery(getActivity());
         dataHolder = DataHolder.getInstance();
         parentCatalogsSubList = new ArrayList<>();
-        courseAdapter = new CourseAdapter(getActivity(),parentCatalogsSubList);
+        courseAdapter = new CourseAdapter(getActivity(), parentCatalogsSubList, R.layout.course_item);
     }
     public void getparentCatalogsSubList(String parentCatalogId){
         String url = Mark.getServerIp()+"/api/v1/course/getCourseChildCatalog";
@@ -84,7 +84,7 @@ public class CourseSubFragment extends Fragment {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                         parentCatalogsSubList = (List<Map<String, Object>>) retData.get("childCatalogs");
-                        courseAdapter.setCourse(parentCatalogsSubList);
+                        courseAdapter.setData(parentCatalogsSubList);
                     }
                 }
             }
