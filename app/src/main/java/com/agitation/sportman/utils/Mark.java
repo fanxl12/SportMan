@@ -36,4 +36,6 @@ public class Mark {
     public static final int ORDER_STATUS_UNADVICES = 2;
     public static final int ORDER_STATUS_DONE = 3;
 
+    public static final int DATA_REFRESH_SUCCEED = 120;
+
 }

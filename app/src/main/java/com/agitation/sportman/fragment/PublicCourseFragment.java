@@ -1,6 +1,7 @@
 package com.agitation.sportman.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.SparseArray;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 
 import com.agitation.sportman.BaseFragment;
 import com.agitation.sportman.R;
+import com.agitation.sportman.activity.CourseDetail;
 import com.agitation.sportman.adapter.CourseListAdapter;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MapTransformer;
@@ -31,10 +33,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
+
 /**
  * Created by fanwl on 2015/11/24.
  */
-public class PublicCourseFragment extends BaseFragment {
+public class PublicCourseFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private View rootView;
     private ListView public_course_lv;
@@ -56,6 +61,7 @@ public class PublicCourseFragment extends BaseFragment {
 
     private ArrayList<String> groups = new ArrayList<String>();
     private SparseArray<LinkedList<String>> children = new SparseArray<LinkedList<String>>();
+    private BGARefreshLayout mRefreshLayout;
 
     @Nullable
     @Override
@@ -67,6 +73,7 @@ public class PublicCourseFragment extends BaseFragment {
            rootView = inflater.inflate(R.layout.public_course_fragment,container,false);
            initVarible();
            initView();
+           processLogic();
            getOpenCourse();
            initListener();
        }
@@ -116,7 +123,17 @@ public class PublicCourseFragment extends BaseFragment {
         courseCatalogAdapter = new CourseListAdapter(getActivity(), courseCatalogInfoList, R.layout.catalog_item);
     }
 
+    protected void processLogic() {
+        BGAStickinessRefreshViewHolder stickinessRefreshViewHolder = new BGAStickinessRefreshViewHolder(getActivity(), false);
+        stickinessRefreshViewHolder.setStickinessColor(R.color.colorPrimary);
+        stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_stickiness);
+        mRefreshLayout.setRefreshViewHolder(stickinessRefreshViewHolder);
+        mRefreshLayout.setDelegate(this);
+    }
+
     private void initView() {
+
+        mRefreshLayout = (BGARefreshLayout) rootView.findViewById(R.id.rl_listview_refresh);
 
         expandTabView = (ExpandTabView) rootView.findViewById(R.id.expandtab_view);
         expandtab_view_test = (ExpandTabView) rootView.findViewById(R.id.expandtab_view_test);
@@ -156,16 +173,83 @@ public class PublicCourseFragment extends BaseFragment {
         public_course_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
+                Intent intent = new Intent(getActivity(), CourseDetail.class);
+                intent.putExtra("courseId", courseCatalogInfoList.get(position).get("id")+"");
+                startActivity(intent);
             }
         });
+
         courseCatalogAdapter.setOnCollectionClickListener(new CourseListAdapter.OnCollectionClickListener() {
             @Override
             public void onCollectionClickListener(Map<String, Object> item, int position) {
 
+                String courseId = item.get("id") + "";
+                if (item.get("collectionId") == null) {
+                    savaCollection(courseId, position);
+                } else {
+                    String collectionId = item.get("collectionId") + "";
+                    deleteCollection(collectionId, position);
+                }
+                courseCatalogAdapter.notifyDataSetChanged();
+
             }
         });
     }
+
+    /**
+     * @param Id
+     * @param position
+     * 收藏操作
+     */
+    public void savaCollection(final String Id,final int position){
+        String url = Mark.getServerIp() + "/api/v1/collect/save";
+        Map<String, Object> param = new HashMap<>();
+        param.put("courseId", Id);
+        mActivity.showLoadingDialog();
+        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
+                .ajax(url, param, Map.class, new AjaxCallback<Map>() {
+                    @Override
+                    public void callback(String url, Map info, AjaxStatus status) {
+                        mActivity.dismissLoadingDialog();
+                        if (info != null) {
+                            if (Boolean.parseBoolean(info.get("result") + "")) {
+                                ToastUtils.showToast(getActivity(), "收藏成功");
+                                Map<String, Object> retData = (Map<String, Object>) info.get("retData");
+                                courseCatalogInfoList.get(position).put("collectionId", retData.get("collectionId") + "");
+                                courseCatalogAdapter.setData(courseCatalogInfoList);
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
+     * @param collectionId
+     * @param position
+     * 取消收藏操作
+     */
+    public void deleteCollection(String collectionId,final int position){
+        String url = Mark.getServerIp() + "/api/v1/collect/deleteCourse";
+        Map<String, Object> param = new HashMap<>();
+        param.put("collectionId",collectionId);
+        mActivity.showLoadingDialog();
+        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
+                .ajax(url, param, Map.class, new AjaxCallback<Map>() {
+                    @Override
+                    public void callback(String url, Map info, AjaxStatus status) {
+                        mActivity.dismissLoadingDialog();
+                        if (info != null) {
+                            if (Boolean.parseBoolean(info.get("result") + "")) {
+                                ToastUtils.showToast(getActivity(), "取消收藏成功");
+                                courseCatalogInfoList.get(position).remove("collectionId");
+                                courseCatalogAdapter.setData(courseCatalogInfoList);
+                            }
+                        }
+                    }
+                });
+    }
+
+
     //获取公开课列表
     private void getOpenCourse(){
         mActivity.showLoadingDialog();
@@ -246,4 +330,13 @@ public class PublicCourseFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
+        mRefreshLayout.endRefreshing();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout bgaRefreshLayout) {
+        return false;
+    }
 }

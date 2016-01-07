@@ -11,6 +11,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -51,12 +53,12 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private FragmentTabHost pay_successed_tabhost;
     private LayoutInflater inflater;
     private CheckBox alipy_pay, weixin_pay;
-    private String courseId;
+    private String courseId, orderId;
     private AQuery aq;
     private Map<String, Object> courseDetailInfo;
     private TextView buy_number, end_time, surplus_number, course_state, favorable_price, orginalPrice,
             start_time, address, course_introduction, coursr_type, notice, teacher_name, teacher_honor
-            , tx_count, unit_price, subtotal_money, total_money;
+            , tx_count, unit_price, subtotal_money, total_money, more_comment;
 
     private int count = 1;
     private DataHolder dataHolder;
@@ -66,6 +68,9 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
     private double unitPrice=0.00;
     private double subMoney =0.00;
+    View choose_bg;
+    Animation dropdown_in, dropdown_out, dropdown_mask_out;
+
 
 
     @Override
@@ -109,10 +114,22 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         commentAdapter = new CommentAdapter(commentList, this);
     }
 
+    /**
+     * 初始化控件
+     */
     private void initView() {
+        choose_bg = findViewById(R.id.choose_bg);
+
+        more_comment = (TextView) findViewById(R.id.more_comment);
+        more_comment.setOnClickListener(this);
+        dropdown_in = AnimationUtils.loadAnimation(this, R.anim.dropdown_in);
+        dropdown_out = AnimationUtils.loadAnimation(this,R.anim.dropdown_out);
+        dropdown_mask_out = AnimationUtils.loadAnimation(this, R.anim.dropdown_mask_out);
+
         inflater = LayoutInflater.from(this);
         lv_comment = (ListView) findViewById(R.id.lv_conment);
         lv_comment.setAdapter(commentAdapter);
+        lv_comment.setEnabled(false);
 
         buy_number = (TextView) findViewById(R.id.buy_number);
         end_time = (TextView) findViewById(R.id.end_time);
@@ -130,6 +147,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
         bt_enrolled = (Button) findViewById(R.id.bt_enrolled);
         bt_enrolled.setOnClickListener(this);
+
         //快速支付的popupWindow
         payView = inflater.inflate(R.layout.fast_pay_window, null);
         payWindow = new PopupWindow(payView, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -160,13 +178,20 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 }
             }
         });
-
         payWindow.setBackgroundDrawable(new BitmapDrawable());
         bt_fast_pay.setOnClickListener(this);
         payWindow.setOutsideTouchable(true);
         payWindow.setFocusable(true);
         payWindow.update();
         payWindow.setAnimationStyle(R.style.PopBottomToTop);
+
+        payWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                choose_bg.startAnimation(dropdown_mask_out);
+                choose_bg.setVisibility(View.GONE);
+            }
+        });
 
         //支付成功后的popupWindow
         fastPayView = inflater.inflate(R.layout.pay_successed, null);
@@ -197,11 +222,18 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 subMoney = unitPrice*1;
                 subtotal_money.setText(subMoney+"");
                 total_money.setText(subMoney+"");
-
-                payWindow.showAtLocation(bt_enrolled, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
+                payWindow.showAtLocation(bt_enrolled, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                //背景变暗
+                choose_bg.startAnimation(dropdown_in);
+                choose_bg.setVisibility(View.VISIBLE);
                 break;
             case R.id.bt_fast_pay:
-                pay(subMoney);
+                if (alipy_pay.isChecked()){
+                    payType= CHANNEL_ALIPAY;
+                }else {
+                    payType = CHANNEL_WECHAT;
+                }
+                commintCourseOrder();
                 break;
             case R.id.iv_del_num:
                 int countDel = Integer.parseInt(tx_count.getText().toString()) - 1;
@@ -218,6 +250,11 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 subMoney = unitPrice * count;
                 subtotal_money.setText(subMoney+"");
                 break;
+            case R.id.more_comment:
+                Intent intent = new Intent(CourseDetail.this, CommentList.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
+                break;
         }
     }
     //提交订单
@@ -225,19 +262,22 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         String url = Mark.getServerIp() + "/api/v1/order/commitCourse";
         Map<String, Object> param = new HashMap<>();
         param.put("courseId",courseDetailInfo.get("id")+"");
-        param.put("name",courseDetailInfo.get("name")+"");
+        param.put("name", courseDetailInfo.get("name")+"");
         param.put("startTime",courseDetailInfo.get("startTime")+"");
         param.put("count",count);
         param.put("totalMoney",subMoney);
-        param.put("payWay","支付宝");
+        param.put("payWay",payType);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).
                 ajax(url, param, Map.class, new AjaxCallback<Map>() {
                     @Override
                     public void callback(String url, Map info, AjaxStatus status) {
+                        dismissLoadingDialog();
                         if (info != null) {
                             if (Boolean.parseBoolean(info.get("result") + "")) {
                                 Map<String, Object> retData = (Map<String, Object>) info.get("retData");
-                                payCourse(retData.get("orderId") + "");
+                                orderId = retData.get("orderId") + "";
+                                pay(subMoney, orderId, retData.get("name") + "");
                             }
                         }
                     }
@@ -245,15 +285,17 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     }
 
     //提交支付宝订单
-    public void payCourse(String orderId){
+    public void payCourse(){
         String url = Mark.getServerIp() + "/api/v1/order/payCourse";
         Map<String, Object> param = new HashMap<>();
         param.put("orderId", orderId);
-        param.put("payWay","支付宝");
+        param.put("payWay", payType);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).
                 ajax(url, param, Map.class, new AjaxCallback<Map>() {
                     @Override
                     public void callback(String url, Map info, AjaxStatus status) {
+                        dismissLoadingDialog();
                         if (info != null) {
 
                         }
@@ -261,29 +303,43 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 });
     }
 
+    /**
+     * 获取评论列表
+     */
     private void getAdviceList(){
         String url = Mark.getServerIp() + "/api/v1/advice/getAdviceList";
         Map<String, Object> param = new HashMap<>();
-        param.put("courseId",courseId);
+        param.put("courseId", courseId);
         param.put("pageNumber","1");
         param.put("pageSize","10");
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (info != null) {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                         commentList = (List<Map<String, Object>>) retData.get("advices");
                         commentAdapter.setCommentList(commentList, true);
-                        setListViewHeight(lv_comment);
+//                        setListViewHeight(lv_comment);
+                        setListViewHeightBasedOnChildren(lv_comment);
+                        if (commentList.size() > 2) {
+                            more_comment.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
         });
     }
 
-    //重新测量listview的item的高度
+    /**
+     * @param lv
+     * 重新测量listview的高度
+     */
     private void setListViewHeight(ListView lv){
+        if (lv==null)return;
+
         //获取ListView对应的Adapter
         ListAdapter listAdapter = lv.getAdapter();
         if (listAdapter == null) {
@@ -305,6 +361,23 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         lv.setLayoutParams(params);
     }
 
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) return;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
 
     private View getTabItemView(int index) {
         View view = inflater.inflate(R.layout.tab_item_view, null);
@@ -313,13 +386,18 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         return view;
     }
 
+    /**
+     * 获取本课程的基本信息
+     */
     public void getCourseDetailInfo(){
         String url = Mark.getServerIp()+ "/api/v1/course/getCourseDetail";
         Map<String, Object> param = new HashMap<>();
         param.put("courseId",courseId);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (info != null) {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
@@ -330,7 +408,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
             }
         });
     }
-
+    //设置课程详情数据
     public void setCourseDetailInfo(Map<String, Object> item){
         
         buy_number.setText(item.get("buyNumber") + "");
@@ -341,7 +419,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
         end_time.setText("" + item.get("endTime"));
 
-        course_state.setText("" + item.get("buy_number"));
+//        course_state.setText("" + item.get("buy_number"));
 
         favorable_price.setText("￥" + item.get("price") + "/");
 
@@ -368,41 +446,43 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
      */
     private final String CHANNEL_WECHAT = "wx";
     /**
-     * 支付支付渠道
+     * 支付宝支付渠道
      */
     private final String CHANNEL_ALIPAY = "alipay";
-    private String payType = null;
+    private String payType = CHANNEL_ALIPAY;
     private static final int REQUEST_CODE_PAYMENT = 1;
 
-    private void pay(double payMoney){
+    private void pay(double payMoney, String orderId, String name){
 
         payType = CHANNEL_ALIPAY;
 
+        String body = "订单号:"+orderId+", "+name+", 价格:"+payMoney;
+
         payMoney = 0.01;
 
-        long bill = System.currentTimeMillis();
 
         Map<String, Object> params = new HashMap<>();
         //支付金额 单位为分
         params.put("amount", (int)(payMoney*100));
         //商品的标题，该参数最长为 32 个 Unicode 字符，银联全渠道（upacp/upacp_wap）限制在 32 个字节。
-        params.put("subject", "High运动");
+        params.put("subject", name);
         //商品的描述信息，该参数最长为 128 个 Unicode 字符，yeepay_wap 对于该参数长度限制为 100 个 Unicode 字符。
-        params.put("body", "课程订单"+":"+"201548751");
+        params.put("body", body);
         //商户订单号，适配每个渠道对此参数的要求，必须在商户系统内唯一。推荐使用 8-20 位，要求数字或字母，不允许特殊字符
-        params.put("order_no", bill);
+        params.put("order_no", orderId);
         //支付渠道
         params.put("channel", payType);
         //发起支付请求终端的 ip 地址
         params.put("client_ip", "192.168.1.200");
+        params.put("phoneType", "android");
 
         String url = Mark.getServerIp() + "/api/v1/drp/pay";
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(DataHolder.getInstance().getBasicHandle())
                 .ajax(url, params, Map.class, new AjaxCallback<Map>() {
-
                     @Override
                     public void callback(String url, Map json, AjaxStatus status) {
-
+                        dismissLoadingDialog();
                         if (json != null) {
                             if (Boolean.parseBoolean(json.get("result")+"")){
                                 String result = ((Map<String, Object>)json.get("retData")).get("charge")+"";
@@ -445,7 +525,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 if ("success".equals(result)){
                     ToastUtils.showToast(CourseDetail.this, "支付成功");
                     payWindow.dismiss();
-                    commintCourseOrder();
+                    payCourse();
                 }else if("user_cancelled".equals(result)){
                     ToastUtils.showToast(CourseDetail.this, "支付取消");
                 }else {

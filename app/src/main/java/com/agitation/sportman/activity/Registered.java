@@ -100,9 +100,11 @@ public class Registered extends BaseActivity {
         Map<String,Object> param = new HashMap<>();
         param.put("userName", userName);
         param.put("passWord",password);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
             @Override
             public void callback(String url, Map result, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (result!=null){
                     if (Boolean.parseBoolean(result.get("result")+"")){
                         SharePreferenceUtil.setValue(Registered.this, Login.IS_RM_PW, false);
@@ -136,9 +138,11 @@ public class Registered extends BaseActivity {
         Map<String,Object> param = new HashMap<>();
         param.put("userName", userName);
         param.put("passWord", password);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map result, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (result != null) {
                     if (Boolean.parseBoolean(result.get("result") + "")) {
                         DataHolder dataHolder = DataHolder.getInstance();

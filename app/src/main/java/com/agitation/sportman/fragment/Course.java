@@ -46,7 +46,6 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
     private AQuery aq;
     private DataHolder dataHolder;
     private BGARefreshLayout mRefreshLayout;
-    private static final int COURSE_REFRESH_SUCCEED = 120;
     private boolean isAutomaticRefresh = false;
     private ImageLoader imageLoader;
 
@@ -91,7 +90,6 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
                 startActivity(intent);
             }
         });
-
         imageLoader = ImageLoader.getInstance();
     }
 
@@ -100,6 +98,9 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
         course_lv = (ListView) rootView.findViewById(R.id.course_lv);
     }
 
+    /**
+     * 初始化刷新样式
+     */
     protected void processLogic() {
         BGAStickinessRefreshViewHolder stickinessRefreshViewHolder = new BGAStickinessRefreshViewHolder(getActivity(), false);
         stickinessRefreshViewHolder.setStickinessColor(R.color.colorPrimary);
@@ -108,14 +109,14 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
         mRefreshLayout.setDelegate(this);
     }
 
-
     /*
     获取课程首页广告和课程的数据
      */
     public void CourseParentCatalog(){
         if (!isAutomaticRefresh)mActivity.showLoadingDialog();
         String url = Mark.getServerIp()+"/api/v1/course/getCourseParentCatalog";
-        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).ajax(url, Map.class, new AjaxCallback<Map>() {
+        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).ajax(url, Map.class,
+                new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
                 if (!isAutomaticRefresh) mActivity.dismissLoadingDialog();
@@ -127,7 +128,7 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
                         List<Map<String, Object>> adversitementsList = (List<Map<String, Object>>) retData.get("adversitements");
                         courseAdapter.setData(parentCatalogsList);
                         if (isAutomaticRefresh) {
-                            refreshHandler.sendEmptyMessageDelayed(COURSE_REFRESH_SUCCEED, 1000);
+                            refreshHandler.sendEmptyMessageDelayed(Mark.DATA_REFRESH_SUCCEED, 1000);
                         }
                         addCarouselView(adversitementsList);
                     }

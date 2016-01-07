@@ -3,6 +3,8 @@ package com.agitation.sportman.activity;
 import android.content.Intent;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -36,10 +38,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
+
 /**
  * Created by fanwl on 2015/11/25.
  */
-public class CourseList extends BaseActivity implements View.OnClickListener {
+public class CourseList extends BaseActivity implements View.OnClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private ListView lv_list_course;
     View choose_bg;
@@ -77,6 +82,18 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
     private Map<String,Object> param; //获取课程需要的参数
     private int currentPage = 1;
     private final int  PAGE_SIZE = 16;
+    private BGARefreshLayout mRefreshLayout;
+
+    private boolean isAutomaticRefresh = false;
+
+    private Handler refreshHandler  = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what==120){
+                mRefreshLayout.endRefreshing();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +104,7 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
         initToolbar();
         initVarible();
         initView();
+        processLogic();
         initPopup();
         getMenuData();
         getCourseList();
@@ -133,7 +151,17 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
         mLocationClient.setLocOption(option);
     }
 
+    protected void processLogic() {
+        BGAStickinessRefreshViewHolder stickinessRefreshViewHolder = new BGAStickinessRefreshViewHolder(this, false);
+        stickinessRefreshViewHolder.setStickinessColor(R.color.colorPrimary);
+        stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_stickiness);
+        mRefreshLayout.setRefreshViewHolder(stickinessRefreshViewHolder);
+        mRefreshLayout.setDelegate(this);
+    }
+
     private void initView() {
+
+        mRefreshLayout = (BGARefreshLayout)findViewById(R.id.rl_listview_refresh);
         lv_list_course = (ListView) findViewById(R.id.lv_list_course);
         choose_bg = findViewById(R.id.choose_bg);
         choose_db_time = (DropdownButton) findViewById(R.id.choose_db_time);
@@ -247,7 +275,6 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
                     }
                     return;
                 }
-
                 switch (currentDb.getId()){
                     case R.id.choose_db_sort:
                         param.put("sort", leftDataList.get(position).get("sort"));
@@ -301,15 +328,21 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    //收藏操作
+    /**
+     * @param Id
+     * @param position
+     * 收藏操作
+     */
     public void savaCollection(final String Id,final int position){
         String url = Mark.getServerIp() + "/api/v1/collect/save";
         Map<String, Object> param = new HashMap<>();
         param.put("courseId",Id);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
                 .ajax(url, param, Map.class, new AjaxCallback<Map>(){
                     @Override
                     public void callback(String url, Map info, AjaxStatus status) {
+                        dismissLoadingDialog();
                         if (info!=null){
                             if (Boolean.parseBoolean(info.get("result")+"")){
                                 ToastUtils.showToast(CourseList.this, "收藏成功");
@@ -321,15 +354,22 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
                     }
                 });
     }
-    //取消收藏
+
+    /**
+     * @param collectionId
+     * @param position
+     * 取消收藏操作
+     */
     public void deleteCollection(String collectionId,final int position){
         String url = Mark.getServerIp() + "/api/v1/collect/deleteCourse";
         Map<String, Object> param = new HashMap<>();
         param.put("collectionId",collectionId);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
                 .ajax(url, param, Map.class, new AjaxCallback<Map>() {
                     @Override
                     public void callback(String url, Map info, AjaxStatus status) {
+                        dismissLoadingDialog();
                         if (info != null) {
                             if (Boolean.parseBoolean(info.get("result") + "")) {
                                 ToastUtils.showToast(CourseList.this, "取消收藏成功");
@@ -340,13 +380,16 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
                     }
                 });
     }
-
-    //获取筛选条件
+    /**
+     * 获取筛选条件信息
+     */
     private void getMenuData(){
         String url = Mark.getServerIp() + "/api/v1/course/getMenuData";
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (info != null) {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
@@ -359,18 +402,24 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
             }
         });
     }
-    //获取课程列表
+
+    /**
+     * 获取课程列表
+     */
     private void getCourseList(){
         String url = Mark.getServerIp()+ "/api/v1/course/getCourseList";
         param.put("pageNumber", currentPage);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (info != null) {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                         catalogStoreList = (List<Map<String, Object>>) retData.get("courseList");
                         courseListAdapter.setData(catalogStoreList);
+                        if (isAutomaticRefresh)refreshHandler.sendEmptyMessageDelayed(Mark.DATA_REFRESH_SUCCEED, 1000);
                     }
                 }
             }
@@ -432,6 +481,17 @@ public class CourseList extends BaseActivity implements View.OnClickListener {
             choose_bg.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
+        isAutomaticRefresh = true;
+        getCourseList();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout bgaRefreshLayout) {
+        return false;
     }
 
     //定位操作

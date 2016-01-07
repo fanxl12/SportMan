@@ -10,7 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.agitation.sportman.BaseFragment;
 import com.agitation.sportman.R;
 import com.agitation.sportman.activity.Collection;
+import com.agitation.sportman.activity.Comment;
 import com.agitation.sportman.activity.CourseOrder;
 import com.agitation.sportman.activity.Login;
 import com.agitation.sportman.activity.PreferentialCode;
@@ -28,17 +30,24 @@ import com.agitation.sportman.activity.Setting;
 import com.agitation.sportman.activity.UserInfoEdit;
 import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.FastBlur;
+import com.agitation.sportman.utils.MapTransformer;
+import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.ScreenUtils;
 import com.agitation.sportman.widget.BadgeView;
 import com.agitation.sportman.widget.CircleImageView;
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.util.Map;
+
 /**
  * Created by fanwl on 2015/10/25.
  */
-public class MyCenter extends Fragment implements View.OnClickListener {
+public class MyCenter extends BaseFragment implements View.OnClickListener {
 
     private View rootView;
     private CircleImageView mycenter_head;
@@ -47,7 +56,9 @@ public class MyCenter extends Fragment implements View.OnClickListener {
     private DataHolder dataHolder;
     public static final int EDIT_PHOTO = 125;
     private ImageLoader imageLoader;
+    private AQuery aq;
     private TextView mycenter_bt_course, mycenter_bt_match;
+    private BadgeView courseBadge, matchBadge;
 
     @Nullable
     @Override
@@ -63,6 +74,7 @@ public class MyCenter extends Fragment implements View.OnClickListener {
         return rootView;
     }
     private void initVarible() {
+        aq = new AQuery(getContext());
         dataHolder=DataHolder.getInstance();
         imageLoader = ImageLoader.getInstance();
     }
@@ -86,13 +98,15 @@ public class MyCenter extends Fragment implements View.OnClickListener {
         mycenter_bt_course.setLayoutParams(params);
         mycenter_bt_match.setLayoutParams(params);
 
-        BadgeView badge = new BadgeView(getActivity(), mycenter_bt_match);
-        badge.setText("2");
-        badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        badge.setBadgeBackgroundColor(android.graphics.Color.parseColor("#FFA200"));
-        badge.show();
-        rootView.findViewById(R.id.mycenter_preferentail_code).setOnClickListener(this);
+        courseBadge = new BadgeView(getActivity(), mycenter_bt_course);
+        courseBadge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+        courseBadge.setBadgeBackgroundColor(android.graphics.Color.parseColor("#FFA200"));
 
+        matchBadge = new BadgeView(getActivity(), mycenter_bt_match);
+        matchBadge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+        matchBadge.setBadgeBackgroundColor(android.graphics.Color.parseColor("#FFA200"));
+
+        rootView.findViewById(R.id.mycenter_preferentail_code).setOnClickListener(this);
 
         rootView.findViewById(R.id.mycenter_setting).setOnClickListener(this);
         second_bg.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -119,6 +133,59 @@ public class MyCenter extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (dataHolder.isLogin()){
+            getOrderNumber();
+        }
+    }
+
+    /**
+     * 我的中心获取课程和比赛的消息数量
+     */
+    private void getOrderNumber(){
+        mActivity.showLoadingDialog();
+        String url = Mark.getServerIp() + "/api/v1/order/getOrderNumber";
+        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).ajax(url, Map.class,
+                new AjaxCallback<Map>(){
+            @Override
+            public void callback(String url, Map info, AjaxStatus status) {
+                mActivity.dismissLoadingDialog();
+                if (info!=null){
+                    if (Boolean.parseBoolean(info.get("result")+"")){
+                        Map<String, Object> retData = (Map<String, Object>) info.get("retData");
+                        String courseNumberStr = retData.get("courseNumber")+"";
+                        String matchNumberStr = retData.get("matchNumber")+"";
+                        if (!TextUtils.isEmpty(courseNumberStr) && !"null".equals(courseNumberStr)){
+                            int courseNumber = Integer.parseInt(courseNumberStr);
+                            if (courseNumber>0){
+                                courseBadge.setText(courseNumberStr);
+                                courseBadge.show();
+                            }else{
+                                courseBadge.hide();
+                            }
+                        }else{
+                            courseBadge.hide();
+                        }
+                        if (!TextUtils.isEmpty(matchNumberStr) && !"null".equals(matchNumberStr)){
+                            int matchNumber = Integer.parseInt(matchNumberStr);
+                            if (matchNumber>0){
+                                matchBadge.setText(matchNumberStr);
+                                matchBadge.show();
+                            }else{
+                                matchBadge.hide();
+                            }
+                        }else{
+                            matchBadge.hide();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode==EDIT_PHOTO){
@@ -140,7 +207,9 @@ public class MyCenter extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), CourseOrder.class));
                 break;
             case R.id.mycenter_bt_match:
-
+                Intent intent = new Intent(getContext(), Comment.class);
+                intent.putExtra("courseId","22");
+                startActivity(intent);
                 break;
             case R.id.mycenter_collection:
                 startActivity(new Intent(getActivity(), Collection.class));
@@ -219,4 +288,3 @@ public class MyCenter extends Fragment implements View.OnClickListener {
         System.out.println(System.currentTimeMillis() - startMs + "ms");
     }
 }
-

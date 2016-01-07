@@ -104,13 +104,19 @@
     </style>
 
     <style name="comment_text">
-        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
     </style>
 
     <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/food_rating_bar_full</item>
-        <item name="android:minHeight">44dp</item>
-        <item name="android:maxHeight">44dp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:maxHeight">40dp</item>
+    </style>
+    <style name="ComentRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/comment_rating_bar_full</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:maxHeight">40dp</item>
     </style>
 
     <style name="course_sub_title">
@@ -126,7 +132,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@color/md_grey_200</item>
     </style>
-    <style name="CourseDetailTiamAddress" parent="MatchWarp">
+    <style name="CourseDetailTiamAddress" parent="WarpWarp">
         <item name="android:paddingLeft">6dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -155,6 +161,17 @@
     <style name="CourseDetailLeftDivider">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">10dp</item>
+    </style>
+
+    <style name="PreferentialCodeBtn" parent="MatchWarp">
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:background">@color/preferential_code_bt</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
 </resources>

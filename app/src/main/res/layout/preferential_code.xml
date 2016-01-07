@@ -15,16 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
-        android:layout_marginTop="40dp"
-        android:background="@color/preferential_code_bt"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:text="提交"
-        android:textSize="24sp"
-        android:textColor="@color/text_color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/PreferentialCodeBtn" />
 
 </LinearLayout>
