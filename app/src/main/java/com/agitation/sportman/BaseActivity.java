@@ -82,6 +82,4 @@ public class BaseActivity extends AppCompatActivity {
             mLoadingDialog.dismiss();
         }
     }
-
-
 }

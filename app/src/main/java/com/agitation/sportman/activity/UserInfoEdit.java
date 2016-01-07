@@ -318,10 +318,12 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
 
     public void modiftUserInfo(final Map<String,Object> param){
         String url = Mark.getServerIp()+"/baseApi/updateUser";
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
                 .ajax(url, param, Map.class, new AjaxCallback<Map>() {
                     @Override
                     public void callback(String url, Map result, AjaxStatus status) {
+                        dismissLoadingDialog();
                         if (result != null) {
                             boolean isResult = Boolean.parseBoolean(result.get("result") + "");
                             if (isResult) {

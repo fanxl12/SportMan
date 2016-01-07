@@ -1,5 +1,6 @@
 package com.agitation.sportman.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,14 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
+
 /**
  * Created by fanwl on 2015/12/4.
  */
-public class Collection extends BaseActivity {
+public class Collection extends BaseActivity implements BGARefreshLayout.BGARefreshLayoutDelegate  {
 
     private ListView collection_list;
     private CollectionAdapter collectionAdapter;
     private List<Map<String, Object>> collectionList;
+    private BGARefreshLayout mRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,7 @@ public class Collection extends BaseActivity {
         initToolbar();
         initVarible();
         initView();
+        processLogic();
         getCollectionInfo();
     }
 
@@ -57,12 +63,15 @@ public class Collection extends BaseActivity {
     }
 
     private void initView() {
+        mRefreshLayout = (BGARefreshLayout)findViewById(R.id.rl_listview_refresh);
         collection_list = (ListView) findViewById(R.id.collection_list);
         collection_list.setAdapter(collectionAdapter);
         collection_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.showToast(Collection.this,position+"");
+                Intent intent = new Intent(Collection.this, CourseDetail.class);
+                intent.putExtra("courseId", collectionList.get(position).get("id")+"");
+                startActivity(intent);
             }
         });
         collectionAdapter.setOnIconClickListener(new CollectionAdapter.OnIconClickListener() {
@@ -73,15 +82,25 @@ public class Collection extends BaseActivity {
         });
     }
 
+    protected void processLogic() {
+        BGAStickinessRefreshViewHolder stickinessRefreshViewHolder = new BGAStickinessRefreshViewHolder(this, false);
+        stickinessRefreshViewHolder.setStickinessColor(R.color.colorPrimary);
+        stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_stickiness);
+        mRefreshLayout.setRefreshViewHolder(stickinessRefreshViewHolder);
+        mRefreshLayout.setDelegate(this);
+    }
+
     //取消收藏
     public void deleteCollection(String collectionId,final int position){
         String url = Mark.getServerIp() + "/api/v1/collect/deleteCourse";
         Map<String, Object> param = new HashMap<>();
         param.put("collectionId", collectionId);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
                 .ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (info != null) {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         ToastUtils.showToast(Collection.this, "取消收藏成功");
@@ -93,12 +112,17 @@ public class Collection extends BaseActivity {
         });
     }
 
+    /**
+     * 获取收藏列表
+     */
     public void getCollectionInfo(){
         String url = Mark.getServerIp() + "/api/v1/collect/getCollectList";
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).
             ajax(url, Map.class, new AjaxCallback<Map>(){
                     @Override
                 public void callback(String url, Map info, AjaxStatus status) {
+                        dismissLoadingDialog();
                 if (info!=null){
                     if (Boolean.parseBoolean(info.get("result")+"")){
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
@@ -108,5 +132,15 @@ public class Collection extends BaseActivity {
                 }
                 }
             });
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
+        mRefreshLayout.endRefreshing();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout bgaRefreshLayout) {
+        return false;
     }
 }

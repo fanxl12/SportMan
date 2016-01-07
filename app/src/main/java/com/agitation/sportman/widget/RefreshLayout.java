@@ -190,6 +190,8 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
         }
     }
 
+
+
     /**
      * 加载更多的监听器
      *

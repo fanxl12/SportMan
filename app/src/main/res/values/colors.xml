@@ -125,6 +125,8 @@
 
     <color name="registered_green">#47CEAD</color>
 
+    <color name="fast_pay_btn">#1ABF9F</color>
+
     <!--start-tabViewColor-->
     <color name="popup_main_background">#b0000000</color>
     <color name="black">#000000</color>
@@ -135,5 +137,7 @@
 
     <color name="custom_imoocstyle">#eb4f38</color>
     <color name="imoocstyle">#CA0612</color>
+
+    <color name="courseDetail_bt">#FFA100</color>
 
 </resources>

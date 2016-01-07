@@ -108,10 +108,12 @@ public class Login extends BaseActivity implements View.OnClickListener {
         Map<String,Object> param = new HashMap<>();
         param.put("userName",name);
         param.put("passWord", password);
+        showLoadingDialog();
         aq.transformer(new MapTransformer())
                 .ajax(url, param, Map.class,new AjaxCallback<Map>(){
             @Override
             public void callback(String url, Map result, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (result!=null){
                     boolean isRegistered = Boolean.parseBoolean(result.get("result")+"");
                     if (isRegistered){

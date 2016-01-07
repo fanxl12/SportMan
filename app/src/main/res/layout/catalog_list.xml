@@ -52,24 +52,28 @@
     </LinearLayout>
 
 
-    <FrameLayout
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/rl_listview_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/lv_list_course"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-        </ListView>
+            <ListView
+                android:id="@+id/lv_list_course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <View
-            android:id="@+id/choose_bg"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#80000000" />
-    </FrameLayout>
+            </ListView>
 
-
+            <View
+                android:id="@+id/choose_bg"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80000000" />
+        </FrameLayout>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 </LinearLayout>

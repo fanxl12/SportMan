@@ -2,75 +2,110 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_grey_200"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/comment_text"
-        android:text="羽毛球正手"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        style="@style/comment_text"
-        android:text="时间:2015-11-02--2015-12-03"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        style="@style/comment_text"
-        android:text="地点:上海市闵行区鹤庆路100号顶星羽毛馆"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        style="@style/comment_text"
-        android:text="评分"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
-        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@color/md_white_1000"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <RatingBar
-            android:id="@+id/ratingbar"
+
+        <TextView
+            android:id="@+id/name"
             android:layout_marginLeft="20dp"
-            style="@style/MyRatingBar"
-            android:numStars="5"
-            android:rating="5"
-            android:stepSize="0.5"
-            android:isIndicator="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/comment_num"
-            android:layout_marginRight="20dp"
-            android:text="5.0分"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:text="羽毛球正手"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/time"
+            style="@style/comment_text"
+            android:text="时间:2015-11-02--2015-12-03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/address"
+            style="@style/comment_text"
+            android:text="地点:上海市闵行区鹤庆路100号顶星羽毛馆"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <TextView
-        style="@style/comment_text"
-        android:text="评价"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/et_commnt_content"
-        android:hint="请输入评价的内容"
-        android:lines="3"
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/md_white_1000"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:text="评分"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RatingBar
+                android:id="@+id/ratingbar"
+                android:layout_marginLeft="20dp"
+                style="@style/ComentRatingBar"
+                android:numStars="5"
+                android:rating="5"
+                android:stepSize="0.5"
+                android:isIndicator="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textColor="@color/courseDetail_bt"
+                android:id="@+id/comment_num"
+                android:text="10"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginRight="20dp"
+                android:text="分"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:text="评价"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            style="@style/comment_text"
+            android:background="@null"
+            android:id="@+id/et_commnt_content"
+            android:hint="请输入评价集体文字内容"
+            android:lines="3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <Button
-        android:id="@+id/bt_commint"
         android:text="提交"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/bt_commint"
+        style="@style/PreferentialCodeBtn" />
 
 </LinearLayout>

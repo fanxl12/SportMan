@@ -82,8 +82,6 @@ public class UtilsHelper {
         return sourceSf.format(time);
     }
 
-
-
     /*
     获取当前系统时间
      */
@@ -131,6 +129,5 @@ public class UtilsHelper {
         BigDecimal format = new BigDecimal(number);
         return format.setScale(1, BigDecimal.ROUND_HALF_DOWN).doubleValue();
     }
-
 
 }

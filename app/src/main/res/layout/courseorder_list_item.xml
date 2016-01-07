@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:orientation="horizontal"
       android:id="@+id/list_item"
+      android:descendantFocusability="blocksDescendants"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
 
@@ -32,10 +33,24 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-    <Button
+
+    <LinearLayout
         android:layout_weight="1"
-        android:id="@+id/course_order_bt_pay"
-        android:text="支付"
+        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/course_order_bt_pay"
+            android:text="支付"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/course_order_bt_delete"
+            android:text="删除"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </LinearLayout>
+
 </LinearLayout>

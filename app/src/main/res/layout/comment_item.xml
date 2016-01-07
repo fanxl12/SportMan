@@ -4,11 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <ImageView
+    <com.agitation.sportman.widget.CircleImageView
         android:layout_gravity="center"
-        android:src="@drawable/default_head"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/default_head" />
 
     <LinearLayout
         android:layout_weight="1"
@@ -25,46 +25,44 @@
                 android:text="13147143170"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <View
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
             <TextView
                 android:id="@+id/comment_time"
-                android:layout_gravity="right"
                 android:text="2015-12-19-16:30:20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
         </LinearLayout>
 
         <TextView
+            android:layout_margin="6dp"
             android:id="@+id/comment_content"
-            android:paddingTop="10dp"
             android:text="     老师授课的方式非常适合我们,老师授课的方式非常适合我们,老师授课的方式非常适合我们,老师授课的方式非常适合我们"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:paddingTop="10dp"
+            android:layout_margin="6dp"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RatingBar
                 android:id="@+id/ratingbar"
                 style="@style/MyRatingBar"
-                android:numStars="10"
-                android:rating="5"
+                android:numStars="5"
+                android:rating="3.5"
                 android:stepSize="0.5"
                 android:isIndicator="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:layout_marginLeft="20dp"
                 android:id="@+id/comment_num"
-                android:layout_marginRight="20dp"
                 android:text="5.0分"
                 android:textSize="16sp"
-                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

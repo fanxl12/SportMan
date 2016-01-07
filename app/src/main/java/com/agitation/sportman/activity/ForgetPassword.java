@@ -90,9 +90,11 @@ public class ForgetPassword extends BaseActivity {
         Map<String,Object> param = new HashMap<>();
         param.put("userName", userName);
         param.put("passWord",userPW);
+        showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
+                dismissLoadingDialog();
                 if (info != null) {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         ToastUtils.showToast(ForgetPassword.this, "重置成功");
