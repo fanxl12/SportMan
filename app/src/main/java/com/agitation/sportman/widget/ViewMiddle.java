@@ -75,17 +75,6 @@ public class ViewMiddle extends LinearLayout implements ViewBaseAction {
 		setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.choosearea_bg_mid));
 
-//		for(int i=0;i<10;i++){
-//			groups.add(i+"行");
-//			LinkedList<String> tItem = new LinkedList<String>();
-//			for(int j=0;j<15;j++){
-//				
-//				tItem.add(i+"行"+j+"列");
-//				
-//			}
-//			children.put(i, tItem);
-//		}
-
 		earaListViewAdapter = new TextAdapter(context, groups,
 				R.drawable.choose_item_selected,
 				R.drawable.choose_eara_item_selector);

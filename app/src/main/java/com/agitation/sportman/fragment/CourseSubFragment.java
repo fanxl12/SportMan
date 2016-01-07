@@ -1,7 +1,6 @@
 package com.agitation.sportman.fragment;
 
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.agitation.sportman.BaseFragment;
 import com.agitation.sportman.R;
 import com.agitation.sportman.activity.CourseList;
 import com.agitation.sportman.adapter.CourseAdapter;
@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * Created by fanwl on 2015/11/24.
  */
-public class CourseSubFragment extends Fragment {
+public class CourseSubFragment extends BaseFragment {
 
     private ListView course_sub_listview;
     private CourseAdapter courseAdapter;

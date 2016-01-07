@@ -1,7 +1,6 @@
 package com.agitation.sportman.fragment;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.SparseArray;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.agitation.sportman.BaseFragment;
 import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.CourseListAdapter;
 import com.agitation.sportman.utils.DataHolder;
@@ -18,6 +18,7 @@ import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.ToastUtils;
 import com.agitation.sportman.widget.ExpandTabView;
+import com.agitation.sportman.widget.ScreenView;
 import com.agitation.sportman.widget.ViewLeft;
 import com.agitation.sportman.widget.ViewMiddle;
 import com.androidquery.AQuery;
@@ -33,7 +34,7 @@ import java.util.Map;
 /**
  * Created by fanwl on 2015/11/24.
  */
-public class PublicCourseFragment extends Fragment {
+public class PublicCourseFragment extends BaseFragment {
 
     private View rootView;
     private ListView public_course_lv;
@@ -42,18 +43,19 @@ public class PublicCourseFragment extends Fragment {
     private AQuery aq;
     private DataHolder dataHolder;
 
-    private ArrayList<View> mViewArray = new ArrayList<View>();
-    private ExpandTabView expandTabView;
+    private ArrayList<View> mViewArray = new ArrayList<>();
+    private ArrayList<View> mViewArrayTest = new ArrayList<>();
+    private ExpandTabView expandTabView, expandtab_view_test;
     private ViewMiddle timeChoiseView;
     private ViewLeft typeChoiseView;
     private ViewMiddle distanceChoiseView;
+    private ScreenView screenView1, screenView2, screenView3, screenView4;
     private ViewLeft defaultChoiseView;
     private String[] items = new String[]{ "时间", "item2", "item3", "item4", "item5", "item6", "item7", "item8" };
     private String[] itemsVaule = new String[]{ "item1", "item2", "item3", "item4", "item5", "item6", "item7", "item8" };
 
     private ArrayList<String> groups = new ArrayList<String>();
     private SparseArray<LinkedList<String>> children = new SparseArray<LinkedList<String>>();
-
 
     @Nullable
     @Override
@@ -88,6 +90,26 @@ public class PublicCourseFragment extends Fragment {
         typeChoiseView = new ViewLeft(getActivity(), items, itemsVaule);
         distanceChoiseView = new ViewMiddle(getActivity(), groups,  children);
         defaultChoiseView = new ViewLeft(getActivity(), items, itemsVaule);
+
+        List<Map<String, Object>> testDatas = new ArrayList<>();
+        for (int i=0; i<6; i++){
+            Map<String, Object> item = new HashMap<>();
+            item.put("name", "name"+i);
+            List<Map<String, Object>> childs = new ArrayList<>();
+            for (int j=0; j<6; j++){
+                Map<String, Object> child = new HashMap<>();
+                child.put("name", "child"+i);
+                childs.add(child);
+            }
+            item.put("child", childs);
+            testDatas.add(item);
+        }
+
+        screenView1 = new ScreenView(getActivity(), testDatas);
+        screenView2 = new ScreenView(getActivity(), testDatas);
+        screenView3 = new ScreenView(getActivity(), testDatas);
+        screenView4 = new ScreenView(getActivity(), testDatas);
+
         aq = new AQuery(getActivity());
         dataHolder = DataHolder.getInstance();
         courseCatalogInfoList = new ArrayList<>();
@@ -97,16 +119,31 @@ public class PublicCourseFragment extends Fragment {
     private void initView() {
 
         expandTabView = (ExpandTabView) rootView.findViewById(R.id.expandtab_view);
+        expandtab_view_test = (ExpandTabView) rootView.findViewById(R.id.expandtab_view_test);
 
         mViewArray.add(timeChoiseView);
         mViewArray.add(typeChoiseView);
         mViewArray.add(distanceChoiseView);
         mViewArray.add(defaultChoiseView);
+
+        mViewArrayTest.add(screenView1);
+        mViewArrayTest.add(screenView2);
+        mViewArrayTest.add(screenView3);
+        mViewArrayTest.add(screenView4);
+
         ArrayList<String> mTextArray = new ArrayList<String>();
         mTextArray.add("时间");
         mTextArray.add("类型");
         mTextArray.add("区域");
         mTextArray.add("默认");
+
+        expandtab_view_test.setValue(mTextArray, mViewArrayTest);
+        expandTabView.setTitle("时间1", 0);
+        expandTabView.setTitle("类型1", 1);
+        expandTabView.setTitle("区域1", 2);
+        expandTabView.setTitle("默认1", 3);
+
+
         expandTabView.setValue(mTextArray, mViewArray);
         expandTabView.setTitle(timeChoiseView.getShowText(), 0);
         expandTabView.setTitle(typeChoiseView.getShowText(), 1);
@@ -131,6 +168,7 @@ public class PublicCourseFragment extends Fragment {
     }
     //获取公开课列表
     private void getOpenCourse(){
+        mActivity.showLoadingDialog();
         String url = Mark.getServerIp()+ "/api/v1/course/getOpenCourse";
         Map<String, Object> param = new HashMap<>();
         param.put("pageNumber","1");
@@ -138,6 +176,7 @@ public class PublicCourseFragment extends Fragment {
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>(){
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
+                mActivity.dismissLoadingDialog();
                 if (info!=null){
                     Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                     courseCatalogInfoList = (List<Map<String, Object>>) retData.get("courseList");

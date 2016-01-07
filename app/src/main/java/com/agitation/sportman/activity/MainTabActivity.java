@@ -17,6 +17,7 @@ import com.agitation.sportman.fragment.Course;
 import com.agitation.sportman.fragment.MyCenter;
 import com.agitation.sportman.fragment.TestMatch;
 import com.agitation.sportman.utils.Mark;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class MainTabActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UmengUpdateAgent.update(this);
         setContentView(R.layout.main_tab_activity);
         initView();
     }

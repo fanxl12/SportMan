@@ -1,9 +1,10 @@
 package com.agitation.sportman.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
-import com.agitation.sportman.R;
 import com.agitation.sportman.utils.ViewHolder;
 
 import java.util.List;
@@ -16,8 +17,21 @@ import java.util.Map;
 public class LeftTestMenuAdapter extends CommonAdapter<Map<String, Object>> {
 
     private int selectedPosition = 0;
+    private Drawable selectedDrawble;
+    private Drawable normalDrawble;
+    private Context context;
+
+    public void setSelectedDrawble(int sId, int nId) {
+        this.selectedDrawble = ContextCompat.getDrawable(context, sId);
+        this.normalDrawble = ContextCompat.getDrawable(context, nId);
+    }
 
     public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
+        this.notifyDataSetChanged();
+    }
+
+    public void setSelectedPositionNoNotify(int selectedPosition){
         this.selectedPosition = selectedPosition;
     }
 
@@ -27,33 +41,37 @@ public class LeftTestMenuAdapter extends CommonAdapter<Map<String, Object>> {
 
     public LeftTestMenuAdapter(Context context, List<Map<String, Object>> mDatas, int itemLayoutId) {
         super(context, mDatas, itemLayoutId);
+        this.context = context;
     }
 
     public void setData(List<Map<String, Object>> mDatas){
-        this.mDatas=mDatas;
-        this.notifyDataSetChanged();
+        super.setData(mDatas);
     }
 
     @Override
     public void convert(ViewHolder helper, Map<String, Object> item) {
-
-        //选中和没选中时，设置不同的颜色
+        TextView nameTv = (TextView) helper.getConvertView();
         if (helper.getPosition() == selectedPosition){
-            helper.getConvertView().setBackgroundResource(R.color.popup_right_bg);
+            nameTv.setBackground(selectedDrawble);
         }else{
-            helper.getConvertView().setBackgroundResource(R.drawable.selector_left_normal);
+            nameTv.setBackground(normalDrawble);//设置未选中状态背景图片
         }
+        nameTv.setPadding(20, 0, 0, 0);
+        nameTv.setText(item.get("name") + "");
+//        nameTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ToastUtils.showToast(context, "click");
+//            }
+//        });
 
-        TextView nameTv = helper.getView(R.id.left_item_name);
-        nameTv.setText(item.get("name")+"");
-
-        if (item.get("child") != null) {
-            List<Map<String, Object>> secondList = (List<Map<String, Object>>) item.get("child");
-            if (secondList!=null && secondList.size()>0){
-                nameTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
-            }
-        } else {
-            nameTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }
+//        if (item.get("child") != null) {
+//            List<Map<String, Object>> secondList = (List<Map<String, Object>>) item.get("child");
+//            if (secondList!=null && secondList.size()>0){
+//                nameTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
+//            }
+//        } else {
+//            nameTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//        }
     }
 }

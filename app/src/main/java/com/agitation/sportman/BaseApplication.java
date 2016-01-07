@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemor
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.umeng.socialize.PlatformConfig;
 
 /**
  * Created by fanxl on 2015/7/15.
@@ -22,7 +23,14 @@ public class BaseApplication extends Application {
         super.onCreate();
 //        refWatcher = LeakCanary.install(this);
         initImageLoader();
+        initShare();
+    }
 
+    private void initShare() {
+        //微信分享
+        PlatformConfig.setWeixin("wxa14ff301f487441b", "9d84dccdf623e88d96f401b380cad623");
+        //QQ和空间的分享
+        PlatformConfig.setQQZone("1105016705", "u5VZKTmYAhbEBRTw");
     }
 
     private void initImageLoader() {

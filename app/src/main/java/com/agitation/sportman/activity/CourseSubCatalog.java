@@ -1,9 +1,10 @@
 package com.agitation.sportman.activity;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.agitation.sportman.BaseActivity;
@@ -20,7 +21,7 @@ public class CourseSubCatalog extends BaseActivity implements View.OnClickListen
     private CourseSubFragment courseSubFragment;
     private PublicCourseFragment publicCourseFragment;
 
-    private android.app.FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
     private String parentCatalogId, subTitle;
     private Bundle bundle;
 
@@ -34,12 +35,12 @@ public class CourseSubCatalog extends BaseActivity implements View.OnClickListen
         initToolbar();
         initVarible();
         initView();
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         setTabSelection(0);
     }
 
     private void initToolbar() {
-        if (toolbar!=null){
+        if (toolbar != null) {
             linear_toobar.setVisibility(View.VISIBLE);
             setSupportActionBar(toolbar);
         }
@@ -64,7 +65,7 @@ public class CourseSubCatalog extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.title_course:
                 setTabSelection(0);
                 break;
@@ -76,31 +77,25 @@ public class CourseSubCatalog extends BaseActivity implements View.OnClickListen
 
     /**
      * 根据传入的index参数来设置选中的tab页。
-     *
      */
-    @SuppressLint("NewApi")
-    private void setTabSelection(int index)
-    {
+    private void setTabSelection(int index) {
         // 重置按钮
         resetBtn();
         // 开启一个Fragment事务
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
         hideFragments(transaction);
-        switch (index)
-        {
+        switch (index) {
             case 0:
                 // 当点击了消息tab时，改变控件的图片和文字颜色
                 title_course.setBackgroundResource(R.drawable.course_left_title_round);
-                if (courseSubFragment == null)
-                {
+                if (courseSubFragment == null) {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     courseSubFragment = new CourseSubFragment();
-                    bundle.putString("parentCatalogId",parentCatalogId);
+                    bundle.putString("parentCatalogId", parentCatalogId);
                     courseSubFragment.setArguments(bundle);
                     transaction.add(R.id.id_course, courseSubFragment);
-                } else
-                {
+                } else {
                     // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(courseSubFragment);
                 }
@@ -108,13 +103,11 @@ public class CourseSubCatalog extends BaseActivity implements View.OnClickListen
             case 1:
                 // 当点击了消息tab时，改变控件的图片和文字颜色
                 public_course.setBackgroundResource(R.drawable.course_right_title_round);
-                if (publicCourseFragment == null)
-                {
+                if (publicCourseFragment == null) {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     publicCourseFragment = new PublicCourseFragment();
                     transaction.add(R.id.id_course, publicCourseFragment);
-                } else
-                {
+                } else {
                     // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(publicCourseFragment);
                 }
@@ -122,11 +115,11 @@ public class CourseSubCatalog extends BaseActivity implements View.OnClickListen
         }
         transaction.commit();
     }
+
     /**
      * 清除掉所有的选中状态。
      */
-    private void resetBtn()
-    {
+    private void resetBtn() {
         title_course.setBackgroundResource(R.drawable.course_left_title_normal_round);
         public_course.setBackgroundResource(R.drawable.course_right_title_normal_round);
     }
@@ -134,18 +127,14 @@ public class CourseSubCatalog extends BaseActivity implements View.OnClickListen
     /**
      * 将所有的Fragment都置为隐藏状态。
      *
-     * @param transaction
-     *            用于对Fragment执行操作的事务
+     * @param transaction 用于对Fragment执行操作的事务
      */
     @SuppressLint("NewApi")
-    private void hideFragments(FragmentTransaction transaction)
-    {
-        if (courseSubFragment != null)
-        {
+    private void hideFragments(FragmentTransaction transaction) {
+        if (courseSubFragment != null) {
             transaction.hide(courseSubFragment);
         }
-        if (publicCourseFragment != null)
-        {
+        if (publicCourseFragment != null) {
             transaction.hide(publicCourseFragment);
         }
     }

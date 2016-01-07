@@ -24,4 +24,16 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/set_check_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="检查更新"/>
+
+    <Button
+        android:id="@+id/set_shere_qq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享到QQ"/>
+
 </LinearLayout>
