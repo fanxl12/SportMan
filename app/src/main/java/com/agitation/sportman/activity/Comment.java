@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
+import com.agitation.sportman.fragment.CourseOrderList;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.ToastUtils;
@@ -25,7 +26,7 @@ public class Comment extends BaseActivity implements View.OnClickListener {
 
     private RatingBar ratingBar;
     private TextView commentNum, commnet_name, commnet_time, commnet_address;
-    private String courseId, name, time, address;
+    private String courseId, name, time, address, orderId;
     private double score= 5.0;
     private EditText et_content;
     @Override
@@ -36,6 +37,7 @@ public class Comment extends BaseActivity implements View.OnClickListener {
         name = getIntent().getStringExtra("name");
         time = getIntent().getStringExtra("time");
         address = getIntent().getStringExtra("address");
+        orderId = getIntent().getStringExtra("orderId");
         initToolbar();
         initView();
     }
@@ -61,7 +63,6 @@ public class Comment extends BaseActivity implements View.OnClickListener {
         commnet_name = (TextView) findViewById(R.id.name);
         commnet_time = (TextView) findViewById(R.id.time);
         commnet_address = (TextView) findViewById(R.id.address);
-
         commnet_name.setText(name);
         commnet_time.setText(time);
         commnet_address.setText(address);
@@ -101,6 +102,7 @@ public class Comment extends BaseActivity implements View.OnClickListener {
         param.put("content",content);
         param.put("score",score);
         param.put("courseId",courseId);
+        param.put("orderId", orderId);
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
             .ajax(url, param, Map.class, new AjaxCallback<Map>() {
                 @Override
@@ -109,6 +111,7 @@ public class Comment extends BaseActivity implements View.OnClickListener {
                     if (info != null) {
                         if(Boolean.parseBoolean(info.get("result")+"")){
                             ToastUtils.showToast(Comment.this, "评论成功");
+                            Comment.this.setResult(CourseOrderList.COMMENT_SUCCEED);
                             finish();
                         }
                     }

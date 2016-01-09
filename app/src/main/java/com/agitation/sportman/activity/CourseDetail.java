@@ -2,6 +2,7 @@ package com.agitation.sportman.activity;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -22,7 +23,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.CommentAdapter;
@@ -34,6 +37,14 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.pingplusplus.android.PaymentActivity;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.ShareContent;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMVideo;
+import com.umeng.socialize.media.UMusic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +83,34 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     Animation dropdown_in, dropdown_out, dropdown_mask_out;
 
 
+    //分享操作
+    private final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]{
+            SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
+            SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE
+    };
+
+    UMImage image = new UMImage(CourseDetail.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
+    UMusic music = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
+
+    UMVideo video = new UMVideo("http://video.sina.com.cn/p/sports/cba/v/2013-10-22/144463050817.html");
+
+    private UMShareListener shareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(CourseDetail.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(CourseDetail.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(CourseDetail.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +132,13 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
             right_title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtils.showToast(CourseDetail.this, "分享");
+                    new ShareAction(CourseDetail.this)
+                            .setDisplayList(SHARE_MEDIA.QQ,
+                                    SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
+                                    SHARE_MEDIA.WEIXIN_CIRCLE)
+                            .setContentList(new ShareContent(), new ShareContent())
+                            .withMedia(image)
+                            .setListenerList(shareListener, shareListener).open();
                 }
             });
             setSupportActionBar(toolbar);
@@ -217,15 +262,19 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_enrolled:
-                unitPrice = Double.parseDouble(courseDetailInfo.get("price")+"");
-                unit_price.setText(unitPrice+"元/人");
-                subMoney = unitPrice*1;
-                subtotal_money.setText(subMoney+"");
-                total_money.setText(subMoney+"");
-                payWindow.showAtLocation(bt_enrolled, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                //背景变暗
-                choose_bg.startAnimation(dropdown_in);
-                choose_bg.setVisibility(View.VISIBLE);
+                if (dataHolder.isLogin()){
+                    unitPrice = Double.parseDouble(courseDetailInfo.get("price")+"");
+                    unit_price.setText(unitPrice+"元/人");
+                    subMoney = unitPrice*1;
+                    subtotal_money.setText(subMoney+"");
+                    total_money.setText(subMoney+"");
+                    payWindow.showAtLocation(bt_enrolled, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    //背景变暗
+                    choose_bg.startAnimation(dropdown_in);
+                    choose_bg.setVisibility(View.VISIBLE);
+                }else{
+                    goTOLogin();
+                }
                 break;
             case R.id.bt_fast_pay:
                 if (alipy_pay.isChecked()){
@@ -242,6 +291,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 tx_count.setText(countDel+"");
                 subMoney = unitPrice * count;
                 subtotal_money.setText(subMoney+"");
+                total_money.setText(subMoney+"");
                 break;
             case R.id.iv_add_num:
                 int countAdd = Integer.parseInt(tx_count.getText().toString()) + 1;
@@ -249,6 +299,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 tx_count.setText(countAdd+"");
                 subMoney = unitPrice * count;
                 subtotal_money.setText(subMoney+"");
+                total_money.setText(subMoney+"");
                 break;
             case R.id.more_comment:
                 Intent intent = new Intent(CourseDetail.this, CommentList.class);
@@ -284,6 +335,31 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 });
     }
 
+
+    /**
+     * 购买前没有登录的操作
+     */
+    private void goTOLogin(){
+        new AlertDialogWrapper.Builder(this)
+                .setMessage("请登录")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(CourseDetail.this, Login.class);
+                        intent.putExtra("isNormalLogin", false);
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+
+
+    }
+
+
     //提交支付宝订单
     public void payCourse(){
         String url = Mark.getServerIp() + "/api/v1/order/payCourse";
@@ -297,7 +373,9 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                     public void callback(String url, Map info, AjaxStatus status) {
                         dismissLoadingDialog();
                         if (info != null) {
-
+                            if (Boolean.parseBoolean(info.get("result")+"")){
+                                fastPayWindow.showAtLocation(bt_enrolled, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                            }
                         }
                     }
                 });
@@ -511,6 +589,8 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE_PAYMENT){
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getExtras().getString("pay_result");
@@ -537,9 +617,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 //                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
             }
         }
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
-
-//    分享操作
-
 
 }

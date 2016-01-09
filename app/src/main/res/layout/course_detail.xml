@@ -80,15 +80,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/non_refundable"
                     android:layout_width="20dp"
                     android:layout_height="20dp" />
                 <TextView
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
                     android:id="@+id/course_state"
                     android:layout_width="wrap_content"

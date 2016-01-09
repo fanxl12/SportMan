@@ -52,6 +52,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
     private DataHolder dataHolder;
     private AQuery aq;
     public static final String STATUS_NAME_KEY = "STATUS_NAME_KEY";
+    public static final int COMMENT_SUCCEED = 140;
     private String orderId;
 
     public static CourseOrderList getInstance(int status){
@@ -74,7 +75,11 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
             init();
             initVarible();
             processLogic();
-            getCourseOrderList();
+            if(dataHolder.isLogin()){
+                getCourseOrderList();
+            }else {
+                ToastUtils.showToast(getContext(), "请登录");
+            }
         }
         return rootView;
     }
@@ -89,7 +94,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), CourseDetail.class);
-                intent.putExtra("courseId", orderList.get(position).get("courseId")+"");
+                intent.putExtra("courseId", orderList.get(position).get("courseId") + "");
                 startActivity(intent);
             }
         });
@@ -112,7 +117,8 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
                         intent.putExtra("name", item.get("name") + "");
                         intent.putExtra("time", item.get("createDate") + "");
                         intent.putExtra("address", item.get("address") + "");
-                        startActivity(intent);
+                        intent.putExtra("orderId", orderId);
+                        startActivityForResult(intent, 140);
                     }
                 }
             }
@@ -168,7 +174,6 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
     }
 
     private void init() {
-
         swipe_container = (BGARefreshLayout) rootView.findViewById(R.id.swipe_container);
         tickey_list_lv = (ListView)rootView.findViewById(R.id.course_list_lv);
     }
@@ -271,6 +276,9 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
 //                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
 //                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
             }
+        }
+        if (requestCode==COMMENT_SUCCEED){
+            getCourseOrderList();
         }
     }
 

@@ -37,11 +37,14 @@ public class Login extends BaseActivity implements View.OnClickListener {
     public DataHolder dataHolder;
     public static final int Registered_SUCCEED = 100;
     public static final int Registered_FAILED = 101;
+    private boolean isNormalLogin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        Intent intent = getIntent();
+        isNormalLogin = intent.getBooleanExtra("isNormalLogin", true);
         initToolbar();
         init();
         initVarible();
@@ -126,8 +129,12 @@ public class Login extends BaseActivity implements View.OnClickListener {
                         SharePreferenceUtil.setValue(Login.this, IS_RM_PW, isRemeber);
                         dataHolder.setBasicHandle(name, password);
                         dataHolder.setUserData((Map<String, Object>) result.get("retData"));
-                        startActivity(new Intent(Login.this, MainTabActivity.class));
-                        finish();
+                        if (isNormalLogin){
+                            startActivity(new Intent(Login.this, MainTabActivity.class));
+                            finish();
+                        }else {
+                            finish();
+                        }
                     }else {
                         ToastUtils.showToast(Login.this, "登录失败" + "," + result.get("error"));
                     }

@@ -41,6 +41,7 @@ public class Collection extends BaseActivity implements BGARefreshLayout.BGARefr
         initView();
         processLogic();
         getCollectionInfo();
+
     }
 
     private void initToolbar() {

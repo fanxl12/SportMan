@@ -402,7 +402,6 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
 
     private Bitmap decodeUriAsBitmap(Uri uri){
 
-//        Log.e("uri.toString", uri.toString());
         Bitmap bitmap = null;
         try {
             bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));

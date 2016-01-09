@@ -164,10 +164,15 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         mRefreshLayout = (BGARefreshLayout)findViewById(R.id.rl_listview_refresh);
         lv_list_course = (ListView) findViewById(R.id.lv_list_course);
         choose_bg = findViewById(R.id.choose_bg);
-        choose_db_time = (DropdownButton) findViewById(R.id.choose_db_time);
-        choose_db_type = (DropdownButton) findViewById(R.id.choose_db_type);
-        choose_db_positon = (DropdownButton) findViewById(R.id.choose_db_positon);
-        choose_db_sort = (DropdownButton) findViewById(R.id.choose_db_sort);
+
+        View menuView = View.inflate(this, R.layout.incould_screen_menu, null);
+
+        mRefreshLayout.setCustomHeaderView(menuView, true);
+
+        choose_db_time = (DropdownButton) menuView.findViewById(R.id.choose_db_time);
+        choose_db_type = (DropdownButton) menuView.findViewById(R.id.choose_db_type);
+        choose_db_positon = (DropdownButton) menuView.findViewById(R.id.choose_db_positon);
+        choose_db_sort = (DropdownButton) menuView.findViewById(R.id.choose_db_sort);
         choose_db_time.setText("时间");
         choose_db_time.setChecked(false);
         choose_db_type.setText("类型");
@@ -214,6 +219,8 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         });
     }
 
+
+
     private void initPopup() {
         popupWindow = new PopupWindow(this);
         View view = LayoutInflater.from(this).inflate(R.layout.menu_popup_layout, null);
@@ -231,8 +238,8 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
             @Override
             public void onDismiss() {
 
-                choose_bg.startAnimation(dropdown_mask_out);
-                choose_bg.setVisibility(View.GONE);
+//                choose_bg.startAnimation(dropdown_mask_out);
+//                choose_bg.setVisibility(View.GONE);
 
                 left_menu.setSelection(0);
                 right_menu.setSelection(0);
@@ -477,8 +484,8 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
             popupWindow.showAsDropDown(v);
             popupWindow.setAnimationStyle(-1);
             //背景变暗
-            choose_bg.startAnimation(dropdown_in);
-            choose_bg.setVisibility(View.VISIBLE);
+//            choose_bg.startAnimation(dropdown_in);
+//            choose_bg.setVisibility(View.VISIBLE);
         }
 
     }

@@ -1,79 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_listview_refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
+    android:layout_height="match_parent">
+    <ListView
+        android:id="@+id/lv_list_course"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/md_grey_300"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+    </ListView>
 
-        <com.agitation.sportman.widget.DropdownButton
-            android:id="@+id/choose_db_time"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+    <!--<View-->
+        <!--android:id="@+id/choose_bg"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="#80000000" />-->
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="18dp"
-            android:background="#dddddd" />
-
-        <com.agitation.sportman.widget.DropdownButton
-            android:id="@+id/choose_db_type"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="18dp"
-            android:background="#dddddd" />
-
-        <com.agitation.sportman.widget.DropdownButton
-            android:id="@+id/choose_db_positon"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="18dp"
-            android:background="#dddddd" />
-
-        <com.agitation.sportman.widget.DropdownButton
-            android:id="@+id/choose_db_sort"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:id="@+id/rl_listview_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ListView
-                android:id="@+id/lv_list_course"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </ListView>
-
-            <View
-                android:id="@+id/choose_bg"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#80000000" />
-        </FrameLayout>
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
-</LinearLayout>
+</cn.bingoogolapple.refreshlayout.BGARefreshLayout>

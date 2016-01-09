@@ -33,6 +33,7 @@ import com.agitation.sportman.utils.FastBlur;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.ScreenUtils;
+import com.agitation.sportman.utils.ToastUtils;
 import com.agitation.sportman.widget.BadgeView;
 import com.agitation.sportman.widget.CircleImageView;
 import com.androidquery.AQuery;
@@ -119,24 +120,24 @@ public class MyCenter extends BaseFragment implements View.OnClickListener {
                 return true;
             }
         });
-
-        if (dataHolder.isLogin()){
-            String headImg = dataHolder.getImageProfix() + dataHolder.getUserData().get("head")+"";
-            setCenterHead(headImg);
-            userName.setText(dataHolder.getUserData().get("name") + "");
-        }else {
-            Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.default_head);
-            setHeadImage(bitmap);
-            userName.setText("未登录");
-        }
-
     }
+
+
 
     @Override
     public void onResume() {
         super.onResume();
         if (dataHolder.isLogin()){
+            String headImg = dataHolder.getImageProfix() + dataHolder.getUserData().get("head")+"";
+            setCenterHead(headImg);
+            userName.setText(dataHolder.getUserData().get("name") + "");
             getOrderNumber();
+        }else {
+            Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.default_head);
+            setHeadImage(bitmap);
+            userName.setText("未登录");
+            courseBadge.hide();
+            matchBadge.hide();
         }
     }
 
@@ -204,7 +205,11 @@ public class MyCenter extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.mycenter_bt_course:
-                startActivity(new Intent(getActivity(), CourseOrder.class));
+                if (dataHolder.isLogin()){
+                    startActivity(new Intent(getActivity(), CourseOrder.class));
+                }else{
+                    ToastUtils.showToast(getContext(), "请登录");
+                }
                 break;
             case R.id.mycenter_bt_match:
                 Intent intent = new Intent(getContext(), Comment.class);
@@ -212,10 +217,18 @@ public class MyCenter extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.mycenter_collection:
-                startActivity(new Intent(getActivity(), Collection.class));
+                if (dataHolder.isLogin()){
+                    startActivity(new Intent(getActivity(), Collection.class));
+                }else{
+                    ToastUtils.showToast(getContext(), "请登录");
+                }
                 break;
             case R.id.mycenter_preferentail_code:
-                startActivity(new Intent(getActivity(), PreferentialCode.class));
+                if (dataHolder.isLogin()){
+                    startActivity(new Intent(getActivity(), PreferentialCode.class));
+                }else{
+                    ToastUtils.showToast(getContext(), "请登录");
+                }
                 break;
             case R.id.mycenter_setting:
                 startActivity(new Intent(getActivity(), Setting.class));
