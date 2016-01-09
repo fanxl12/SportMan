@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.agitation.sportman.R;
 import com.agitation.sportman.utils.DataHolder;
@@ -15,6 +16,8 @@ import com.agitation.sportman.utils.SharePreferenceUtil;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +78,13 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.splash_activity);
         initVarible();
         checkAccount();
+
+        //开启推送服务
+        PushAgent mPushAgent = PushAgent.getInstance(getApplicationContext());
+        mPushAgent.enable();
+        mPushAgent.onAppStart();
+        String device_token = UmengRegistrar.getRegistrationId(this);
+        Log.i("device_token", device_token);
     }
 
     private void initVarible() {

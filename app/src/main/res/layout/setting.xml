@@ -35,5 +35,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="分享到QQ"/>
+    <Button
+        android:id="@+id/set_shere_wx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享到微信"/>
+    <Button
+        android:id="@+id/set_shere_wxquan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享到朋友圈"/>
+    <Button
+        android:id="@+id/set_shere_qqzone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享到空间"/>
+    <Button
+        android:id="@+id/set_shere_board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="面板"/>
 
 </LinearLayout>
