@@ -19,19 +19,15 @@ import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.CourseListAdapter;
 import com.agitation.sportman.adapter.LeftMenuAdapter;
 import com.agitation.sportman.adapter.RightMenuAdapter;
-import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.ScreenUtils;
 import com.agitation.sportman.utils.ToastUtils;
 import com.agitation.sportman.widget.DropdownButton;
-import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,18 +51,16 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
     private Map<String, Object> retData;
 
     //店铺列表
-    private AQuery aq;
-    private DataHolder dataHolder;
     private String childCatalogId;
     private List<Map<String,Object>> catalogStoreList;
     private CourseListAdapter courseListAdapter;
 
     //定位操作
-    public LocationClient mLocationClient = null;
-    public BDLocationListener myListener = new MyLocationListener();
-    private static final int UPDATE_TIME = 500;
-    private String latitude="31.012832";
-    private String lontitude="121.411235";
+//    public LocationClient mLocationClient = null;
+//    public BDLocationListener myListener = new MyLocationListener();
+//    private static final int UPDATE_TIME = 500;
+//    private String latitude="31.012832";
+//    private String lontitude="121.411235";
 
     //菜单筛选相关
     /**使用PopupWindow显示一级分类和二级分类*/
@@ -108,7 +102,6 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         initPopup();
         getMenuData();
         getCourseList();
-        getLocation();
     }
 
 
@@ -129,26 +122,11 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         param = new HashMap<>();
         param.put("childCatalogId",childCatalogId);
         param.put("pageSize", PAGE_SIZE);
-        param.put("latitude", latitude);
-        param.put("longitude",lontitude);
+        param.put("latitude",  dataHolder.getLatitude());
+        param.put("longitude", dataHolder.getLongitude());
 
-        aq = new AQuery(this);
-        dataHolder = DataHolder.getInstance();
         catalogStoreList = new ArrayList<>();
         courseListAdapter = new CourseListAdapter(this, catalogStoreList, R.layout.catalog_item);
-        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
-        mLocationClient.registerLocationListener(myListener);    //注册监听函数
-
-        //设置定位条件
-        LocationClientOption option = new LocationClientOption();
-        option.setOpenGps(true);        //是否打开GPS
-        option.setCoorType("bd09ll");       //设置返回值的坐标类型。
-        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
-        option.setIsNeedAddress(true);//返回的定位结果包含地址信息
-        option.setProdName("LocationDemo"); //设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
-        option.setScanSpan(UPDATE_TIME);    //设置定时定位的时间间隔。单位毫秒
-        option.setIgnoreKillProcess(true);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-        mLocationClient.setLocOption(option);
     }
 
     protected void processLogic() {
@@ -346,12 +324,12 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         param.put("courseId",Id);
         showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
-                .ajax(url, param, Map.class, new AjaxCallback<Map>(){
+                .ajax(url, param, Map.class, new AjaxCallback<Map>() {
                     @Override
                     public void callback(String url, Map info, AjaxStatus status) {
                         dismissLoadingDialog();
-                        if (info!=null){
-                            if (Boolean.parseBoolean(info.get("result")+"")){
+                        if (info != null) {
+                            if (Boolean.parseBoolean(info.get("result") + "")) {
                                 ToastUtils.showToast(CourseList.this, "收藏成功");
                                 retData = (Map<String, Object>) info.get("retData");
                                 catalogStoreList.get(position).put("collectionId", retData.get("collectionId") + "");
@@ -433,14 +411,7 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         });
     }
 
-    public void getLocation(){
-        if(mLocationClient == null)return;
-        if (mLocationClient.isStarted()){
-            mLocationClient.requestLocation();
-        }else{
-            mLocationClient.start();
-        }
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -537,15 +508,4 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         rightDataList.addAll(rigtData);
         rightAdapter.notifyDataSetChanged();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mLocationClient != null && mLocationClient.isStarted()) {
-            mLocationClient.stop();
-            mLocationClient = null;
-        }
-    }
-
-
 }

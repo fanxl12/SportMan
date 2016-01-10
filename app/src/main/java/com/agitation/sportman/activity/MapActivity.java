@@ -123,7 +123,7 @@ public class MapActivity extends BaseActivity{
 			public boolean onMarkerClick(final Marker marker) {
 				if (marker == markerA) {
 					tv_name.setText(targetName);
-					tv_address.setText(targetAddress);
+					tv_address.setText("地址: "+targetAddress);
 				}
 				LatLng ll = marker.getPosition();
 				mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(marker_pop_view), ll, -47, listener);
@@ -192,6 +192,8 @@ public class MapActivity extends BaseActivity{
 				initMaker();
 				return;
 			}
+			dataHolder.setLongitude(location.getLongitude());
+			dataHolder.setLatitude(location.getLatitude());
 			currentLat = new LatLng(location.getLatitude(), location.getLongitude());
 			MyLocationData locData = new MyLocationData.Builder()
 					.accuracy(location.getRadius())
@@ -206,7 +208,6 @@ public class MapActivity extends BaseActivity{
 				initMaker();
 			}
 		}
-
 	}
 
 	/**
