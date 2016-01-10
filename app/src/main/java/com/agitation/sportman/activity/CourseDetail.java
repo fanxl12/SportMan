@@ -256,6 +256,8 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 //        pay_successed_tabhost.addTab(pay_successed_tabhost.newTabSpec("朋友圈").setIndicator(getTabItemView(2)));
 
 //        pay_successed_tabhost.setCurrentTab(0);
+
+        findViewById(R.id.course_ll_address).setOnClickListener(this);
     }
 
     @Override
@@ -305,6 +307,10 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 Intent intent = new Intent(CourseDetail.this, CommentList.class);
                 intent.putExtra("courseId", courseId);
                 startActivity(intent);
+                break;
+            case R.id.course_ll_address:
+                Intent mapIntent = new Intent(CourseDetail.this, MapActivity.class);
+                startActivity(mapIntent);
                 break;
         }
     }

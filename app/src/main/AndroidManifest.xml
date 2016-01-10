@@ -110,6 +110,7 @@
         <activity android:name=".activity.CommentList"/>
         <activity android:name=".activity.PreferentialCode"/>
         <activity android:name=".activity.WebActivity"/>
+        <activity android:name=".activity.MapActivity"/>
 
         <!-- 自动更新程序服务 -->
         <service

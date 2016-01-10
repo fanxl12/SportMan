@@ -131,6 +131,7 @@
                         android:text="时间:10月22日(星期四)09:45-10:45" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/course_ll_address"
                 style="@style/CourseDetailTiamAddressLinear">
 
                 <ImageView
