@@ -89,7 +89,7 @@
 
         <ImageButton
             android:id="@+id/bt_collection"
-            android:src="@drawable/zambia_normal"
+            android:src="@drawable/collection_icon_normal"
             android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

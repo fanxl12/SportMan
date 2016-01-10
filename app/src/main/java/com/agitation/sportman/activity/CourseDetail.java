@@ -310,10 +310,10 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.course_ll_address:
                 Intent mapIntent = new Intent(CourseDetail.this, MapActivity.class);
-                mapIntent.putExtra(MapActivity.MAP_TARGET_NAME, "金仕堡健身");
-                mapIntent.putExtra(MapActivity.MAP_TARGET_ADDRESS, "上海市闵行区金平路");
-                mapIntent.putExtra(MapActivity.MAP_LONGITUDE, 31.032546);
-                mapIntent.putExtra(MapActivity.MAP_LATIDUTE, 121.422458);
+                mapIntent.putExtra(MapActivity.MAP_TARGET_NAME, courseDetailInfo.get("venueName")+"");
+                mapIntent.putExtra(MapActivity.MAP_TARGET_ADDRESS, courseDetailInfo.get("address")+"");
+                mapIntent.putExtra(MapActivity.MAP_LONGITUDE, courseDetailInfo.get("longitude")+"");
+                mapIntent.putExtra(MapActivity.MAP_LATIDUTE, courseDetailInfo.get("latitude")+"");
                 startActivity(mapIntent);
                 break;
         }
