@@ -17,6 +17,7 @@ import com.agitation.sportman.utils.ToastUtils;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.umeng.message.PushAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -129,6 +130,12 @@ public class Login extends BaseActivity implements View.OnClickListener {
                         SharePreferenceUtil.setValue(Login.this, IS_RM_PW, isRemeber);
                         dataHolder.setBasicHandle(name, password);
                         dataHolder.setUserData((Map<String, Object>) result.get("retData"));
+                        PushAgent mPushAgent = PushAgent.getInstance(getApplicationContext());
+                        try {
+                            mPushAgent.addAlias(name, "HighSport");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         if (isNormalLogin){
                             startActivity(new Intent(Login.this, MainTabActivity.class));
                             finish();
