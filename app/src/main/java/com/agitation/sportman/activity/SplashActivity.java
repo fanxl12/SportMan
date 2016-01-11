@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.agitation.sportman.R;
 import com.agitation.sportman.utils.DataHolder;
@@ -17,7 +16,6 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +62,12 @@ public class SplashActivity extends AppCompatActivity {
                         dataHolder.setBasicHandle(userName, passWord);
                         dataHolder.setUserData((Map<String, Object>) result.get("retData"));
                         dataHolder.setIsLogin(true);
+                        PushAgent mPushAgent = PushAgent.getInstance(getApplicationContext());
+                        try {
+                            mPushAgent.addAlias(userName, "HighSport");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 startActivity(new Intent(SplashActivity.this, MainTabActivity.class));
@@ -76,18 +80,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
-        userName = SharePreferenceUtil.getString(this, Login.LOGIN_UN_NAME, "");
-        //开启推送服务
-        PushAgent mPushAgent = PushAgent.getInstance(getApplicationContext());
-        mPushAgent.enable();
-        try {
-            mPushAgent.addAlias(userName, "HighSport");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mPushAgent.onAppStart();
-        String device_token = UmengRegistrar.getRegistrationId(this);
-        Log.i("device_token", device_token);
         initVarible();
         checkAccount();
     }
