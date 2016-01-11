@@ -139,12 +139,17 @@ public class Setting extends BaseActivity {
                         .setDisplayList(SHARE_MEDIA.QQ,
                                 SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
                                 SHARE_MEDIA.WEIXIN_CIRCLE)
-                        .setContentList(new ShareContent(), new ShareContent())
+                        .setContentList(new ShareContent(), new ShareContent(), new ShareContent(), new ShareContent())
+                        .withText("呵呵")
+                        .withTitle("title")
+                        .withTargetUrl("http://www.baidu.com")
                         .withMedia(image)
-                        .setListenerList(shareListener, shareListener).open();
+                        .setListenerList(shareListener, shareListener, shareListener, shareListener).open();
             }
         });
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
