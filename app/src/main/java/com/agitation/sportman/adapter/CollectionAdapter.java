@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.agitation.sportman.R;
 import com.agitation.sportman.utils.MyViewHolder;
+import com.agitation.sportman.utils.UtilsHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ public class CollectionAdapter extends BaseAdapter {
     private List<Map<String ,Object>> collectionList;
     private Context context;
     private OnIconClickListener onIconClickListener;
+    private int lastAnimatedPosition = -1;
 
 
     public CollectionAdapter(List<Map<String ,Object>> collectionList, Context context){
@@ -60,9 +63,15 @@ public class CollectionAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view =convertView;
+
         if (view==null){
             view = LayoutInflater.from(context).inflate(R.layout.collection_item,null);
         }
+
+//        Animation animation = AnimationUtils.loadAnimation(context, R.anim.list_anim);
+//        view.setAnimation(animation);
+        runEnterAnimation(view, position);
+
         Map<String, Object> item = collectionList.get(position);
         TextView name = MyViewHolder.get(view,R.id.collection_name);
         TextView address = MyViewHolder.get(view,R.id.collection_address);
@@ -84,6 +93,28 @@ public class CollectionAdapter extends BaseAdapter {
         return view;
     }
 
+    private void runEnterAnimation(View view, int position) {
+
+        view.setTranslationY(UtilsHelper.getScreenHeight(context));
+        view.animate()
+                .translationY(0)
+                .setStartDelay(100 * position)
+                .setInterpolator(new DecelerateInterpolator(3.f))
+                .setDuration(700)
+                .start();
+
+
+//        if (position > lastAnimatedPosition) {
+//            lastAnimatedPosition = position;
+//            view.setTranslationY(UtilsHelper.getScreenHeight(context));
+//            view.animate()
+//                    .translationY(0)
+//                    .setStartDelay(100 * position)
+//                    .setInterpolator(new DecelerateInterpolator(3.f))
+//                    .setDuration(700)
+//                    .start();
+//        }
+    }
 
 
 }

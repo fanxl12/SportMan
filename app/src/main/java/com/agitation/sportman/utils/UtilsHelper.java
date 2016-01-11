@@ -3,6 +3,9 @@ package com.agitation.sportman.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.WindowManager;
 
 import org.josql.Query;
 import org.josql.QueryExecutionException;
@@ -129,5 +132,24 @@ public class UtilsHelper {
         BigDecimal format = new BigDecimal(number);
         return format.setScale(1, BigDecimal.ROUND_HALF_DOWN).doubleValue();
     }
+
+    private static int screenHeight = 0;
+
+    /**
+     * @param c
+     * @return
+     * 获取屏幕的高度
+     */
+    public static int getScreenHeight(Context c) {
+        if (screenHeight == 0) {
+            WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            screenHeight = size.y;
+        }
+        return screenHeight;
+    }
+
 
 }

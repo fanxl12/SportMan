@@ -32,14 +32,20 @@
             app:border_color="@color/background_floating_material_light"
             app:border_width="4dp"/>
 
+        <com.agitation.sportman.widget.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            app:auto_start="true"
+            app:duration="3000"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="运动让生活更美好"/>
+            <TextView
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="运动让生活更美好"/>
 
+        </com.agitation.sportman.widget.ShimmerFrameLayout>
     </FrameLayout>
 
     <LinearLayout

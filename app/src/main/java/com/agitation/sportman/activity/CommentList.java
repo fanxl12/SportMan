@@ -54,6 +54,7 @@ public class CommentList extends BaseActivity implements BGARefreshLayout.BGARef
         mRefreshLayout = (BGARefreshLayout)findViewById(R.id.rl_listview_refresh);
         lv_comment_list = (ListView) findViewById(R.id.lv_comment_list);
         lv_comment_list.setAdapter(commentAdapter);
+
     }
 
     protected void processLogic() {

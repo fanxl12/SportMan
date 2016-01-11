@@ -366,7 +366,6 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                     }
                 }).show();
 
-
     }
 
 

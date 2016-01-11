@@ -104,4 +104,14 @@ public class DataHolder {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    private String deviceTokens;
+
+    public String getDeviceTokens() {
+        return deviceTokens;
+    }
+
+    public void setDeviceTokens(String deviceTokens) {
+        this.deviceTokens = deviceTokens;
+    }
 }

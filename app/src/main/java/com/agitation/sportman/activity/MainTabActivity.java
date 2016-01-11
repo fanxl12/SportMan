@@ -100,6 +100,18 @@ public class MainTabActivity extends BaseActivity {
                     toolbar.setVisibility(View.GONE);
                 }else{
                     toolbar.setVisibility(View.VISIBLE);
+                    if (mTextviewArray[0].equals(tabId)){
+                        if (toolbar!=null){
+                            title.setText("课程");
+                            setSupportActionBar(toolbar);
+                        }
+                    }
+                    if (mTextviewArray[1].equals(tabId)){
+                        if (toolbar!=null){
+                            title.setText("比赛");
+                            setSupportActionBar(toolbar);
+                        }
+                    }
                 }
             }
         });

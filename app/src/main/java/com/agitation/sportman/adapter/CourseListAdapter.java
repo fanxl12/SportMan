@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.agitation.sportman.R;
+import com.agitation.sportman.utils.DataHolder;
 import com.agitation.sportman.utils.UtilsHelper;
 import com.agitation.sportman.utils.ViewHolder;
 
@@ -17,8 +18,11 @@ import java.util.Map;
  */
 public class CourseListAdapter extends CommonAdapter<Map<String, Object>> {
 
+    private DataHolder dataHolder;
+
     public CourseListAdapter(Context context, List<Map<String, Object>> mDatas, int itemLayoutId) {
         super(context, mDatas, itemLayoutId);
+        dataHolder = DataHolder.getInstance();
     }
 
     public void setData(List<Map<String, Object>> mDatas){
@@ -53,11 +57,16 @@ public class CourseListAdapter extends CommonAdapter<Map<String, Object>> {
         helper.setText(R.id.course_item_distance, distanceStr);
         helper.setText(R.id.course_money, item.get("price") + "");
         ImageButton bt_collection = helper.getView(R.id.bt_collection);
-        if (item.get("collectionId")==null){
-            bt_collection.setImageResource(R.drawable.collection_icon_normal);
+        if (dataHolder.isLogin()){
+            if (item.get("collectionId")==null){
+                bt_collection.setImageResource(R.drawable.collection_icon_normal);
+            }else {
+                bt_collection.setImageResource(R.drawable.collection_icon_selected);
+            }
         }else {
-            bt_collection.setImageResource(R.drawable.collection_icon_selected);
+            bt_collection.setImageResource(R.drawable.collection_icon_normal);
         }
+
         bt_collection.setTag(item);
         bt_collection.setOnClickListener(new View.OnClickListener() {
             @Override

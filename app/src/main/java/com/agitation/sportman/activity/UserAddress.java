@@ -64,10 +64,10 @@ public class UserAddress extends BaseActivity {
         findViewById(R.id.bt_address).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(et_address.getText()) && TextUtils.isEmpty(text_address.getText())){
+                if (TextUtils.isEmpty(et_address.getText()) || TextUtils.isEmpty(text_address.getText())
+                        || completeAddress==null){
                     ToastUtils.showToast(UserAddress.this,"请输入一个详细地址");
                 }else {
-                    ToastUtils.showToast(UserAddress.this,completeAddress);
                     modiftAddress();
                 }
             }

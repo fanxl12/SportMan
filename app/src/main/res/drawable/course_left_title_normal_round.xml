@@ -11,5 +11,5 @@
         android:width="0.5dp"
         android:color="@color/md_white_1000"></stroke>
 
-    <!--<solid android:color="@color/window_background" />-->
+    <solid android:color="@android:color/transparent" />
 </shape>

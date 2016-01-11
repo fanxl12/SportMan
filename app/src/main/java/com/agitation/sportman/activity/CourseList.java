@@ -1,5 +1,6 @@
 package com.agitation.sportman.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.CourseListAdapter;
@@ -54,13 +56,6 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
     private String childCatalogId;
     private List<Map<String,Object>> catalogStoreList;
     private CourseListAdapter courseListAdapter;
-
-    //定位操作
-//    public LocationClient mLocationClient = null;
-//    public BDLocationListener myListener = new MyLocationListener();
-//    private static final int UPDATE_TIME = 500;
-//    private String latitude="31.012832";
-//    private String lontitude="121.411235";
 
     //菜单筛选相关
     /**使用PopupWindow显示一级分类和二级分类*/
@@ -185,19 +180,43 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         courseListAdapter.setOnCollectionClickListener(new CourseListAdapter.OnCollectionClickListener() {
             @Override
             public void onCollectionClickListener(Map<String, Object> item, int position) {
-                String courseId = item.get("id") + "";
-                if (item.get("collectionId") == null) {
-                    savaCollection(courseId, position);
-                } else {
-                    String collectionId = item.get("collectionId") + "";
-                    deleteCollection(collectionId, position);
+                if (dataHolder.isLogin()){
+                    String courseId = item.get("id") + "";
+                    if (item.get("collectionId") == null) {
+                        savaCollection(courseId, position);
+                    } else {
+                        String collectionId = item.get("collectionId") + "";
+                        deleteCollection(collectionId, position);
+                    }
+                    courseListAdapter.notifyDataSetChanged();
+                }else {
+                    goTOLogin();
                 }
-                courseListAdapter.notifyDataSetChanged();
             }
         });
     }
 
+    /**
+     * 收藏前没有登录的操作
+     */
+    private void goTOLogin(){
+        new AlertDialogWrapper.Builder(this)
+                .setMessage("请登录")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                       Intent intent = new Intent(CourseList.this, Login.class);
+                        intent.putExtra("isNormalLogin", false);
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        }).show();
+
+    }
 
     private void initPopup() {
         popupWindow = new PopupWindow(this);
@@ -294,18 +313,18 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
                 int leftPosition = leftMenuAdapter.getSelectedPosition();
                 List<Map<String, Object>> rightList = (List<Map<String, Object>>) leftDataList.get(leftPosition).get("child");
 
-                switch (currentDb.getId()){
+                switch (currentDb.getId()) {
                     case R.id.choose_db_time:
                         param.put("startTime", rightList.get(position).get("startTime"));
                         param.put("endTime", rightList.get(position).get("endTime"));
-                        currentDb.setText(rightList.get(position).get("showName")+"");
+                        currentDb.setText(rightList.get(position).get("showName") + "");
                         break;
                     case R.id.choose_db_positon:
-                        if (position==0){
+                        if (position == 0) {
                             param.remove("areaId");
                         }
                         param.put("range", rightList.get(position).get("value"));
-                        currentDb.setText(rightList.get(position).get("name")+"");
+                        currentDb.setText(rightList.get(position).get("name") + "");
                         break;
                 }
                 getCourseList();
@@ -394,6 +413,9 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
     private void getCourseList(){
         String url = Mark.getServerIp()+ "/api/v1/course/getCourseList";
         param.put("pageNumber", currentPage);
+        if (dataHolder.isLogin()){
+            param.put("userId", dataHolder.getUserData().get("id"));
+        }
         showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override

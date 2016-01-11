@@ -2,6 +2,8 @@ package com.agitation.sportman.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -31,7 +33,18 @@ public class Collection extends BaseActivity implements BGARefreshLayout.BGARefr
     private ListView collection_list;
     private CollectionAdapter collectionAdapter;
     private List<Map<String, Object>> collectionList;
+    private boolean isAutomaticRefresh = false;
     private BGARefreshLayout mRefreshLayout;
+
+    private Handler refreshHandler  = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what==120){
+                mRefreshLayout.endRefreshing();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,14 +84,14 @@ public class Collection extends BaseActivity implements BGARefreshLayout.BGARefr
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Collection.this, CourseDetail.class);
-                intent.putExtra("courseId", collectionList.get(position).get("id")+"");
+                intent.putExtra("courseId", collectionList.get(position).get("id") + "");
                 startActivity(intent);
             }
         });
         collectionAdapter.setOnIconClickListener(new CollectionAdapter.OnIconClickListener() {
             @Override
             public void onIconClickListener(Map<String, Object> item, int position) {
-                deleteCollection(item.get("id")+"",position);
+                deleteCollection(item.get("id") + "", position);
             }
         });
     }
@@ -99,18 +112,18 @@ public class Collection extends BaseActivity implements BGARefreshLayout.BGARefr
         showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
                 .ajax(url, param, Map.class, new AjaxCallback<Map>() {
-            @Override
-            public void callback(String url, Map info, AjaxStatus status) {
-                dismissLoadingDialog();
-                if (info != null) {
-                    if (Boolean.parseBoolean(info.get("result") + "")) {
-                        ToastUtils.showToast(Collection.this, "取消收藏成功");
-                        collectionList.remove(position);
-                        collectionAdapter.setCollectionList(collectionList);
+                    @Override
+                    public void callback(String url, Map info, AjaxStatus status) {
+                        dismissLoadingDialog();
+                        if (info != null) {
+                            if (Boolean.parseBoolean(info.get("result") + "")) {
+                                ToastUtils.showToast(Collection.this, "取消收藏成功");
+                                collectionList.remove(position);
+                                collectionAdapter.setCollectionList(collectionList);
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 
     /**
@@ -120,24 +133,38 @@ public class Collection extends BaseActivity implements BGARefreshLayout.BGARefr
         String url = Mark.getServerIp() + "/api/v1/collect/getCollectList";
         showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).
-            ajax(url, Map.class, new AjaxCallback<Map>(){
-                    @Override
+            ajax(url, Map.class, new AjaxCallback<Map>() {
+                @Override
                 public void callback(String url, Map info, AjaxStatus status) {
-                        dismissLoadingDialog();
-                if (info!=null){
-                    if (Boolean.parseBoolean(info.get("result")+"")){
-                        Map<String, Object> retData = (Map<String, Object>) info.get("retData");
-                        collectionList = (List<Map<String, Object>>) retData.get("collects");
-                        collectionAdapter.setCollectionList(collectionList);
+                    dismissLoadingDialog();
+                    if (info != null) {
+                        if (Boolean.parseBoolean(info.get("result") + "")) {
+                            Map<String, Object> retData = (Map<String, Object>) info.get("retData");
+                            collectionList = (List<Map<String, Object>>) retData.get("collects");
+//                            ListAnimation();
+                            collectionAdapter.setCollectionList(collectionList);
+                            if (isAutomaticRefresh) {
+                                refreshHandler.sendEmptyMessageDelayed(Mark.DATA_REFRESH_SUCCEED, 2000);
+                            }
+                        }
                     }
-                }
                 }
             });
     }
 
+//    private void ListAnimation(View view){
+//        Animation animation = (Animation) AnimationUtils.loadAnimation(
+//                this, R.anim.list_anim);
+//        LayoutAnimationController lac = new LayoutAnimationController(animation);
+//        lac.setDelay(0.2f);  //设置动画间隔时间
+//        lac.setOrder(LayoutAnimationController.ORDER_NORMAL); //设置列表的显示顺序
+//        collection_list.setLayoutAnimation(lac);
+//    }
+
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
-        mRefreshLayout.endRefreshing();
+        isAutomaticRefresh = true;
+        getCollectionInfo();
     }
 
     @Override

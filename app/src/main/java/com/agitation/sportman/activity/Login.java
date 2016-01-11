@@ -17,6 +17,7 @@ import com.agitation.sportman.utils.ToastUtils;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.umeng.message.UmengRegistrar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -113,36 +114,52 @@ public class Login extends BaseActivity implements View.OnClickListener {
         param.put("passWord", password);
         showLoadingDialog();
         aq.transformer(new MapTransformer())
-                .ajax(url, param, Map.class,new AjaxCallback<Map>(){
-            @Override
-            public void callback(String url, Map result, AjaxStatus status) {
-                dismissLoadingDialog();
-                if (result!=null){
-                    boolean isRegistered = Boolean.parseBoolean(result.get("result")+"");
-                    if (isRegistered){
-                        isRemeber = re_password.isChecked();
-                        if (isRemeber){
-                            SharePreferenceUtil.setValue(Login.this,LOGIN_PW_NAME,password);
-                            dataHolder.setIsLogin(isRemeber);
+                .ajax(url, param, Map.class, new AjaxCallback<Map>() {
+                    @Override
+                    public void callback(String url, Map result, AjaxStatus status) {
+                        dismissLoadingDialog();
+                        if (result != null) {
+                            boolean isRegistered = Boolean.parseBoolean(result.get("result") + "");
+                            if (isRegistered) {
+                                isRemeber = re_password.isChecked();
+                                if (isRemeber) {
+                                    SharePreferenceUtil.setValue(Login.this, LOGIN_PW_NAME, password);
+                                    dataHolder.setIsLogin(isRemeber);
+                                }
+                                SharePreferenceUtil.setValue(Login.this, LOGIN_UN_NAME, name);
+                                SharePreferenceUtil.setValue(Login.this, IS_RM_PW, isRemeber);
+                                dataHolder.setBasicHandle(name, password);
+                                dataHolder.setUserData((Map<String, Object>) result.get("retData"));
+
+                                updateDeviceTokens();
+
+                                if (isNormalLogin) {
+                                    startActivity(new Intent(Login.this, MainTabActivity.class));
+                                    finish();
+                                } else {
+                                    finish();
+                                }
+                            } else {
+                                ToastUtils.showToast(Login.this, "登录失败" + "," + result.get("error"));
+                            }
+                        } else {
+                            ToastUtils.showToast(Login.this, "登录失败" + "," + result.get("error"));
                         }
-                        SharePreferenceUtil.setValue(Login.this, LOGIN_UN_NAME, name);
-                        SharePreferenceUtil.setValue(Login.this, IS_RM_PW, isRemeber);
-                        dataHolder.setBasicHandle(name, password);
-                        dataHolder.setUserData((Map<String, Object>) result.get("retData"));
-                        if (isNormalLogin){
-                            startActivity(new Intent(Login.this, MainTabActivity.class));
-                            finish();
-                        }else {
-                            finish();
-                        }
-                    }else {
-                        ToastUtils.showToast(Login.this, "登录失败" + "," + result.get("error"));
                     }
-                }else {
-                    ToastUtils.showToast(Login.this, "登录失败" + "," + result.get("error"));
-                }
-            }
-        });
+                });
+    }
+
+    private void updateDeviceTokens() {
+        String url = Mark.getServerIp() + "/baseApi/updateDeviceTokens";
+        Map<String, Object> param = new HashMap<>();
+        param.put("deviceTokens", UmengRegistrar.getRegistrationId(this));
+        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
+                .ajax(url, param, Map.class, new AjaxCallback<Map>(){
+                    @Override
+                    public void callback(String url, Map info, AjaxStatus status) {
+                        if (info!=null){}
+                    }
+                });
     }
 
     @Override
