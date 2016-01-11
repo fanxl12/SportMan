@@ -76,15 +76,20 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
-        initVarible();
-        checkAccount();
-
+        userName = SharePreferenceUtil.getString(this, Login.LOGIN_UN_NAME, "");
         //开启推送服务
         PushAgent mPushAgent = PushAgent.getInstance(getApplicationContext());
         mPushAgent.enable();
+        try {
+            mPushAgent.addAlias(userName, "HighSport");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mPushAgent.onAppStart();
         String device_token = UmengRegistrar.getRegistrationId(this);
         Log.i("device_token", device_token);
+        initVarible();
+        checkAccount();
     }
 
     private void initVarible() {
