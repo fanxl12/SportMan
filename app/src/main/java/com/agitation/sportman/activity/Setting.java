@@ -10,7 +10,6 @@ import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.utils.UtilsHelper;
 import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.ShareContent;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -139,7 +138,7 @@ public class Setting extends BaseActivity {
                         .setDisplayList(SHARE_MEDIA.QQ,
                                 SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
                                 SHARE_MEDIA.WEIXIN_CIRCLE)
-                        .setContentList(new ShareContent(), new ShareContent(), new ShareContent(), new ShareContent())
+//                        .setContentList(new ShareContent(), new ShareContent(), new ShareContent(), new ShareContent())
                         .withText("呵呵")
                         .withTitle("title")
                         .withTargetUrl("http://www.baidu.com")
