@@ -1,5 +1,12 @@
 <resources>
 
+    <style name = "Base.AppTheme" parent = "Theme.AppCompat.Light.NoActionBar">
+        <item name = "colorPrimary">@color/colorPrimary</item>
+        <item name = "colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name = "colorAccent">@color/colorAccent</item>
+        <item name = "android:windowBackground">@color/window_background</item>
+    </style>
+
     <style name = "AppTheme" parent = "Base.AppTheme"></style>
 
     <style name="MatchWarp">
@@ -9,13 +16,6 @@
     <style name="WarpWarp">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name = "Base.AppTheme" parent = "Theme.AppCompat.Light.NoActionBar">
-        <item name = "colorPrimary">@color/colorPrimary</item>
-        <item name = "colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name = "colorAccent">@color/colorAccent</item>
-        <item name = "android:windowBackground">@color/window_background</item>
     </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">

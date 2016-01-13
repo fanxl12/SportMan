@@ -4,6 +4,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -45,6 +47,27 @@ public class BaseActivity extends AppCompatActivity {
     private void initBaseToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
+
+        //测量actionBarHeight
+        TypedValue tv = new TypedValue();
+        int actionBarHeight = 0;
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)){
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+
+        //根据版本的不同，重新计算高度
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int padingTopPx = getResources().getDimensionPixelOffset(R.dimen.toolbar_padding_top);
+            Log.i("padingTopPx", padingTopPx+"");
+            actionBarHeight += padingTopPx;
+        }
+        Log.i("actionBarHeight", actionBarHeight + "");
+
+        //重新设置toolbar的高度
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar.getLayoutParams();
+        layoutParams.height = actionBarHeight;
+        toolbar.setLayoutParams(layoutParams);
+
         title = (TextView)toolbar.findViewById(R.id.base_tv_title);
         right_title = (TextView) toolbar.findViewById(R.id.base_tv_right_title);
 
