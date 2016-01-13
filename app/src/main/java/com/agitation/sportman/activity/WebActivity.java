@@ -32,6 +32,7 @@ public class WebActivity extends BaseActivity {
         wv = (WebView)findViewById(R.id.web_wv);
         wv.loadUrl(url);
         wv.getSettings().setJavaScriptEnabled(true);
+        wv.removeJavascriptInterface("searchBoxJavaBridge_");
         wv.setWebViewClient(new WebViewClient() {
 
             //覆盖webview默认通过第三方浏览器浏览网页，返回false就会用第三方浏览器，返回true用自己来加载url

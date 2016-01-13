@@ -169,14 +169,6 @@ public class Login extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-//        UpdateManager updateManager = new UpdateManager(Login.this);
-//        updateManager.checkUpdate();
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_login:

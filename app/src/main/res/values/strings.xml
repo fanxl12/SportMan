@@ -7,4 +7,5 @@
     <string name="buy_notice01">请提前15分钟到场以便准备运动</string>
     <string name="buy_notice02">迟到超过15分钟商家可能无法接待</string>
     <string name="no_data">没有找到符合条件的房源</string>
+    <string name="app_tips_name">High运动</string>
 </resources>
