@@ -15,8 +15,8 @@ public class Mark {
     //http://192.168.1.200:8088/tickey
     public static String getServerIp(){
         if (TEST){
-//            return "http://192.168.1.200:8083/sport";
-            return "http://www.highyundong.com:8080/sport";
+            return "http://192.168.1.200:8083/sport";
+//            return "http://www.highyundong.com:8080/sport";
         }else {
             return "http://www.highyundong.com:8080/sport";
         }
@@ -30,11 +30,6 @@ public class Mark {
     public static int phoneWidth = 0; //设备屏幕的宽度
 
     public static int phoneHeight = 0; //设备屏幕的高度
-
-    public static final int ORDER_STATUS_UNPAY = 0;
-    public static final int ORDER_STATUS_PAYED = 1;
-    public static final int ORDER_STATUS_UNADVICES = 2;
-    public static final int ORDER_STATUS_DONE = 3;
 
     public static final int DATA_REFRESH_SUCCEED = 120;
 

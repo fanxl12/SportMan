@@ -3,9 +3,10 @@ package com.agitation.sportman.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.agitation.sportman.R;
-import com.agitation.sportman.utils.Mark;
+import com.agitation.sportman.activity.CourseOrder;
 import com.agitation.sportman.utils.ViewHolder;
 
 import java.util.List;
@@ -41,23 +42,23 @@ public class CourseOrderAdapter extends CommonAdapter<Map<String, Object>> {
         helper.setText(R.id.course_order_match_time,item.get("createDate")+"");
         helper.setText(R.id.course_order_match_address,item.get("address")+"");
 
+        LinearLayout order_item_ll = helper.getView(R.id.order_item_ll);
+
         Button bt_pay = helper.getView(R.id.course_order_bt_pay);
         Button bt_delete = helper.getView(R.id.course_order_bt_delete);
         bt_pay.setTag(item);
         bt_delete.setTag(item);
-        if (status== Mark.ORDER_STATUS_UNPAY){
+        if (status== CourseOrder.STATUS_UNPAY){
+            order_item_ll.setVisibility(View.VISIBLE);
             bt_pay.setText("支付");
             bt_delete.setText("删除");
-        }else if (status== Mark.ORDER_STATUS_PAYED){
-            bt_pay.setVisibility(View.GONE);
-            bt_delete.setVisibility(View.GONE);
-        }else if (status== Mark.ORDER_STATUS_UNADVICES){
+        }else if (status== CourseOrder.STATUS_UNADVICES){
+            order_item_ll.setVisibility(View.VISIBLE);
             bt_pay.setVisibility(View.VISIBLE);
             bt_pay.setText("评价");
             bt_delete.setVisibility(View.GONE);
-        }if (status== Mark.ORDER_STATUS_DONE){
-            bt_pay.setVisibility(View.GONE);
-            bt_delete.setVisibility(View.GONE);
+        }else{
+            order_item_ll.setVisibility(View.GONE);
         }
 
         bt_pay.setOnClickListener(new View.OnClickListener() {

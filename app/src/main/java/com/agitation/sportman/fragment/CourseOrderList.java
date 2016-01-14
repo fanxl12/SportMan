@@ -18,6 +18,7 @@ import com.agitation.sportman.BaseFragment;
 import com.agitation.sportman.R;
 import com.agitation.sportman.activity.Comment;
 import com.agitation.sportman.activity.CourseDetail;
+import com.agitation.sportman.activity.CourseOrder;
 import com.agitation.sportman.adapter.CourseOrderAdapter;
 import com.agitation.sportman.inter.OrderNotice;
 import com.agitation.sportman.utils.DataHolder;
@@ -73,13 +74,10 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
             rootView = inflater.inflate(R.layout.course_order_list, container, false);
             status = getArguments().getInt(STATUS_NAME_KEY);
             init();
+            Log.e("初始化", status + "");
             initVarible();
             processLogic();
-            if(dataHolder.isLogin()){
-                getCourseOrderList();
-            }else {
-                ToastUtils.showToast(getContext(), "请登录");
-            }
+            dataChange();
         }
         return rootView;
     }
@@ -108,10 +106,10 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
                     deleteOrder();
                 } else {
                     int status = Integer.parseInt(item.get("status") + "");
-                    if (status == Mark.ORDER_STATUS_UNPAY) {
+                    if (status == CourseOrder.STATUS_UNPAY) {
                         double totalMoney = Double.parseDouble(item.get("totalMoney") + "");
                         pay(totalMoney, orderId, item.get("name") + "", item.get("payWay") + "");
-                    } else if (status == Mark.ORDER_STATUS_UNADVICES) {
+                    } else if (status == CourseOrder.STATUS_UNADVICES) {
                         Intent intent = new Intent(getContext(), Comment.class);
                         intent.putExtra("courseId", item.get("courseId") + "");
                         intent.putExtra("name", item.get("name") + "");
@@ -126,24 +124,24 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
     }
 
     //获取订单数据
-    public void getCourseOrderList(){
-        mActivity.showLoadingDialog();
-        String url = Mark.getServerIp() + "/api/v1/order/getCourseOrderList";
-        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
-                .ajax(url, Map.class, new AjaxCallback<Map>() {
-                    @Override
-                    public void callback(String url, Map info, AjaxStatus status) {
-                        mActivity.dismissLoadingDialog();
-                        if (info != null) {
-                            if (Boolean.parseBoolean(info.get("result") + "")) {
-                                Map<String, Object> retData = (Map<String, Object>) info.get("retData");
-                                List<Map<String, Object>> courseOrderList = (List<Map<String, Object>>) retData.get("courseOrderList");
-                                selectedOrderData(courseOrderList);
-                            }
-                        }
-                    }
-                });
-    }
+//    public void getCourseOrderList(){
+//        mActivity.showLoadingDialog();
+//        String url = Mark.getServerIp() + "/api/v1/order/getCourseOrderList";
+//        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
+//                .ajax(url, Map.class, new AjaxCallback<Map>() {
+//                    @Override
+//                    public void callback(String url, Map info, AjaxStatus status) {
+//                        mActivity.dismissLoadingDialog();
+//                        if (info != null) {
+//                            if (Boolean.parseBoolean(info.get("result") + "")) {
+//                                Map<String, Object> retData = (Map<String, Object>) info.get("retData");
+//                                List<Map<String, Object>> courseOrderList = (List<Map<String, Object>>) retData.get("courseOrderList");
+//                                selectedOrderData(courseOrderList);
+//                            }
+//                        }
+//                    }
+//                });
+//    }
 
     //删除订单
     public void deleteOrder(){
@@ -158,7 +156,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
                         mActivity.dismissLoadingDialog();
                         if (info != null) {
                             if (Boolean.parseBoolean(info.get("result") + "")) {
-                                getCourseOrderList();
+//                                getCourseOrderList();
                             }
                         }
                     }
@@ -178,16 +176,11 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
         tickey_list_lv = (ListView)rootView.findViewById(R.id.course_list_lv);
     }
 
-    public void selectedOrderData(List<Map<String, Object>> courseOrderList){
-        orderList = UtilsHelper.selectMapList(courseOrderList, "get(:_currobj,'status') like '" + status + "'");
-        courseOrderAdapter.setData(orderList);
-        refreshHandler.sendEmptyMessageDelayed(Mark.DATA_REFRESH_SUCCEED, 2000);
-    }
-
     @Override
     public void dataChange() {
-
-
+        if (courseOrderAdapter==null)return;
+        orderList = UtilsHelper.selectMapList(dataHolder.getOrderList(), "get(:_currobj,'status') like '" + status + "'");
+        courseOrderAdapter.setData(orderList);
     }
 
     /**
@@ -278,7 +271,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
             }
         }
         if (requestCode==COMMENT_SUCCEED){
-            getCourseOrderList();
+//            getCourseOrderList();
         }
     }
 
@@ -293,7 +286,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
                     public void callback(String url, Map info, AjaxStatus status) {
                         if (info != null) {
                             if (Boolean.parseBoolean(info.get("result") + "")) {
-                                getCourseOrderList();
+//                                getCourseOrderList();
                             }
                         }
                     }
@@ -311,7 +304,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
-        getCourseOrderList();
+//        getCourseOrderList();
     }
 
     @Override

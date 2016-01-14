@@ -53,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
         Map<String,Object> param = new HashMap<>();
         param.put("userName",userName);
         param.put("passWord", passWord);
+        param.put("roles", "user");
         aq.transformer(new MapTransformer()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
             @Override
             public void callback(String url, Map result, AjaxStatus status) {

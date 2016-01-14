@@ -35,9 +35,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/order_item_ll"
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_width="0dp"
+        android:visibility="gone"
         android:layout_height="match_parent">
         <Button
             android:layout_weight="1"

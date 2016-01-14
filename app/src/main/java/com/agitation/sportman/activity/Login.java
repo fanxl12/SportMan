@@ -113,6 +113,7 @@ public class Login extends BaseActivity implements View.OnClickListener {
         Map<String,Object> param = new HashMap<>();
         param.put("userName",name);
         param.put("passWord", password);
+        param.put("roles", "user");
         showLoadingDialog();
         aq.transformer(new MapTransformer())
                 .ajax(url, param, Map.class, new AjaxCallback<Map>() {

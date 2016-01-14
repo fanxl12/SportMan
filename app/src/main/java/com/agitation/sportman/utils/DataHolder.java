@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import com.androidquery.auth.BasicHandle;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -113,5 +115,16 @@ public class DataHolder {
 
     public void setDeviceTokens(String deviceTokens) {
         this.deviceTokens = deviceTokens;
+    }
+
+    private List<Map<String, Object>> orderList;
+
+    public List<Map<String, Object>> getOrderList() {
+        if (orderList==null)orderList=new ArrayList<>();
+        return orderList;
+    }
+
+    public void setOrderList(List<Map<String, Object>> orderList) {
+        this.orderList = orderList;
     }
 }
