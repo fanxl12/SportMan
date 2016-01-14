@@ -55,7 +55,7 @@ public class CourseOrder extends BaseActivity {
             mTabContents.add(courseOrderList);
         }
         setupViewPager(pager_course_appointment);
-//        pager_course_appointment.setOffscreenPageLimit(1);
+        pager_course_appointment.setOffscreenPageLimit(1);
         for (String title : orderTitle){
             tab_course_appointment.addTab(tab_course_appointment.newTab().setText(title));
         }
@@ -76,7 +76,7 @@ public class CourseOrder extends BaseActivity {
         });
     }
 
-    private void getOrder(){
+    public void getOrder(){
         showLoadingDialog();
         String url = Mark.getServerIp() + "/api/v1/order/getCourseOrderList";
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())

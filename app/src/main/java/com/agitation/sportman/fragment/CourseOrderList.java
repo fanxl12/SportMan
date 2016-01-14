@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +53,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
     public static final String STATUS_NAME_KEY = "STATUS_NAME_KEY";
     public static final int COMMENT_SUCCEED = 140;
     private String orderId;
+    private boolean isRefreshing = false;
 
     public static CourseOrderList getInstance(int status){
         Bundle bundle = new Bundle();
@@ -74,7 +73,6 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
             rootView = inflater.inflate(R.layout.course_order_list, container, false);
             status = getArguments().getInt(STATUS_NAME_KEY);
             init();
-            Log.e("初始化", status + "");
             initVarible();
             processLogic();
             dataChange();
@@ -123,26 +121,6 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
         });
     }
 
-    //获取订单数据
-//    public void getCourseOrderList(){
-//        mActivity.showLoadingDialog();
-//        String url = Mark.getServerIp() + "/api/v1/order/getCourseOrderList";
-//        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
-//                .ajax(url, Map.class, new AjaxCallback<Map>() {
-//                    @Override
-//                    public void callback(String url, Map info, AjaxStatus status) {
-//                        mActivity.dismissLoadingDialog();
-//                        if (info != null) {
-//                            if (Boolean.parseBoolean(info.get("result") + "")) {
-//                                Map<String, Object> retData = (Map<String, Object>) info.get("retData");
-//                                List<Map<String, Object>> courseOrderList = (List<Map<String, Object>>) retData.get("courseOrderList");
-//                                selectedOrderData(courseOrderList);
-//                            }
-//                        }
-//                    }
-//                });
-//    }
-
     //删除订单
     public void deleteOrder(){
         mActivity.showLoadingDialog();
@@ -156,7 +134,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
                         mActivity.dismissLoadingDialog();
                         if (info != null) {
                             if (Boolean.parseBoolean(info.get("result") + "")) {
-//                                getCourseOrderList();
+                                ((CourseOrder) mActivity).getOrder();
                             }
                         }
                     }
@@ -181,6 +159,10 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
         if (courseOrderAdapter==null)return;
         orderList = UtilsHelper.selectMapList(dataHolder.getOrderList(), "get(:_currobj,'status') like '" + status + "'");
         courseOrderAdapter.setData(orderList);
+        if (isRefreshing){
+            swipe_container.endRefreshing();
+            isRefreshing = false;
+        }
     }
 
     /**
@@ -269,9 +251,8 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
 //                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
 //                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
             }
-        }
-        if (requestCode==COMMENT_SUCCEED){
-//            getCourseOrderList();
+        }else if (requestCode==COMMENT_SUCCEED){
+            ((CourseOrder) mActivity).getOrder();
         }
     }
 
@@ -286,25 +267,19 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
                     public void callback(String url, Map info, AjaxStatus status) {
                         if (info != null) {
                             if (Boolean.parseBoolean(info.get("result") + "")) {
-//                                getCourseOrderList();
+                                ((CourseOrder) mActivity).getOrder();
                             }
                         }
                     }
                 });
     }
 
-    private Handler refreshHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what==Mark.DATA_REFRESH_SUCCEED){
-                swipe_container.endRefreshing();
-            }
-        }
-    };
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
-//        getCourseOrderList();
+        isRefreshing = true;
+        CourseOrder courseOrder = (CourseOrder) mActivity;
+        courseOrder.getOrder();
     }
 
     @Override
