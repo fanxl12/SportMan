@@ -115,7 +115,7 @@ public class MapActivity extends BaseActivity{
 		double latitute = getIntent().getDoubleExtra(MAP_LATIDUTE, 0);
 
 		//定义Maker坐标点
-		targetLat = new LatLng(longitude, latitute);
+		targetLat = new LatLng(latitute, longitude);
 
 		ms = new MapStatus.Builder().target(targetLat).zoom(14).build();
 		mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {

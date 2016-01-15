@@ -65,7 +65,7 @@ public class CommentAdapter extends BaseAdapter {
         TextView comment_time = MyViewHolder.get(view, R.id.comment_time);
         comment_time.setText(item.get("createDate")+"");
         TextView comment_content = MyViewHolder.get(view, R.id.comment_content);
-        comment_content.setText("         "+item.get("content"));
+        comment_content.setText("     "+item.get("content"));
         TextView comment_num = MyViewHolder.get(view, R.id.comment_num);
         comment_num.setText(item.get("score")+"分");
         RatingBar ratingbar = MyViewHolder.get(view, R.id.ratingbar);

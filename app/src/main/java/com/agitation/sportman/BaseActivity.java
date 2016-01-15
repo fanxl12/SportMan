@@ -24,7 +24,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected LinearLayout rootLayout, linear_toobar;
     protected Toolbar toolbar;
-    protected TextView title, title_course, public_course,sourse_sub_subtitle, right_title;
+    protected TextView title, title_course, public_course,sourse_sub_subtitle;
     public AQuery aq;
     public DataHolder dataHolder;
     private SweetAlertDialog mLoadingDialog;
@@ -69,7 +69,6 @@ public class BaseActivity extends AppCompatActivity {
         toolbar.setLayoutParams(layoutParams);
 
         title = (TextView)toolbar.findViewById(R.id.base_tv_title);
-        right_title = (TextView) toolbar.findViewById(R.id.base_tv_right_title);
 
         title_course = (TextView)toolbar.findViewById(R.id.title_course);
         sourse_sub_subtitle = (TextView)toolbar.findViewById(R.id.sourse_sub_subtitle);
@@ -101,7 +100,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void dismissLoadingDialog() {
-        if (mLoadingDialog != null) {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
     }

@@ -5,6 +5,11 @@
 
     <dimen name="toolbar_padding_top">0dp</dimen>
 
+    <dimen name="txtsize_title">20sp</dimen>
+    <dimen name="txtsize_subhead">16sp</dimen>
+    <dimen name="txtsize_body">14sp</dimen>
+    <dimen name="txtsize_caption">12sp</dimen>
+
     <!--start-tabview-->
     <dimen name="button_text_size">14sp</dimen>
     <dimen name="expand_tab_item_height">45dp</dimen>

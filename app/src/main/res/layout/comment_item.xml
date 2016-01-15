@@ -5,66 +5,65 @@
     android:orientation="horizontal">
 
     <com.agitation.sportman.widget.CircleImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
         android:src="@drawable/default_head" />
 
     <LinearLayout
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/comment_name"
-                android:text="13147143170"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <View
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:text="13147143170" />
+
             <TextView
                 android:id="@+id/comment_time"
-                android:text="2015-12-19-16:30:20"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="2015-12-19-16:30:20" />
+        </RelativeLayout>
 
         <TextView
-            android:layout_margin="6dp"
             android:id="@+id/comment_content"
-            android:text="     老师授课的方式非常适合我们,老师授课的方式非常适合我们,老师授课的方式非常适合我们,老师授课的方式非常适合我们"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/CourseDetailBodyStyle"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="老师授的方式非常适合我们" />
 
-        <LinearLayout
-            android:layout_margin="6dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
             <RatingBar
                 android:id="@+id/ratingbar"
                 style="@style/MyRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
                 android:numStars="5"
                 android:rating="3.5"
-                android:stepSize="0.5"
-                android:isIndicator="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:stepSize="0.5" />
+
             <TextView
-                android:layout_marginLeft="20dp"
                 android:id="@+id/comment_num"
-                android:text="5.0分"
-                android:textSize="16sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="5.0分"
+                android:textSize="16sp" />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -17,7 +20,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,15 +32,16 @@ import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.CommentAdapter;
 import com.agitation.sportman.utils.DataHolder;
+import com.agitation.sportman.utils.ImageOptHelper;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.ToastUtils;
-import com.androidquery.AQuery;
+import com.agitation.sportman.widget.CircleImageView;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.pingplusplus.android.PaymentActivity;
 import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.ShareContent;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -65,14 +68,12 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private LayoutInflater inflater;
     private CheckBox alipy_pay, weixin_pay;
     private String courseId, orderId;
-    private AQuery aq;
     private Map<String, Object> courseDetailInfo;
     private TextView buy_number, end_time, surplus_number, course_state, favorable_price, orginalPrice,
             start_time, address, course_introduction, coursr_type, notice, teacher_name, teacher_honor
-            , tx_count, unit_price, subtotal_money, total_money, more_comment;
+            , tx_count, unit_price, subtotal_money, total_money;
 
     private int count = 1;
-    private DataHolder dataHolder;
     private ListView lv_comment;
     private List<Map<String, Object>> commentList;
     private CommentAdapter commentAdapter;
@@ -81,6 +82,10 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private double subMoney =0.00;
     View choose_bg;
     Animation dropdown_in, dropdown_out, dropdown_mask_out;
+
+    private CircleImageView coach_head;
+    private ImageLoader imageLoader;
+    private TextView course_advices;
 
 
     //分享操作
@@ -127,20 +132,6 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
     private void initToolbar() {
         if (toolbar!=null){
-            title.setText("羽毛球正手");
-            right_title.setVisibility(View.VISIBLE);
-            right_title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new ShareAction(CourseDetail.this)
-                            .setDisplayList(SHARE_MEDIA.QQ,
-                                    SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
-                                    SHARE_MEDIA.WEIXIN_CIRCLE)
-                            .setContentList(new ShareContent(), new ShareContent())
-                            .withMedia(image)
-                            .setListenerList(shareListener, shareListener).open();
-                }
-            });
             setSupportActionBar(toolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -153,10 +144,9 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     }
 
     private void initVarible() {
-        aq = new AQuery(this);
         commentList = new ArrayList<>();
-        dataHolder =DataHolder.getInstance();
         commentAdapter = new CommentAdapter(commentList, this);
+        imageLoader = ImageLoader.getInstance();
     }
 
     /**
@@ -165,8 +155,6 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private void initView() {
         choose_bg = findViewById(R.id.choose_bg);
 
-        more_comment = (TextView) findViewById(R.id.more_comment);
-        more_comment.setOnClickListener(this);
         dropdown_in = AnimationUtils.loadAnimation(this, R.anim.dropdown_in);
         dropdown_out = AnimationUtils.loadAnimation(this,R.anim.dropdown_out);
         dropdown_mask_out = AnimationUtils.loadAnimation(this, R.anim.dropdown_mask_out);
@@ -182,6 +170,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         course_state = (TextView) findViewById(R.id.course_state);
         favorable_price = (TextView) findViewById(R.id.favorable_price);
         orginalPrice = (TextView) findViewById(R.id.orginal_price);
+        orginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         start_time = (TextView) findViewById(R.id.start_time);
         address = (TextView) findViewById(R.id.address);
         course_introduction = (TextView) findViewById(R.id.course_introduction);
@@ -258,6 +247,9 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 //        pay_successed_tabhost.setCurrentTab(0);
 
         findViewById(R.id.course_ll_address).setOnClickListener(this);
+
+        coach_head = (CircleImageView)findViewById(R.id.coach_head);
+        course_advices = (TextView)findViewById(R.id.course_advices);
     }
 
     @Override
@@ -303,17 +295,17 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                 subtotal_money.setText(subMoney+"");
                 total_money.setText(subMoney+"");
                 break;
-            case R.id.more_comment:
-                Intent intent = new Intent(CourseDetail.this, CommentList.class);
-                intent.putExtra("courseId", courseId);
-                startActivity(intent);
-                break;
+//            case R.id.more_comment:
+//                Intent intent = new Intent(CourseDetail.this, CommentList.class);
+//                intent.putExtra("courseId", courseId);
+//                startActivity(intent);
+//                break;
             case R.id.course_ll_address:
                 Intent mapIntent = new Intent(CourseDetail.this, MapActivity.class);
-                mapIntent.putExtra(MapActivity.MAP_TARGET_NAME, courseDetailInfo.get("venueName")+"");
+                mapIntent.putExtra(MapActivity.MAP_TARGET_NAME, courseDetailInfo.get("companyName")+"");
                 mapIntent.putExtra(MapActivity.MAP_TARGET_ADDRESS, courseDetailInfo.get("address")+"");
-                mapIntent.putExtra(MapActivity.MAP_LONGITUDE, courseDetailInfo.get("longitude")+"");
-                mapIntent.putExtra(MapActivity.MAP_LATIDUTE, courseDetailInfo.get("latitude")+"");
+                mapIntent.putExtra(MapActivity.MAP_LONGITUDE, Double.parseDouble(courseDetailInfo.get("longitude")+""));
+                mapIntent.putExtra(MapActivity.MAP_LATIDUTE, Double.parseDouble(courseDetailInfo.get("latitude")+""));
                 startActivity(mapIntent);
                 break;
         }
@@ -360,11 +352,11 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                         startActivity(intent);
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                }).show();
+            }
+        }).show();
 
     }
 
@@ -375,6 +367,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         Map<String, Object> param = new HashMap<>();
         param.put("orderId", orderId);
         param.put("payWay", payType);
+        param.put("courseId", courseId);
         showLoadingDialog();
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).
                 ajax(url, param, Map.class, new AjaxCallback<Map>() {
@@ -382,7 +375,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                     public void callback(String url, Map info, AjaxStatus status) {
                         dismissLoadingDialog();
                         if (info != null) {
-                            if (Boolean.parseBoolean(info.get("result")+"")){
+                            if (Boolean.parseBoolean(info.get("result") + "")) {
                                 fastPayWindow.showAtLocation(bt_enrolled, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                             }
                         }
@@ -397,8 +390,8 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         String url = Mark.getServerIp() + "/api/v1/advice/getAdviceList";
         Map<String, Object> param = new HashMap<>();
         param.put("courseId", courseId);
-        param.put("pageNumber","1");
-        param.put("pageSize","10");
+        param.put("pageNumber", 1);
+        param.put("pageSize", 10);
         showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
@@ -408,11 +401,15 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                         commentList = (List<Map<String, Object>>) retData.get("advices");
-                        commentAdapter.setCommentList(commentList, true);
+                        if (commentList==null || commentList.size()==0){
+                            course_advices.setVisibility(View.GONE);
+                            lv_comment.setVisibility(View.GONE);
+                        }else{
+                            course_advices.setVisibility(View.VISIBLE);
+                            lv_comment.setVisibility(View.VISIBLE);
+                            commentAdapter.setCommentList(commentList, true);
 //                        setListViewHeight(lv_comment);
-                        setListViewHeightBasedOnChildren(lv_comment);
-                        if (commentList.size() > 2) {
-                            more_comment.setVisibility(View.VISIBLE);
+                            setListViewHeightBasedOnChildren(lv_comment);
                         }
                     }
                 }
@@ -465,21 +462,13 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         listView.setLayoutParams(params);
     }
 
-
-    private View getTabItemView(int index) {
-        View view = inflater.inflate(R.layout.tab_item_view, null);
-        ImageView tab_item_icon = (ImageView) view.findViewById(R.id.tab_item_icon);
-        tab_item_icon.setBackgroundResource(shareIconS[index]);
-        return view;
-    }
-
     /**
      * 获取本课程的基本信息
      */
     public void getCourseDetailInfo(){
         String url = Mark.getServerIp()+ "/api/v1/course/getCourseDetail";
         Map<String, Object> param = new HashMap<>();
-        param.put("courseId",courseId);
+        param.put("courseId", courseId);
         showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
@@ -497,6 +486,8 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     }
     //设置课程详情数据
     public void setCourseDetailInfo(Map<String, Object> item){
+
+        title.setText(item.get("name")+"");
         
         buy_number.setText(item.get("buyNumber") + "");
 
@@ -506,25 +497,26 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
         end_time.setText("" + item.get("endTime"));
 
-//        course_state.setText("" + item.get("buy_number"));
-
-        favorable_price.setText("￥" + item.get("price") + "/");
+        favorable_price.setText("￥" + item.get("price"));
 
         orginalPrice.setText("￥" + item.get("orginalPrice"));
 
-        start_time.setText("时间:" + item.get("startTime"));
+        start_time.setText("时间: " + item.get("startTime"));
 
-        address.setText("地址:" + item.get("address"));
+        address.setText("地址: " + item.get("address"));
 
-//        course_introduction.setText("" + item.get("buy_number"));
+        course_introduction.setText("" + item.get("introduce"));
 
         coursr_type.setText("" + item.get("courseTypeName"));
 
         notice.setText("" + item.get("notice"));
 
-//        teacher_name.setText("" + item.get("buy_number"));
+        teacher_name.setText(item.get("coachName") + " " + item.get("coachTime"));
 
-//        teacher_honor.setText("" + item.get("buy_number"));
+        teacher_honor.setText("" + item.get("honor"));
+
+        String headUrl = dataHolder.getImageProfix()+item.get("coachUrl")+"";
+        imageLoader.displayImage(headUrl, coach_head, ImageOptHelper.getAvatarOptions());
     }
 
 
@@ -627,6 +619,27 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
             }
         }
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.share, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.menu_share){
+            ToastUtils.showToast(this, "分享");
+            new ShareAction(CourseDetail.this)
+                    .setDisplayList(SHARE_MEDIA.QQ,
+                            SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
+                            SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .withMedia(image)
+                    .setListenerList(shareListener, shareListener, shareListener, shareListener).open();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

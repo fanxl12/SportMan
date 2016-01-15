@@ -261,6 +261,7 @@ public class CourseOrderList extends BaseFragment implements OrderNotice, BGARef
         String url = Mark.getServerIp() + "/api/v1/order/payCourse";
         Map<String, Object> param = new HashMap<>();
         param.put("orderId", orderId);
+//        param.put("courseId", courseId);
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).
                 ajax(url, param, Map.class, new AjaxCallback<Map>() {
                     @Override

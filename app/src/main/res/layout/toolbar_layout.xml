@@ -20,18 +20,6 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:text="分享"
-        android:id="@+id/base_tv_right_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginRight="10dp"
-        android:layout_gravity="right"
-        android:textColor="@color/md_white_1000"
-        android:textSize="16sp"/>
-
-
     <LinearLayout
         android:id="@+id/linear_toobar"
         android:visibility="gone"

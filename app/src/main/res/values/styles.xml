@@ -88,7 +88,6 @@
         <item name="android:src">@drawable/right_arrow</item>
     </style>
 
-
     <!--水平分割线style-->
     <style name="common_horizontal_division_line_style">
         <item name="android:layout_width">match_parent</item>
@@ -127,11 +126,6 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="CourseDetailTiamAddressLinear" parent="MatchWarp">
-        <item name="android:orientation">horizontal</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:background">@color/md_grey_200</item>
-    </style>
     <style name="CourseDetailTiamAddress" parent="WarpWarp">
         <item name="android:paddingLeft">6dp</item>
         <item name="android:paddingTop">10dp</item>
@@ -143,18 +137,17 @@
     </style>
     <!--课程详情课程条件信息-->
     <style name="CourseDetailSubHead" parent="WarpWarp">
-        <item name="android:textSize">18sp</item>
-        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textSize">@dimen/txtsize_subhead</item>
+    </style>
+    <style name="CourseDetailBodyStyle" parent="WarpWarp">
+        <item name="android:textSize">@dimen/txtsize_body</item>
     </style>
 
     <style name="CourseDetailSubHeadLinear">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:background">@color/md_white_1000</item>
+        <item name="android:layout_margin">10dp</item>
         <item name="android:orientation">vertical</item>
     </style>
 
@@ -173,5 +166,29 @@
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">24sp</item>
     </style>
+
+    <style name="courseDetailBaseMarginLeftAndRight">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="CourseDetailTiamAddressLinear">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/md_grey_200</item>
+    </style>
+
+    <style name="RightArrowStyle">
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_height">15dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:src">@drawable/right_arrow</item>
+    </style>
+
+
 
 </resources>

@@ -99,7 +99,7 @@ public class Registered extends BaseActivity {
         String url = Mark.getServerIp()+"/baseApi/register";
         Map<String,Object> param = new HashMap<>();
         param.put("userName", userName);
-        param.put("passWord",password);
+        param.put("passWord", password);
         showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url,param,Map.class,new AjaxCallback<Map>(){
             @Override
@@ -138,6 +138,7 @@ public class Registered extends BaseActivity {
         Map<String,Object> param = new HashMap<>();
         param.put("userName", userName);
         param.put("passWord", password);
+        param.put("roles", "user");
         showLoadingDialog();
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
