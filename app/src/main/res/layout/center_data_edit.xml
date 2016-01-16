@@ -6,193 +6,123 @@
 
     <LinearLayout
         android:id="@+id/mycenter_edit_head"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        style="@style/UserInfoLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/centerUserDateText"
+            style="@style/UserInfoLeftText"
             android:text="头像" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-        <com.agitation.sportman.widget.CircleImageView
-            android:layout_marginRight="10dp"
-            android:id="@+id/head_portrait"
-            android:src="@drawable/default_head"
-            android:layout_width="46dp"
-            android:layout_height="46dp" />
+            style="@style/TextViewWeight" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            style="@style/centerUserDateImg"/>
+        <com.agitation.sportman.widget.CircleImageView
+            android:id="@+id/head_portrait"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/default_head" />
+
+        <ImageView style="@style/RightArrowStyle" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/mycenter_edit_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        style="@style/UserInfoLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/centerUserDateText"
+            style="@style/UserInfoLeftText"
             android:text="昵称" />
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            style="@style/TextViewWeight" />
+
         <TextView
             android:id="@+id/user_data_name_edit"
-            android:text="张三"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            style="@style/centerUserDateEdit"/>
+            style="@style/centerUserDateEdit"
+            android:text="张三" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/right_arrow" />
+        <ImageView style="@style/RightArrowStyle" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/mycenter_edit_sex"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        style="@style/UserInfoLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/centerUserDateText"
+            style="@style/UserInfoLeftText"
             android:text="性别" />
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            style="@style/TextViewWeight" />
+
         <TextView
             android:id="@+id/edit_sex"
-            android:text="男"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            style="@style/centerUserDateEdit"/>
+            style="@style/centerUserDateEdit"
+            android:text="男" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/right_arrow" />
+        <ImageView style="@style/RightArrowStyle" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/mycenter_edit_age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        style="@style/UserInfoLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/centerUserDateText"
+            style="@style/UserInfoLeftText"
             android:text="年龄" />
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            style="@style/TextViewWeight" />
+
         <TextView
             android:id="@+id/user_data__age_edit"
-            android:text="21"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            style="@style/centerUserDateEdit"/>
+            style="@style/centerUserDateEdit"
+            android:text="21" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/right_arrow" />
+        <ImageView style="@style/RightArrowStyle" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/mycenter_edit_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        style="@style/UserInfoLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/centerUserDateText"
-            android:text="手机号码" />
+            style="@style/UserInfoLeftText"
+            android:text="手机" />
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            style="@style/TextViewWeight" />
+
         <TextView
             android:id="@+id/user_data_phone_edit"
-            android:text="13147143170"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            style="@style/centerUserDateEdit"/>
+            style="@style/centerUserDateEdit"
+            android:text="13147143170" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/right_arrow" />
+        <ImageView style="@style/RightArrowStyle" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/mycenter_edit_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        style="@style/UserInfoLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/centerUserDateText"
+            style="@style/UserInfoLeftText"
             android:text="地址" />
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            style="@style/TextViewWeight" />
+
         <TextView
             android:id="@+id/user_data_address_edit"
-            android:text="上海市闵行区金平路500号"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            style="@style/centerUserDateEdit"/>
+            style="@style/centerUserDateEdit"
+            android:text="上海市闵行区金平路500号" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/right_arrow" />
+        <ImageView style="@style/RightArrowStyle" />
     </LinearLayout>
 
     <Button
         android:id="@+id/exit_landing"
-        android:text="退出登陆"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="退出登陆" />
 </LinearLayout>

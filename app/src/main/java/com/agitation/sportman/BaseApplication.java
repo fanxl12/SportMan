@@ -3,9 +3,12 @@ package com.agitation.sportman;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.agitation.sportman.utils.ImageOptHelper;
+import com.alibaba.wireless.security.jaq.JAQException;
+import com.alibaba.wireless.security.jaq.SecurityInit;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,10 +32,20 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initSecurity();
 //        refWatcher = LeakCanary.install(this);
         initImageLoader();
         initShare();
         initPush();
+    }
+
+    private void initSecurity() {
+        //初始化
+        try {
+            SecurityInit.Initialize(getApplicationContext());
+        } catch (JAQException e) {
+            Log.e("SecurityInit", "errorCode =" + e.getErrorCode());
+        }
     }
 
     private void initShare() {

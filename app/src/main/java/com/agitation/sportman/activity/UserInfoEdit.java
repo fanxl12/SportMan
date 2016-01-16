@@ -26,6 +26,7 @@ import com.agitation.sportman.R;
 import com.agitation.sportman.entity.FormFile;
 import com.agitation.sportman.fragment.MyCenter;
 import com.agitation.sportman.utils.DataHolder;
+import com.agitation.sportman.utils.ImageOptHelper;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.MultiUploadThread;
@@ -154,10 +155,14 @@ public class UserInfoEdit extends BaseActivity implements View.OnClickListener {
         if (dataHolder.getUserData()!=null){
             centerUserName.setText(dataHolder.getUserData().get("name")+"");
             centerUserAge.setText(dataHolder.getUserData().get("age")+"");
-            centerUserAddress.setText(dataHolder.getUserData().get("address") + "");
+            if (dataHolder.getUserData().get("address")!=null){
+                centerUserAddress.setText(dataHolder.getUserData().get("address") + "");
+            }else{
+                centerUserAddress.setText("还未设置");
+            }
             centerUserPhone.setText(dataHolder.getUserData().get("phoneNumber") + "");
             String headImg = dataHolder.getImageProfix() + dataHolder.getUserData().get("head")+"";
-            imageLoader.displayImage(headImg,head_portrait);
+            imageLoader.displayImage(headImg, head_portrait, ImageOptHelper.getAvatarOptions());
             if (Boolean.parseBoolean(dataHolder.getUserData().get("sex")+"")){
                 centerUserSex.setText("男");
             }else {

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.agitation.sportman.utils.DataHolder;
@@ -22,12 +23,14 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    protected LinearLayout rootLayout, linear_toobar;
+    protected LinearLayout rootLayout;
     protected Toolbar toolbar;
-    protected TextView title, title_course, public_course,sourse_sub_subtitle;
-    public AQuery aq;
-    public DataHolder dataHolder;
+    protected TextView title;
+    protected AQuery aq;
+    protected DataHolder dataHolder;
     private SweetAlertDialog mLoadingDialog;
+
+    protected RadioGroup title_select_rg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +73,7 @@ public class BaseActivity extends AppCompatActivity {
 
         title = (TextView)toolbar.findViewById(R.id.base_tv_title);
 
-        title_course = (TextView)toolbar.findViewById(R.id.title_course);
-        sourse_sub_subtitle = (TextView)toolbar.findViewById(R.id.sourse_sub_subtitle);
-        public_course = (TextView)toolbar.findViewById(R.id.public_course);
-        linear_toobar = (LinearLayout) toolbar.findViewById(R.id.linear_toobar);
+        title_select_rg = (RadioGroup)toolbar.findViewById(R.id.title_select_rg);
     }
 
     @Override
