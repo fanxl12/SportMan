@@ -157,16 +157,18 @@ public class Login extends BaseActivity implements View.OnClickListener {
     }
 
     private void updateDeviceTokens() {
-        String url = Mark.getServerIp() + "/baseApi/updateDeviceTokens";
-        Map<String, Object> param = new HashMap<>();
-        param.put("deviceTokens", UmengRegistrar.getRegistrationId(this));
-        aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
-                .ajax(url, param, Map.class, new AjaxCallback<Map>(){
-                    @Override
-                    public void callback(String url, Map info, AjaxStatus status) {
-                        if (info!=null){}
-                    }
-                });
+        String deviceTokens = UmengRegistrar.getRegistrationId(this);
+        if (deviceTokens!=null && !TextUtils.isEmpty(deviceTokens)){
+            String url = Mark.getServerIp() + "/baseApi/updateDeviceTokens";
+            Map<String, Object> param = new HashMap<>();
+            param.put("deviceTokens", deviceTokens);
+            aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
+                    .ajax(url, param, Map.class, new AjaxCallback<Map>(){
+                        @Override
+                        public void callback(String url, Map info, AjaxStatus status) {
+                        }
+                    });
+        }
     }
 
     @Override

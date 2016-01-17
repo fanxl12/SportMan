@@ -47,7 +47,7 @@ public class CommentList extends BaseActivity implements BGARefreshLayout.BGARef
 
     private void initVarible() {
         commentList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(commentList, this);
+        commentAdapter = new CommentAdapter(commentList, this, false);
     }
 
     private void init() {
@@ -94,7 +94,7 @@ public class CommentList extends BaseActivity implements BGARefreshLayout.BGARef
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                         commentList = (List<Map<String, Object>>) retData.get("advices");
-                        commentAdapter.setCommentList(commentList, true);
+                        commentAdapter.setCommentList(commentList);
                     }
                 }
             }

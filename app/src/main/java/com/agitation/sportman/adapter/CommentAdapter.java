@@ -23,13 +23,13 @@ public class CommentAdapter extends BaseAdapter {
     private List<Map<String, Object>> commentList;
     private boolean isComment;
 
-    public CommentAdapter(List<Map<String, Object>> commentList, Context context){
+    public CommentAdapter(List<Map<String, Object>> commentList, Context context, boolean isComment){
         this.commentList=commentList;
         this.context=context;
+        this.isComment=isComment;
     }
-    public void  setCommentList(List<Map<String, Object>> commentList, boolean isComment){
+    public void  setCommentList(List<Map<String, Object>> commentList){
         this.commentList=commentList;
-        this.isComment = isComment;
         notifyDataSetChanged();
     }
 

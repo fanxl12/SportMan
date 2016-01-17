@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.agitation.sportman.BaseFragment;
 import com.agitation.sportman.R;
 import com.agitation.sportman.activity.Collection;
-import com.agitation.sportman.activity.Comment;
 import com.agitation.sportman.activity.CourseOrder;
 import com.agitation.sportman.activity.Login;
 import com.agitation.sportman.activity.PreferentialCode;
@@ -75,8 +74,8 @@ public class MyCenter extends BaseFragment implements View.OnClickListener {
         return rootView;
     }
     private void initVarible() {
-        aq = new AQuery(getContext());
-        dataHolder=DataHolder.getInstance();
+        aq = mActivity.aq;
+        dataHolder = mActivity.dataHolder;
         imageLoader = ImageLoader.getInstance();
     }
 
@@ -212,9 +211,7 @@ public class MyCenter extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.mycenter_bt_match:
-                Intent intent = new Intent(getContext(), Comment.class);
-                intent.putExtra("courseId","22");
-                startActivity(intent);
+                ToastUtils.showToast(getActivity(), "暂未开放");
                 break;
             case R.id.mycenter_collection:
                 if (dataHolder.isLogin()){

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:id="@+id/course_ll_advice"
+    android:orientation="horizontal">
+
+    <TextView
+        style="@style/TextViewWeight"/>
+
+    <TextView
+        android:id="@+id/advice_tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/txtsize_subhead"
+        android:textColor="@color/md_light_blue_900"
+        android:text="查看全部320条评论"/>
+
+    <ImageView
+        style="@style/RightArrowStyle" />
+
+</LinearLayout>

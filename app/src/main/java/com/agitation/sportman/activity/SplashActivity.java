@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import com.agitation.sportman.R;
 import com.agitation.sportman.utils.DataHolder;
@@ -16,6 +17,7 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +65,7 @@ public class SplashActivity extends AppCompatActivity {
                         dataHolder.setBasicHandle(userName, passWord);
                         dataHolder.setUserData((Map<String, Object>) result.get("retData"));
                         dataHolder.setIsLogin(true);
+                        updateDeviceTokens();
                         PushAgent mPushAgent = PushAgent.getInstance(getApplicationContext());
                         try {
                             mPushAgent.addAlias(userName, "HighSport");
@@ -80,6 +83,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_activity);
         initVarible();
         checkAccount();
@@ -106,6 +111,21 @@ public class SplashActivity extends AppCompatActivity {
             handler.sendEmptyMessageDelayed(GO_TO_MAIN, DELAY_TIME);
         }else{
             handler.sendEmptyMessageDelayed(GO_TO_LOGIN, DELAY_TIME);
+        }
+    }
+
+    private void updateDeviceTokens() {
+        String deviceTokens = UmengRegistrar.getRegistrationId(this);
+        if (deviceTokens!=null && !TextUtils.isEmpty(deviceTokens)){
+            String url = Mark.getServerIp() + "/baseApi/updateDeviceTokens";
+            Map<String, Object> param = new HashMap<>();
+            param.put("deviceTokens", deviceTokens);
+            aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
+                    .ajax(url, param, Map.class, new AjaxCallback<Map>(){
+                        @Override
+                        public void callback(String url, Map info, AjaxStatus status) {
+                        }
+                    });
         }
     }
 }

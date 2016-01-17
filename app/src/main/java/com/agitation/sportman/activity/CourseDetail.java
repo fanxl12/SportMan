@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -63,13 +62,11 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private View payView,fastPayView;
     private PopupWindow payWindow,fastPayWindow;
     private Button bt_enrolled,bt_fast_pay;
-    private int shareIconS[] = {R.drawable.course_icon, R.drawable.course_icon, R.drawable.course_icon};
-    private FragmentTabHost pay_successed_tabhost;
     private LayoutInflater inflater;
     private CheckBox alipy_pay, weixin_pay;
     private String courseId, orderId;
     private Map<String, Object> courseDetailInfo;
-    private TextView buy_number, end_time, surplus_number, course_state, favorable_price, orginalPrice,
+    private TextView buy_number, end_time, surplus_number, favorable_price, orginalPrice,
             start_time, address, course_introduction, coursr_type, notice, teacher_name, teacher_honor
             , tx_count, unit_price, subtotal_money, total_money;
 
@@ -86,6 +83,8 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private CircleImageView coach_head;
     private ImageLoader imageLoader;
     private TextView course_advices;
+    private View footer;
+    private TextView advice_tv_num;
 
 
     //分享操作
@@ -145,7 +144,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
     private void initVarible() {
         commentList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(commentList, this);
+        commentAdapter = new CommentAdapter(commentList, this, true);
         imageLoader = ImageLoader.getInstance();
     }
 
@@ -156,18 +155,30 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         choose_bg = findViewById(R.id.choose_bg);
 
         dropdown_in = AnimationUtils.loadAnimation(this, R.anim.dropdown_in);
-        dropdown_out = AnimationUtils.loadAnimation(this,R.anim.dropdown_out);
+        dropdown_out = AnimationUtils.loadAnimation(this, R.anim.dropdown_out);
         dropdown_mask_out = AnimationUtils.loadAnimation(this, R.anim.dropdown_mask_out);
 
         inflater = LayoutInflater.from(this);
+        footer = inflater.inflate(R.layout.course_advice_footer, null);
+        advice_tv_num = (TextView)footer.findViewById(R.id.advice_tv_num);
+        footer.setVisibility(View.GONE);
+        footer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CourseDetail.this, CommentList.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
+            }
+        });
         lv_comment = (ListView) findViewById(R.id.lv_conment);
+        lv_comment.addFooterView(footer);
         lv_comment.setAdapter(commentAdapter);
         lv_comment.setEnabled(false);
+
 
         buy_number = (TextView) findViewById(R.id.buy_number);
         end_time = (TextView) findViewById(R.id.end_time);
         surplus_number = (TextView) findViewById(R.id.surplus_number);
-        course_state = (TextView) findViewById(R.id.course_state);
         favorable_price = (TextView) findViewById(R.id.favorable_price);
         orginalPrice = (TextView) findViewById(R.id.orginal_price);
         orginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -401,15 +412,18 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
                     if (Boolean.parseBoolean(info.get("result") + "")) {
                         Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                         commentList = (List<Map<String, Object>>) retData.get("advices");
-                        if (commentList==null || commentList.size()==0){
+                        if (commentList == null || commentList.size() == 0) {
                             course_advices.setVisibility(View.GONE);
                             lv_comment.setVisibility(View.GONE);
-                        }else{
+                            footer.setVisibility(View.GONE);
+                        } else {
                             course_advices.setVisibility(View.VISIBLE);
                             lv_comment.setVisibility(View.VISIBLE);
-                            commentAdapter.setCommentList(commentList, true);
-//                        setListViewHeight(lv_comment);
-                            setListViewHeightBasedOnChildren(lv_comment);
+                            footer.setVisibility(View.VISIBLE);
+                            advice_tv_num.setText("查看全部"+commentList.size()+"条评论");
+                            commentAdapter.setCommentList(commentList);
+                            setListViewHeight(lv_comment);
+//                            setListViewHeightBasedOnChildren(lv_comment);
                         }
                     }
                 }
@@ -438,6 +452,10 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
             totalHeight += listItem.getMeasuredHeight();  //统计所有子项的总高度
         }
 
+        if (footer.getVisibility()==View.VISIBLE){
+            totalHeight += footer.getMeasuredHeight();
+        }
+
         ViewGroup.LayoutParams params = lv.getLayoutParams();
         params.height = totalHeight + (lv.getDividerHeight() * (childNum - 1));
         //listView.getDividerHeight()获取子项间分隔符占用的高度
@@ -445,7 +463,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         lv.setLayoutParams(params);
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    public void setListViewHeightBasedOnChildren(ListView listView) {
         if(listView == null) return;
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
@@ -456,6 +474,9 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0);
             totalHeight += listItem.getMeasuredHeight();
+        }
+        if (footer.getVisibility()==View.VISIBLE){
+            totalHeight += footer.getMeasuredHeight();
         }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));

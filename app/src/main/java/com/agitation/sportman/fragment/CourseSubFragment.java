@@ -83,6 +83,7 @@ public class CourseSubFragment extends BaseFragment implements BGARefreshLayout.
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent catalogIntent = new Intent(getActivity(), CourseList.class);
                 catalogIntent.putExtra("childCatalogId",parentCatalogsSubList.get(position).get("id")+"");
+                catalogIntent.putExtra("childCatalogName",parentCatalogsSubList.get(position).get("name")+"");
                 startActivity(catalogIntent);
             }
         });

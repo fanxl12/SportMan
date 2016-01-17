@@ -1,128 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_white_1000"
+    style="@style/BasePadingLeftRight"
     android:orientation="vertical">
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="160dp"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:orientation="vertical">-->
-        <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="80dp"-->
-            <!--android:layout_gravity="bottom"-->
-            <!--android:background="@color/background_floating_material_light"/>-->
-        <!--<com.agitation.sportman.widget.CircleImageView-->
-            <!--android:layout_width="96dp"-->
-            <!--android:layout_height="96dp"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:src="@drawable/default_head"-->
-            <!--android:layout_marginTop="32dp"-->
-            <!--app:border_color="@color/background_floating_material_light"-->
-            <!--app:border_width="4dp"/>-->
-    <!--</FrameLayout>-->
-
     <LinearLayout
-        style="@style/new_member"
-        android:background="@drawable/registered_bg_round"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/new_member_ll">
+
         <TextView
-            android:background="@drawable/registered_name"
-            android:layout_weight="1"
             style="@style/new_member_text"
-            android:text="用户名:"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_weight="1"
+            android:background="@drawable/registered_name"
+            android:text="用户名:" />
+
         <EditText
             android:id="@+id/et_new_phone"
-            android:layout_weight="3"
             style="@style/new_member_edit"
-            android:hint="请输入手机号"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_weight="3"
+            android:inputType="phone"
+            android:hint="手机号" />
     </LinearLayout>
 
     <LinearLayout
-        style="@style/new_member"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/new_member_ll">
+
         <EditText
-            android:inputType="number"
             android:id="@+id/et_verification_code"
-            android:background="@drawable/registered_edit_code_bg_round"
+            style="@style/new_member_edit"
             android:layout_weight="3"
-            android:paddingLeft="6dp"
             android:hint="验证码"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <Button
-            android:id="@+id/bt_getverrification_code"
-            android:background="@drawable/registered_code_bg_round"
-            android:layout_marginLeft="6dp"
-            android:textColor="@color/text_color"
-            android:layout_weight="2"
-            android:hint="获取验证码"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/new_member"
-        android:background="@drawable/registered_bg_round"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            android:inputType="number" />
+
         <TextView
-            android:background="@drawable/registered_password"
+            android:id="@+id/bt_getverrification_code"
+            style="@style/new_member_text"
+            android:layout_weight="2"
+            android:text="获取验证码"
+            android:background="@drawable/registered_code_bg_round"
+            android:textColor="@color/primary_text" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/new_member_ll">
+
+        <TextView
             style="@style/new_member_text"
             android:layout_weight="1"
-            android:text="密码:"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:background="@drawable/registered_password"
+            android:text="密码:" />
+
         <EditText
             android:id="@+id/et_new_password"
-            android:inputType="textPassword"
-            android:layout_weight="3"
             style="@style/new_member_edit"
-            android:hint="请输入密码"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_weight="3"
+            android:hint="密码"
+            android:inputType="textPassword" />
     </LinearLayout>
+
     <LinearLayout
-        style="@style/new_member"
-        android:background="@drawable/registered_bg_round"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/new_member_ll">
+
         <TextView
-            android:background="@drawable/registered_password"
             style="@style/new_member_text"
             android:layout_weight="1"
-            android:text="确认密码:"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:background="@drawable/registered_password"
+            android:text="确认密码:" />
+
         <EditText
             android:id="@+id/et_new_password_again"
-            android:inputType="textPassword"
-            android:layout_weight="3"
             style="@style/new_member_edit"
-            android:hint="请再次输入密码"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_weight="3"
+            android:hint="确认密码"
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <Button
-        android:background="@drawable/registered_bt_bg_round"
         android:id="@+id/bt_confirm_menber"
-        style="@style/new_member_btn"
-        android:text="注册"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/BaseButtonStyle"
+        android:background="@drawable/round_bt_green"
+        android:text="注册" />
 
 </LinearLayout>

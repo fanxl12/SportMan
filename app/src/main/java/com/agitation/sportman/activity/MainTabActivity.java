@@ -45,8 +45,16 @@ public class MainTabActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         UmengUpdateAgent.update(this);
         setContentView(R.layout.main_tab_activity);
+        initToolbar();
         initView();
         initVarible();
+    }
+
+    private void initToolbar() {
+        if (toolbar!=null){
+            title.setText(mTextviewArray[0]);
+            setSupportActionBar(toolbar);
+        }
     }
 
     private void initVarible() {
@@ -102,13 +110,13 @@ public class MainTabActivity extends BaseActivity {
                     toolbar.setVisibility(View.VISIBLE);
                     if (mTextviewArray[0].equals(tabId)){
                         if (toolbar!=null){
-                            title.setText("课程");
+                            title.setText(mTextviewArray[0]);
                             setSupportActionBar(toolbar);
                         }
                     }
                     if (mTextviewArray[1].equals(tabId)){
                         if (toolbar!=null){
-                            title.setText("比赛");
+                            title.setText(mTextviewArray[1]);
                             setSupportActionBar(toolbar);
                         }
                     }

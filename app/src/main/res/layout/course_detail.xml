@@ -1,326 +1,329 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:scrollbars="none">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/test_bg" />
+                android:layout_height="160dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|bottom"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="right"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/buy_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="36"
-                        android:textColor="@color/registered_green" />
-
-                    <TextView
-                        style="@style/CourseDetailEndTime"
-                        android:text="人购买过" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        style="@style/CourseDetailEndTime"
-                        android:text="报名截止" />
-
-                    <TextView
-                        android:id="@+id/end_time"
-                        style="@style/CourseDetailEndTime"
-                        android:layout_marginRight="10dp"
-                        android:text="10.27" />
-
-                    <TextView
-                        style="@style/CourseDetailEndTime"
-                        android:text="剩余" />
-
-                    <TextView
-                        android:id="@+id/surplus_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="20"
-                        android:textColor="@color/md_orange_A400" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            style="@style/courseDetailBaseMarginLeftAndRight"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/non_refundable" />
-
-            <TextView
-                android:id="@+id/course_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_gravity="center_vertical"
-                android:text="不可退，不可换" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/favorable_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="￥35"
-                android:textColor="@color/md_orange_A400"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/orginal_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:text="￥35"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            style="@style/CourseDetailTiamAddressLinear">
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/iconfont_dian" />
-
-            <TextView
-                android:id="@+id/start_time"
-                style="@style/CourseDetailTiamAddress"
-                android:text="时间:10月22日(星期四)09:45-10:45" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/course_ll_address"
-            style="@style/CourseDetailTiamAddressLinear">
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/iconfont_dian" />
-
-            <TextView
-                android:id="@+id/address"
-                style="@style/CourseDetailTiamAddress"
-                android:text="地址:上海市闵行会易健身会所(老闵行分馆)" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ImageView
-                style="@style/RightArrowStyle" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <View
-                style="@style/CourseDetailLeftDivider"
-                android:background="@color/md_light_blue_400" />
-
-            <LinearLayout
-                style="@style/CourseDetailSubHeadLinear">
-
-                <TextView
-                    style="@style/CourseDetailSubHead"
-                    android:text="课程介绍"
-                    android:textColor="@color/md_light_blue_400" />
-
-                <TextView
-                    android:id="@+id/course_introduction"
-                    style="@style/CourseDetailBodyStyle"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/couser_Introduction" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <View style="@style/common_horizontal_division_line_style" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <View
-                style="@style/CourseDetailLeftDivider"
-                android:background="@color/md_yellow_400" />
-
-            <LinearLayout
-                style="@style/CourseDetailSubHeadLinear">
-
-                <TextView
-                    style="@style/CourseDetailSubHead"
-                    android:text="课程人数"
-                    android:textColor="@color/md_yellow_800" />
-
-                <TextView
-                    android:id="@+id/coursr_type"
-                    style="@style/CourseDetailBodyStyle"
-                    android:layout_marginTop="10dp"
-                    android:text="一对一教学" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <View style="@style/common_horizontal_division_line_style" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <View
-                style="@style/CourseDetailLeftDivider"
-                android:background="@color/md_light_blue_400" />
-
-            <LinearLayout style="@style/CourseDetailSubHeadLinear">
-
-                <TextView
-                    style="@style/CourseDetailSubHead"
-                    android:text="购买须知"
-                    android:textColor="@color/md_light_blue_400" />
-
-                <TextView
-                    android:id="@+id/notice"
-                    style="@style/CourseDetailBodyStyle"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/buy_notice01" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <View style="@style/common_horizontal_division_line_style" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <View
-                style="@style/CourseDetailLeftDivider"
-                android:background="@color/md_yellow_400" />
-
-            <LinearLayout style="@style/CourseDetailSubHeadLinear">
-
-                <TextView
-                    style="@style/CourseDetailSubHead"
-                    android:text="教学信息"
-                    android:textColor="@color/md_yellow_800" />
-
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/test_bg" />
 
-                    <com.agitation.sportman.widget.CircleImageView
-                        android:id="@+id/coach_head"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:src="@drawable/default_head" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="vertical">
+                        android:layout_gravity="right"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/teacher_name"
-                            style="@style/CourseDetailBodyStyle"
-                            android:text="周计权   任教5年" />
+                            android:id="@+id/buy_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="36"
+                            android:textColor="@color/registered_green" />
 
                         <TextView
-                            android:id="@+id/teacher_honor"
-                            android:layout_marginTop="10dp"
-                            style="@style/CourseDetailBodyStyle"
-                            android:text="羽毛球国家一级教练" />
+                            style="@style/CourseDetailEndTime"
+                            android:text="人购买过" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/CourseDetailEndTime"
+                            android:text="报名截止" />
+
+                        <TextView
+                            android:id="@+id/end_time"
+                            style="@style/CourseDetailEndTime"
+                            android:layout_marginRight="10dp"
+                            android:text="10.27" />
+
+                        <TextView
+                            style="@style/CourseDetailEndTime"
+                            android:text="剩余" />
+
+                        <TextView
+                            android:id="@+id/surplus_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20"
+                            android:textColor="@color/md_orange_A400" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                style="@style/courseDetailBaseMarginLeftAndRight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/non_refundable" />
+
+                <TextView
+                    android:id="@+id/course_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="6dp"
+                    android:text="不可退，不可换" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/favorable_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥35"
+                    android:textColor="@color/md_orange_A400"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/orginal_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="￥35"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/CourseDetailTiamAddressLinear"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/iconfont_dian" />
+
+                <TextView
+                    android:id="@+id/start_time"
+                    style="@style/CourseDetailTiamAddress"
+                    android:text="时间:10月22日(星期四)09:45-10:45" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/course_ll_address"
+                style="@style/CourseDetailTiamAddressLinear">
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/iconfont_dian" />
+
+                <TextView
+                    android:id="@+id/address"
+                    style="@style/CourseDetailTiamAddress"
+                    android:text="地址:上海市闵行会易健身会所(老闵行分馆)" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView style="@style/RightArrowStyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    style="@style/CourseDetailLeftDivider"
+                    android:background="@color/md_light_blue_400" />
+
+                <LinearLayout style="@style/CourseDetailSubHeadLinear">
+
+                    <TextView
+                        style="@style/CourseDetailSubHead"
+                        android:text="课程介绍"
+                        android:textColor="@color/md_light_blue_400" />
+
+                    <TextView
+                        android:id="@+id/course_introduction"
+                        style="@style/CourseDetailBodyStyle"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/couser_Introduction" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    style="@style/CourseDetailLeftDivider"
+                    android:background="@color/md_yellow_400" />
+
+                <LinearLayout style="@style/CourseDetailSubHeadLinear">
+
+                    <TextView
+                        style="@style/CourseDetailSubHead"
+                        android:text="课程人数"
+                        android:textColor="@color/md_yellow_800" />
+
+                    <TextView
+                        android:id="@+id/coursr_type"
+                        style="@style/CourseDetailBodyStyle"
+                        android:layout_marginTop="10dp"
+                        android:text="一对一教学" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    style="@style/CourseDetailLeftDivider"
+                    android:background="@color/md_light_blue_400" />
+
+                <LinearLayout style="@style/CourseDetailSubHeadLinear">
+
+                    <TextView
+                        style="@style/CourseDetailSubHead"
+                        android:text="购买须知"
+                        android:textColor="@color/md_light_blue_400" />
+
+                    <TextView
+                        android:id="@+id/notice"
+                        style="@style/CourseDetailBodyStyle"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/buy_notice01" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    style="@style/CourseDetailLeftDivider"
+                    android:background="@color/md_yellow_400" />
+
+                <LinearLayout style="@style/CourseDetailSubHeadLinear">
+
+                    <TextView
+                        style="@style/CourseDetailSubHead"
+                        android:text="教学信息"
+                        android:textColor="@color/md_yellow_800" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <com.agitation.sportman.widget.CircleImageView
+                            android:id="@+id/coach_head"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:src="@drawable/default_head" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/teacher_name"
+                                style="@style/CourseDetailBodyStyle"
+                                android:text="周计权   任教5年" />
+
+                            <TextView
+                                android:id="@+id/teacher_honor"
+                                style="@style/CourseDetailBodyStyle"
+                                android:layout_marginTop="10dp"
+                                android:text="羽毛球国家一级教练" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
+            <View style="@style/common_horizontal_division_line_style" />
+
+            <TextView
+                android:id="@+id/course_advices"
+                style="@style/CourseDetailSubHead"
+                android:layout_margin="10dp"
+                android:text="评价" />
+
+            <ListView
+                android:id="@+id/lv_conment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_enrolled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/courseDetail_bt"
+                android:text="购买"
+                android:textColor="@color/text_color" />
+
         </LinearLayout>
+    </ScrollView>
 
-        <View style="@style/common_horizontal_division_line_style" />
-
-        <TextView
-            android:id="@+id/course_advices"
-            style="@style/CourseDetailSubHead"
-            android:layout_margin="10dp"
-            android:text="评价" />
-
-        <ListView
-            android:id="@+id/lv_conment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/bt_enrolled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/courseDetail_bt"
-            android:text="购买"
-            android:textColor="@color/text_color" />
-
-        <View
-            android:id="@+id/choose_bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#80000000"
-            android:visibility="gone" />
-    </LinearLayout>
-</ScrollView>
+    <View
+        android:id="@+id/choose_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone" />
+</FrameLayout>

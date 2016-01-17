@@ -26,8 +26,8 @@ public class BaseActivity extends AppCompatActivity {
     protected LinearLayout rootLayout;
     protected Toolbar toolbar;
     protected TextView title;
-    protected AQuery aq;
-    protected DataHolder dataHolder;
+    public AQuery aq;
+    public DataHolder dataHolder;
     private SweetAlertDialog mLoadingDialog;
 
     protected RadioGroup title_select_rg;

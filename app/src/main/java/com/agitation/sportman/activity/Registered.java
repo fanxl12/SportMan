@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
@@ -18,6 +18,7 @@ import com.agitation.sportman.utils.ToastUtils;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.umeng.message.UmengRegistrar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class Registered extends BaseActivity {
     private AQuery aq;
     private EditText et_new_phone, et_new_password, et_new_password_again, et_verification_code;
     private String userName, password, verifyCode;
-    private Button bt_getverrification_code;
+    private TextView bt_getverrification_code;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,7 @@ public class Registered extends BaseActivity {
     private void init() {
         et_new_phone = (EditText)findViewById(R.id.et_new_phone);
         et_verification_code = (EditText)findViewById(R.id.et_verification_code);
-        bt_getverrification_code = (Button) findViewById(R.id.bt_getverrification_code);
+        bt_getverrification_code = (TextView) findViewById(R.id.bt_getverrification_code);
         et_new_password = (EditText)findViewById(R.id.et_new_password);
         et_new_password_again = (EditText)findViewById(R.id.et_new_password_again);
         findViewById(R.id.bt_confirm_menber).setOnClickListener(new View.OnClickListener() {
@@ -56,7 +57,7 @@ public class Registered extends BaseActivity {
             @Override
             public void onClick(View v) {
                 userName = et_new_phone.getText().toString().trim();
-                if (TextUtils.isEmpty(userName)){
+                if (TextUtils.isEmpty(userName)) {
                     ToastUtils.showToast(Registered.this, "手机不能为空");
                     return;
                 }
@@ -151,6 +152,7 @@ public class Registered extends BaseActivity {
                         dataHolder.setUserData((Map<String, Object>) result.get("retData"));
                         ToastUtils.showToast(Registered.this, "注册成功");
                         dataHolder.setIsLogin(true);
+                        updateDeviceTokens();
                         SharePreferenceUtil.setValue(Registered.this, Login.IS_RM_PW, true);
                         Registered.this.setResult(Login.Registered_SUCCEED);
                         startActivity(new Intent(Registered.this, MainTabActivity.class));
@@ -185,7 +187,7 @@ public class Registered extends BaseActivity {
         String url = Mark.getServerIp()+"/baseApi/getPhoneCode";
         Map<String, Object> param = new HashMap<>();
         param.put("phoneNumber",userName);
-        param.put("action","register");
+        param.put("action", "register");
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map result, AjaxStatus status) {
@@ -196,6 +198,21 @@ public class Registered extends BaseActivity {
                 }
             }
         });
+    }
+
+    private void updateDeviceTokens() {
+        String deviceTokens = UmengRegistrar.getRegistrationId(this);
+        if (deviceTokens!=null && !TextUtils.isEmpty(deviceTokens)){
+            String url = Mark.getServerIp() + "/baseApi/updateDeviceTokens";
+            Map<String, Object> param = new HashMap<>();
+            param.put("deviceTokens", deviceTokens);
+            aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle())
+                    .ajax(url, param, Map.class, new AjaxCallback<Map>(){
+                        @Override
+                        public void callback(String url, Map info, AjaxStatus status) {
+                        }
+                    });
+        }
     }
 
 }

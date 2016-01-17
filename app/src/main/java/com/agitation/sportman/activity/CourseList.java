@@ -90,7 +90,8 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
         setContentView(R.layout.catalog_list);
         Intent intent = getIntent();
         childCatalogId = intent.getStringExtra("childCatalogId");
-        initToolbar();
+        String childCatalogName = intent.getStringExtra("childCatalogName");
+        initToolbar(childCatalogName);
         initVarible();
         initView();
         processLogic();
@@ -100,9 +101,9 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
     }
 
 
-    private void initToolbar() {
+    private void initToolbar(String name) {
         if (toolbar!=null){
-            title.setText("正手");
+            title.setText(name);
             setSupportActionBar(toolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -170,7 +171,6 @@ public class CourseList extends BaseActivity implements View.OnClickListener, BG
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String courseId = catalogStoreList.get(position).get("id") + "";
-                ToastUtils.showToast(CourseList.this, position + "");
                 Intent detailIntent = new Intent(CourseList.this, CourseDetail.class);
                 detailIntent.putExtra("courseId", courseId);
                 startActivity(detailIntent);
