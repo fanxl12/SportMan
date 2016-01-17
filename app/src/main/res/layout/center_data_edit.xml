@@ -124,5 +124,6 @@
         android:id="@+id/exit_landing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_bt_yellow"
         android:text="退出登陆" />
 </LinearLayout>
