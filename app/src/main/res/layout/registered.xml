@@ -60,6 +60,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/et_new_password_again_ll"
         style="@style/new_member_ll">
 
         <TextView

@@ -101,7 +101,6 @@
         <activity android:name=".activity.CourseOrder"/>
         <activity android:name=".activity.UserAddress"/>
         <activity android:name=".activity.CourseSubCatalog"/>
-        <activity android:name=".activity.ForgetPassword"/>
         <activity android:name=".activity.CourseList"/>
         <activity android:name=".activity.CourseDetail"/>
         <activity android:name=".activity.Comment"/>

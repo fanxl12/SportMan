@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.agitation.sportman.BaseActivity;
@@ -32,22 +34,43 @@ public class Registered extends BaseActivity {
     private EditText et_new_phone, et_new_password, et_new_password_again, et_verification_code;
     private String userName, password, verifyCode;
     private TextView bt_getverrification_code;
+    private Button bt_confirm_menber;
+    private boolean isRegister = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registered);
+        Intent intent = getIntent();
+        isRegister = intent.getBooleanExtra("isRegister", false);
         initToolbar();
         init();
         initVarible();
     }
 
     private void init() {
+        LinearLayout et_new_password_again_ll = (LinearLayout) findViewById(R.id.et_new_password_again_ll);
+        if (isRegister){
+            et_new_password_again_ll.setVisibility(View.VISIBLE);
+        }else {
+            et_new_password_again_ll.setVisibility(View.GONE);
+        }
         et_new_phone = (EditText)findViewById(R.id.et_new_phone);
         et_verification_code = (EditText)findViewById(R.id.et_verification_code);
         bt_getverrification_code = (TextView) findViewById(R.id.bt_getverrification_code);
         et_new_password = (EditText)findViewById(R.id.et_new_password);
+        if (isRegister){
+            et_new_password.setHint("密码");
+        }else {
+            et_new_password.setText("新密码");
+        }
         et_new_password_again = (EditText)findViewById(R.id.et_new_password_again);
-        findViewById(R.id.bt_confirm_menber).setOnClickListener(new View.OnClickListener() {
+        bt_confirm_menber = (Button) findViewById(R.id.bt_confirm_menber);
+        if (isRegister){
+            bt_confirm_menber.setText("注册");
+        }else{
+            bt_confirm_menber.setText("确定");
+        }
+        bt_confirm_menber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToRegistered();
@@ -123,7 +146,9 @@ public class Registered extends BaseActivity {
 
     private void initToolbar() {
         if (toolbar!=null){
-            title.setText("注册");
+            if (isRegister){
+                title.setText("注册");
+            }else {title.setText("找回密码");}
             setSupportActionBar(toolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
