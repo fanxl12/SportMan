@@ -53,11 +53,11 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
     private ScreenView.OnSelectListener selectTestListener = new ScreenView.OnSelectListener() {
         @Override
         public void getValue(Map<String, Object> param, ScreenView view) {
-            onRefresh(view, param.get("name") + "");
+            onRefresh(view, param);
         }
     };
 
-    private int pageNumber;
+    private int pageNumber = 1;
     private final int PAGE_SIZE = 10;
     private boolean isRefreshing = false;
     private boolean isLoading = false;
@@ -90,10 +90,10 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
         typeClear.put("name", "全部类型");
         typeList.add(0, typeClear);
 
-        timeSv = new ScreenView(getActivity(), timeList);
-        typeSv = new ScreenView(getActivity(), typeList);
-        areaSv = new ScreenView(getActivity(), positionList);
-        sortSv = new ScreenView(getActivity(), sortList);
+        timeSv = new ScreenView(getActivity(), timeList, -1);
+        typeSv = new ScreenView(getActivity(), typeList, 0);
+        areaSv = new ScreenView(getActivity(), positionList, 0);
+        sortSv = new ScreenView(getActivity(), sortList, 0);
 
         timeSv.setOnSelectListener(selectTestListener);
         typeSv.setOnSelectListener(selectTestListener);
@@ -121,6 +121,8 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
         courseCatalogAdapter = new CourseListAdapter(getActivity(), courseCatalogInfoList, R.layout.catalog_item);
         param = new HashMap<>();
         param.put("pageSize", PAGE_SIZE);
+        param.put("latitude", dataHolder.getLatitude());
+        param.put("longitude", dataHolder.getLongitude());
     }
 
     protected void processLogic() {
@@ -143,7 +145,7 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), CourseDetail.class);
-                intent.putExtra("courseId", courseCatalogInfoList.get(position).get("id")+"");
+                intent.putExtra("courseId", courseCatalogInfoList.get(position).get("id") + "");
                 startActivity(intent);
             }
         });
@@ -247,11 +249,34 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
         });
     }
 
-    private void onRefresh(View view, String showText) {
+    private void onRefresh(View view, Map<String, Object> item) {
         expandtab_view.onPressBack();
+        String showText = item.get("name") + "";
         int position = getPositon(view);
         if (position >= 0 && !expandtab_view.getTitle(position).equals(showText)) {
             expandtab_view.setTitle(showText, position);
+            switch (position){
+                case 0:
+                    param.put("startTime", item.get("startTime"));
+                    param.put("endTime", item.get("endTime"));
+                    break;
+                case 1:
+                    param.put("courseTypeId", item.get("id"));
+                    break;
+                case 2:
+                    if (item.get("id")==null){
+                        param.remove("areaId");
+                        param.put("range", item.get("value"));
+                    }else{
+                        param.remove("range");
+                        param.put("areaId", item.get("id"));
+                    }
+                    break;
+                case 3:
+                    param.put("sort", item.get("sort"));
+                    break;
+            }
+            getOpenCourse();
         }
     }
 

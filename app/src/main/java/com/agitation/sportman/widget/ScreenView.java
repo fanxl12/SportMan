@@ -27,9 +27,10 @@ public class ScreenView extends LinearLayout{
 	private OnSelectListener mOnSelectListener;
 	private int tBlockPosition = 0;
 
-	public ScreenView(Context context, List<Map<String, Object>> leftMenuList) {
+	public ScreenView(Context context, List<Map<String, Object>> leftMenuList, int tBlockPosition) {
 		super(context);
 		this.leftMenuList=leftMenuList;
+		this.tBlockPosition = tBlockPosition;
 		init(context);
 	}
 
