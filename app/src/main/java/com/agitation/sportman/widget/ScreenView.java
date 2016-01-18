@@ -13,22 +13,19 @@ import android.widget.ListView;
 import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.LeftTestMenuAdapter;
 import com.agitation.sportman.adapter.RightTestMenuAdapter;
-import com.agitation.sportman.inter.ViewBaseAction;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ScreenView extends LinearLayout implements ViewBaseAction {
+public class ScreenView extends LinearLayout{
 
 	private ListView left_menu_lv;
 	private ListView right_menu_lv;
 	private List<Map<String, Object>> leftMenuList, rightMenuList;
 	private LeftTestMenuAdapter leftMenuAdapter;
 	private RightTestMenuAdapter rightMenuAdapter;
-	private int tEaraPosition = 0;
-	private int tBlockPosition = 0;
 	private OnSelectListener mOnSelectListener;
+	private int tBlockPosition = 0;
 
 	public ScreenView(Context context, List<Map<String, Object>> leftMenuList) {
 		super(context);
@@ -51,10 +48,8 @@ public class ScreenView extends LinearLayout implements ViewBaseAction {
 		}
 		leftMenuAdapter = new LeftTestMenuAdapter(context, leftMenuList, R.layout.choose_item);
 		leftMenuAdapter.setSelectedDrawble(R.drawable.choose_item_selected, R.drawable.choose_eara_item_selector);
-		leftMenuAdapter.setSelectedPositionNoNotify(tEaraPosition);
 		left_menu_lv.setAdapter(leftMenuAdapter);
 		left_menu_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -62,6 +57,10 @@ public class ScreenView extends LinearLayout implements ViewBaseAction {
 				List<Map<String, Object>> rightDatas = (List<Map<String, Object>>) leftMenuList.get(position).get("child");
 				if (rightDatas != null && rightDatas.size() > 0) {
 					rightMenuAdapter.setData(rightDatas);
+					right_menu_lv.setVisibility(VISIBLE);
+				}else{
+					right_menu_lv.setVisibility(GONE);
+					mOnSelectListener.getValue(leftMenuList.get(position), ScreenView.this);
 				}
 			}
 		});
@@ -69,26 +68,23 @@ public class ScreenView extends LinearLayout implements ViewBaseAction {
 		if (leftMenuList!=null && leftMenuList.size()>0){
 			rightMenuList = (List<Map<String, Object>>) leftMenuList.get(0).get("child");
 		}
-		if (rightMenuList==null)rightMenuList = new ArrayList<>();
-
-		rightMenuAdapter = new RightTestMenuAdapter(context, rightMenuList, R.layout.choose_item);
-		rightMenuAdapter.setSelectedDrawble(R.drawable.choose_item_right, R.drawable.choose_plate_item_selector);
-		rightMenuAdapter.setSelectedPositionNoNotify(tBlockPosition);
-		right_menu_lv.setAdapter(rightMenuAdapter);
-		right_menu_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				rightMenuAdapter.setSelectedPosition(position);
-//				mOnSelectListener.getValue();
-			}
-		});
-
-		setDefaultSelect();
-	}
-
-	public void setDefaultSelect() {
-		left_menu_lv.setSelection(tEaraPosition);
-		right_menu_lv.setSelection(tBlockPosition);
+		if (rightMenuList==null || rightMenuList.size()==0){
+			right_menu_lv.setVisibility(GONE);
+			leftMenuAdapter.setSelectedDrawble(R.drawable.choose_item_right, R.drawable.choose_eara_item_selector);
+		}else {
+			right_menu_lv.setVisibility(VISIBLE);
+			rightMenuAdapter = new RightTestMenuAdapter(context, rightMenuList, R.layout.choose_item);
+			rightMenuAdapter.setSelectedDrawble(R.drawable.choose_item_right, R.drawable.choose_plate_item_selector);
+			rightMenuAdapter.setSelectedPositionNoNotify(tBlockPosition);
+			right_menu_lv.setAdapter(rightMenuAdapter);
+			right_menu_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					rightMenuAdapter.setSelectedPosition(position);
+					mOnSelectListener.getValue(rightMenuList.get(position), ScreenView.this);
+				}
+			});
+		}
 	}
 
 	public void setOnSelectListener(OnSelectListener onSelectListener) {
@@ -96,16 +92,6 @@ public class ScreenView extends LinearLayout implements ViewBaseAction {
 	}
 
 	public interface OnSelectListener {
-		void getValue(Map<String, Object> param);
-	}
-
-	@Override
-	public void hide() {
-
-	}
-
-	@Override
-	public void show() {
-
+		void getValue(Map<String, Object> param, ScreenView view);
 	}
 }

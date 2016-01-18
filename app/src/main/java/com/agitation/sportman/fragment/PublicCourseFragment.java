@@ -4,7 +4,6 @@ package com.agitation.sportman.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +20,12 @@ import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.ToastUtils;
 import com.agitation.sportman.widget.ExpandTabView;
 import com.agitation.sportman.widget.ScreenView;
-import com.agitation.sportman.widget.ViewLeft;
-import com.agitation.sportman.widget.ViewMiddle;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,20 +44,24 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
     private AQuery aq;
     private DataHolder dataHolder;
 
-    private ArrayList<View> mViewArray = new ArrayList<>();
     private ArrayList<View> mViewArrayTest = new ArrayList<>();
-    private ExpandTabView expandTabView, expandtab_view_test;
-    private ViewMiddle timeChoiseView;
-    private ViewLeft typeChoiseView;
-    private ViewMiddle distanceChoiseView;
-    private ScreenView screenView1, screenView2, screenView3, screenView4;
-    private ViewLeft defaultChoiseView;
-    private String[] items = new String[]{ "时间", "item2", "item3", "item4", "item5", "item6", "item7", "item8" };
-    private String[] itemsVaule = new String[]{ "item1", "item2", "item3", "item4", "item5", "item6", "item7", "item8" };
+    private ExpandTabView expandtab_view;
+    private ScreenView timeSv, typeSv, areaSv, sortSv;
 
-    private ArrayList<String> groups = new ArrayList<String>();
-    private SparseArray<LinkedList<String>> children = new SparseArray<LinkedList<String>>();
     private BGARefreshLayout mRefreshLayout;
+
+    private ScreenView.OnSelectListener selectTestListener = new ScreenView.OnSelectListener() {
+        @Override
+        public void getValue(Map<String, Object> param, ScreenView view) {
+            onRefresh(view, param.get("name") + "");
+        }
+    };
+
+    private int pageNumber;
+    private final int PAGE_SIZE = 10;
+    private boolean isRefreshing = false;
+    private boolean isLoading = false;
+    private Map<String, Object> param;
 
     @Nullable
     @Override
@@ -75,52 +75,52 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
            initView();
            processLogic();
            getOpenCourse();
-           initListener();
+           getMenuData();
        }
         return rootView;
     }
 
+    private void initMenuData(Map<String, Object> retData){
+        List<Map<String, Object>> timeList = (List<Map<String, Object>>) retData.get("timeList");
+        List<Map<String, Object>> typeList = (List<Map<String, Object>>) retData.get("courseTypes");
+        List<Map<String, Object>> positionList = (List<Map<String, Object>>) retData.get("areas");
+        List<Map<String, Object>> sortList = (List<Map<String, Object>>) retData.get("sortList");
+
+        Map<String, Object> typeClear = new HashMap<>();
+        typeClear.put("name", "全部类型");
+        typeList.add(0, typeClear);
+
+        timeSv = new ScreenView(getActivity(), timeList);
+        typeSv = new ScreenView(getActivity(), typeList);
+        areaSv = new ScreenView(getActivity(), positionList);
+        sortSv = new ScreenView(getActivity(), sortList);
+
+        timeSv.setOnSelectListener(selectTestListener);
+        typeSv.setOnSelectListener(selectTestListener);
+        areaSv.setOnSelectListener(selectTestListener);
+        sortSv.setOnSelectListener(selectTestListener);
+
+        mViewArrayTest.add(timeSv);
+        mViewArrayTest.add(typeSv);
+        mViewArrayTest.add(areaSv);
+        mViewArrayTest.add(sortSv);
+
+        ArrayList<String> mTextArray = new ArrayList<String>();
+        mTextArray.add("时间");
+        mTextArray.add("类型");
+        mTextArray.add("区域");
+        mTextArray.add("默认");
+
+        expandtab_view.setValue(mTextArray, mViewArrayTest);
+    }
+
     private void initVarible() {
-
-        for(int i=0;i<10;i++){
-            groups.add(i+"行");
-            LinkedList<String> tItem = new LinkedList<String>();
-            for(int j=0;j<15;j++){
-
-                tItem.add(i+"行"+j+"列");
-
-            }
-            children.put(i, tItem);
-        }
-
-        timeChoiseView = new ViewMiddle(getActivity(), groups,  children);
-        typeChoiseView = new ViewLeft(getActivity(), items, itemsVaule);
-        distanceChoiseView = new ViewMiddle(getActivity(), groups,  children);
-        defaultChoiseView = new ViewLeft(getActivity(), items, itemsVaule);
-
-        List<Map<String, Object>> testDatas = new ArrayList<>();
-        for (int i=0; i<6; i++){
-            Map<String, Object> item = new HashMap<>();
-            item.put("name", "name"+i);
-            List<Map<String, Object>> childs = new ArrayList<>();
-            for (int j=0; j<6; j++){
-                Map<String, Object> child = new HashMap<>();
-                child.put("name", "child"+i);
-                childs.add(child);
-            }
-            item.put("child", childs);
-            testDatas.add(item);
-        }
-
-        screenView1 = new ScreenView(getActivity(), testDatas);
-        screenView2 = new ScreenView(getActivity(), testDatas);
-        screenView3 = new ScreenView(getActivity(), testDatas);
-        screenView4 = new ScreenView(getActivity(), testDatas);
-
-        aq = new AQuery(getActivity());
-        dataHolder = DataHolder.getInstance();
+        aq = mActivity.aq;
+        dataHolder = mActivity.dataHolder;
         courseCatalogInfoList = new ArrayList<>();
         courseCatalogAdapter = new CourseListAdapter(getActivity(), courseCatalogInfoList, R.layout.catalog_item);
+        param = new HashMap<>();
+        param.put("pageSize", PAGE_SIZE);
     }
 
     protected void processLogic() {
@@ -135,38 +135,7 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
 
         mRefreshLayout = (BGARefreshLayout) rootView.findViewById(R.id.rl_listview_refresh);
 
-        expandTabView = (ExpandTabView) rootView.findViewById(R.id.expandtab_view);
-        expandtab_view_test = (ExpandTabView) rootView.findViewById(R.id.expandtab_view_test);
-
-        mViewArray.add(timeChoiseView);
-        mViewArray.add(typeChoiseView);
-        mViewArray.add(distanceChoiseView);
-        mViewArray.add(defaultChoiseView);
-
-        mViewArrayTest.add(screenView1);
-        mViewArrayTest.add(screenView2);
-        mViewArrayTest.add(screenView3);
-        mViewArrayTest.add(screenView4);
-
-        ArrayList<String> mTextArray = new ArrayList<String>();
-        mTextArray.add("时间");
-        mTextArray.add("类型");
-        mTextArray.add("区域");
-        mTextArray.add("默认");
-
-        expandtab_view_test.setValue(mTextArray, mViewArrayTest);
-        expandTabView.setTitle("时间1", 0);
-        expandTabView.setTitle("类型1", 1);
-        expandTabView.setTitle("区域1", 2);
-        expandTabView.setTitle("默认1", 3);
-
-
-        expandTabView.setValue(mTextArray, mViewArray);
-        expandTabView.setTitle(timeChoiseView.getShowText(), 0);
-        expandTabView.setTitle(typeChoiseView.getShowText(), 1);
-        expandTabView.setTitle(distanceChoiseView.getShowText(), 2);
-        expandTabView.setTitle(defaultChoiseView.getShowText(), 3);
-
+        expandtab_view = (ExpandTabView) rootView.findViewById(R.id.expandtab_view_test);
 
         public_course_lv = (ListView)rootView.findViewById(R.id.public_course_lv);
         public_course_lv.setAdapter(courseCatalogAdapter);
@@ -252,16 +221,24 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
 
     //获取公开课列表
     private void getOpenCourse(){
-        mActivity.showLoadingDialog();
+        if (!isRefreshing && !isLoading){
+            mActivity.showLoadingDialog();
+        }
         String url = Mark.getServerIp()+ "/api/v1/course/getOpenCourse";
-        Map<String, Object> param = new HashMap<>();
-        param.put("pageNumber","1");
-        param.put("pageSize","10");
-        aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>(){
+        param.put("pageNumber", pageNumber);
+        aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
             public void callback(String url, Map info, AjaxStatus status) {
-                mActivity.dismissLoadingDialog();
-                if (info!=null){
+                if (isRefreshing){
+                    mRefreshLayout.endRefreshing();
+                }else if(isLoading){
+                    isLoading = false;
+                    mRefreshLayout.endLoadingMore();
+                }else{
+                    isRefreshing = false;
+                    mActivity.dismissLoadingDialog();
+                }
+                if (info != null) {
                     Map<String, Object> retData = (Map<String, Object>) info.get("retData");
                     courseCatalogInfoList = (List<Map<String, Object>>) retData.get("courseList");
                     courseCatalogAdapter.setData(courseCatalogInfoList);
@@ -270,59 +247,17 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
         });
     }
 
-    private void initListener() {
-
-        timeChoiseView.setOnSelectListener(new ViewMiddle.OnSelectListener() {
-
-            @Override
-            public void getValue(String showText) {
-
-                onRefresh(timeChoiseView,showText);
-
-            }
-        });
-
-        typeChoiseView.setOnSelectListener(new ViewLeft.OnSelectListener() {
-
-            @Override
-            public void getValue(String distance, String showText) {
-                onRefresh(typeChoiseView, showText);
-            }
-        });
-
-        distanceChoiseView.setOnSelectListener(new ViewMiddle.OnSelectListener() {
-
-            @Override
-            public void getValue(String showText) {
-
-                onRefresh(distanceChoiseView,showText);
-
-            }
-        });
-
-        defaultChoiseView.setOnSelectListener(new ViewLeft.OnSelectListener() {
-
-            @Override
-            public void getValue(String distance, String showText) {
-                onRefresh(defaultChoiseView, showText);
-            }
-        });
-    }
-
     private void onRefresh(View view, String showText) {
-
-        expandTabView.onPressBack();
+        expandtab_view.onPressBack();
         int position = getPositon(view);
-        if (position >= 0 && !expandTabView.getTitle(position).equals(showText)) {
-            expandTabView.setTitle(showText, position);
+        if (position >= 0 && !expandtab_view.getTitle(position).equals(showText)) {
+            expandtab_view.setTitle(showText, position);
         }
-        ToastUtils.showToast(getActivity(), showText);
-
     }
 
     private int getPositon(View tView) {
-        for (int i = 0; i < mViewArray.size(); i++) {
-            if (mViewArray.get(i) == tView) {
+        for (int i = 0; i < mViewArrayTest.size(); i++) {
+            if (mViewArrayTest.get(i) == tView) {
                 return i;
             }
         }
@@ -332,11 +267,36 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
-        mRefreshLayout.endRefreshing();
+        isRefreshing = true;
+        pageNumber = 1;
+        getOpenCourse();
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout bgaRefreshLayout) {
-        return false;
+        pageNumber++;
+        isLoading = true;
+        getOpenCourse();
+        return true;
+    }
+
+    /**
+     * 获取筛选条件信息
+     */
+    private void getMenuData(){
+        String url = Mark.getServerIp() + "/api/v1/course/getMenuData";
+        showLoadingDialog();
+        aq.transformer(new MapTransformer()).ajax(url, Map.class, new AjaxCallback<Map>() {
+            @Override
+            public void callback(String url, Map info, AjaxStatus status) {
+                dismissLoadingDialog();
+                if (info != null) {
+                    if (Boolean.parseBoolean(info.get("result") + "")) {
+                        Map<String, Object> retData = (Map<String, Object>) info.get("retData");
+                        initMenuData(retData);
+                    }
+                }
+            }
+        });
     }
 }

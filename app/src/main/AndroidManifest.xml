@@ -58,6 +58,11 @@
             </intent-filter>
         </service>
 
+        <meta-data android:name="design_width" android:value="1080">
+        </meta-data>
+        <meta-data android:name="design_height" android:value="1920">
+        </meta-data>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="F81p1cbLi9gkL8xlwSezGTBs" />

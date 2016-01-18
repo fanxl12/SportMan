@@ -8,7 +8,7 @@
     <FrameLayout
         android:id="@+id/framelayout"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/y400"
+        android:layout_height="300dp"
         android:background="#ececec" >
 
         <com.agitation.sportman.widget.ViewFlow
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/md_grey_300"
                 android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="@dimen/y10"
+                android:layout_marginBottom="10dp"
                 android:padding="2dip"
                 app:activeColor="#ec407a"
                 app:activeType="fill"

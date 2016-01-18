@@ -35,10 +35,6 @@ public class LeftTestMenuAdapter extends CommonAdapter<Map<String, Object>> {
         this.selectedPosition = selectedPosition;
     }
 
-    public int getSelectedPosition() {
-        return selectedPosition;
-    }
-
     public LeftTestMenuAdapter(Context context, List<Map<String, Object>> mDatas, int itemLayoutId) {
         super(context, mDatas, itemLayoutId);
         this.context = context;
@@ -56,22 +52,6 @@ public class LeftTestMenuAdapter extends CommonAdapter<Map<String, Object>> {
         }else{
             nameTv.setBackground(normalDrawble);//设置未选中状态背景图片
         }
-        nameTv.setPadding(20, 0, 0, 0);
         nameTv.setText(item.get("name") + "");
-//        nameTv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ToastUtils.showToast(context, "click");
-//            }
-//        });
-
-//        if (item.get("child") != null) {
-//            List<Map<String, Object>> secondList = (List<Map<String, Object>>) item.get("child");
-//            if (secondList!=null && secondList.size()>0){
-//                nameTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
-//            }
-//        } else {
-//            nameTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-//        }
     }
 }

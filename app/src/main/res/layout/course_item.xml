@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.agitation.sportman.widget.AutoFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y460">
+    android:layout_height="300px">
 
     <ImageView
         android:id="@+id/course_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y460"
+        android:layout_height="300px"
         android:src="@drawable/test"
         android:scaleType="centerCrop"/>
 
@@ -19,4 +20,4 @@
         android:text="羽毛球"
         android:layout_gravity="center"/>
 
-</FrameLayout>
+</com.agitation.sportman.widget.AutoFrameLayout>

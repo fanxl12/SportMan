@@ -87,7 +87,7 @@ dependencies {
     compile files('libs/libpingpp-2.0.6.jar')
     //上拉刷新下拉翻页
     compile 'com.nineoldandroids:library:2.4.0'
-    compile 'cn.bingoogolapple:bga-refreshlayout:1.1.2@aar'
+    compile 'cn.bingoogolapple:bga-refreshlayout:1.1.3@aar'
     //广告条
     compile 'cn.bingoogolapple:bga-banner:2.0.3@aar'
     //进度条
@@ -96,4 +96,6 @@ dependencies {
     compile project(':share')
     compile files('libs/com.umeng.message.lib_v2.6.0.jar')
     compile files('libs/securityguard-3.1.45.jar')
+    //适配
+    compile 'com.zhy:autolayout:1.3.6'
 }
