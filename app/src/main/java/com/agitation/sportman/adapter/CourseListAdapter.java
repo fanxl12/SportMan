@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 
 import com.agitation.sportman.R;
 import com.agitation.sportman.utils.DataHolder;
-import com.agitation.sportman.utils.UtilsHelper;
 import com.agitation.sportman.utils.ViewHolder;
 
 import java.util.List;
@@ -49,9 +48,9 @@ public class CourseListAdapter extends CommonAdapter<Map<String, Object>> {
         if (item.get("distance")!=null && !TextUtils.isEmpty(item.get("distance")+"")){
             double distance = Double.parseDouble(item.get("distance")+"");
             if (distance>1000){
-                distanceStr = UtilsHelper.format1Decimal(distance / 1000)+"km";
+                distanceStr = ((int)distance / 1000)+"km";
             }else {
-                distanceStr = UtilsHelper.format1Decimal(distance) + "m";
+                distanceStr = ((int)distance) + "m";
             }
         }
         helper.setText(R.id.course_item_distance, distanceStr);

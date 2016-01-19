@@ -3,96 +3,107 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
+    android:padding="10dp"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_weight="5"
         android:layout_width="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/course_name"
-            android:textSize="16sp"
-            android:text="莘庄羽毛球公开赛"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="莘庄羽毛球公开赛"
+            android:textSize="@dimen/txtsize_subhead" />
+
         <TextView
             android:id="@+id/course_address"
-            android:layout_marginTop="6dp"
-            android:textSize="12sp"
-            android:text="上海市闵行区金平路604号"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="上海市闵行区金平路604号"
+            android:textSize="@dimen/txtsize_body" />
+
         <TextView
+            android:id="@+id/course_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/time_round"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:background="@drawable/time_round"
-            android:id="@+id/course_time"
-            android:layout_marginTop="6dp"
-            android:textSize="12sp"
             android:text="16:00-17:50"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/txtsize_body" />
 
     </LinearLayout>
+
     <LinearLayout
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/course_item_score"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="10分"
+            android:layout_marginTop="10dp" />
+
         <TextView
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <TextView
-                android:text="￥"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="￥" />
+
             <TextView
                 android:id="@+id/course_money"
-                android:textColor="@color/red"
-                android:textSize="18sp"
-                android:text="35"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="35"
+                android:textColor="@color/red"
+                android:textSize="@dimen/txtsize_subhead" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:padding="10dp"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
         <TextView
-            android:text="1.6Km"
             android:id="@+id/course_item_distance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="300Km" />
+
         <View
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/bt_collection"
-            android:src="@drawable/collection_icon_normal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@null"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/collection_icon_normal" />
     </LinearLayout>
 
 </LinearLayout>

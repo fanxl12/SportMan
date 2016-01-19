@@ -130,7 +130,7 @@ public class UtilsHelper {
      */
     public static double format1Decimal(double number){
         BigDecimal format = new BigDecimal(number);
-        return format.setScale(1, BigDecimal.ROUND_HALF_DOWN).doubleValue();
+        return format.setScale(0, BigDecimal.ROUND_HALF_DOWN).doubleValue();
     }
 
     private static int screenHeight = 0;

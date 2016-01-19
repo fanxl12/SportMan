@@ -55,9 +55,10 @@ public class ScreenView extends LinearLayout{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				leftMenuAdapter.setSelectedPosition(position);
-				List<Map<String, Object>> rightDatas = (List<Map<String, Object>>) leftMenuList.get(position).get("child");
-				if (rightDatas != null && rightDatas.size() > 0) {
-					rightMenuAdapter.setData(rightDatas);
+				rightMenuList = (List<Map<String, Object>>) leftMenuList.get(position).get("child");
+				if (rightMenuList != null && rightMenuList.size() > 0) {
+					rightMenuAdapter.setSelectedPositionNoNotify(0);
+					rightMenuAdapter.setData(rightMenuList);
 					right_menu_lv.setVisibility(VISIBLE);
 				}else{
 					right_menu_lv.setVisibility(GONE);
