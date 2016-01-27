@@ -178,10 +178,10 @@ public class Login extends BaseActivity implements View.OnClickListener {
                 getToLogin();
                 break;
             case R.id.forget_password:
-                startActivity(new Intent(Login.this, Registered.class));
+                startActivity(new Intent(Login.this, Register.class));
                 break;
             case R.id.login_to_registered:
-                Intent registeredIntent = new Intent(Login.this, Registered.class);
+                Intent registeredIntent = new Intent(Login.this, Register.class);
                 registeredIntent.putExtra("isRegister", true);
                 startActivityForResult(registeredIntent, 100);
                 break;

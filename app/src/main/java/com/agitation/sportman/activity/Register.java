@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * Created by fanwl on 2015/11/1.
  */
-public class Registered extends BaseActivity {
+public class Register extends BaseActivity {
 
     private AQuery aq;
     private EditText et_new_phone, et_new_password, et_new_password_again, et_verification_code;
@@ -81,7 +81,7 @@ public class Registered extends BaseActivity {
             public void onClick(View v) {
                 userName = et_new_phone.getText().toString().trim();
                 if (TextUtils.isEmpty(userName)) {
-                    ToastUtils.showToast(Registered.this, "手机不能为空");
+                    ToastUtils.showToast(Register.this, "手机不能为空");
                     return;
                 }
                 getVerifyCode();
@@ -103,7 +103,7 @@ public class Registered extends BaseActivity {
         }
         String code = et_verification_code.getText().toString().trim();
         if (!code.equals(verifyCode)){
-            ToastUtils.showToast(Registered.this, "验证码错误");
+            ToastUtils.showToast(Register.this, "验证码错误");
             return;
         }
         password = et_new_password.getText().toString().trim();
@@ -131,13 +131,13 @@ public class Registered extends BaseActivity {
                 dismissLoadingDialog();
                 if (result!=null){
                     if (Boolean.parseBoolean(result.get("result")+"")){
-                        SharePreferenceUtil.setValue(Registered.this, Login.IS_RM_PW, false);
+                        SharePreferenceUtil.setValue(Register.this, Login.IS_RM_PW, false);
                         toLogin();
                     }else {
-                        ToastUtils.showToast(Registered.this,"注册失败"+"," + result.get("error"));
+                        ToastUtils.showToast(Register.this,"注册失败"+"," + result.get("error"));
                     }
                 }else {
-                    ToastUtils.showToast(Registered.this,status.getError());
+                    ToastUtils.showToast(Register.this,status.getError());
                 }
             }
         });
@@ -175,15 +175,15 @@ public class Registered extends BaseActivity {
                         DataHolder dataHolder = DataHolder.getInstance();
                         dataHolder.setBasicHandle(userName, password);
                         dataHolder.setUserData((Map<String, Object>) result.get("retData"));
-                        ToastUtils.showToast(Registered.this, "注册成功");
+                        ToastUtils.showToast(Register.this, "注册成功");
                         dataHolder.setIsLogin(true);
                         updateDeviceTokens();
-                        SharePreferenceUtil.setValue(Registered.this, Login.IS_RM_PW, true);
-                        Registered.this.setResult(Login.Registered_SUCCEED);
-                        startActivity(new Intent(Registered.this, MainTabActivity.class));
+                        SharePreferenceUtil.setValue(Register.this, Login.IS_RM_PW, true);
+                        Register.this.setResult(Login.Registered_SUCCEED);
+                        startActivity(new Intent(Register.this, MainTabActivity.class));
                         finish();
                     } else {
-                        ToastUtils.showToast(Registered.this, "注册失败" + "," + result.get("error"));
+                        ToastUtils.showToast(Register.this, "注册失败" + "," + result.get("error"));
                     }
                 }
             }
@@ -219,7 +219,7 @@ public class Registered extends BaseActivity {
                 if (Boolean.parseBoolean(result.get("result") + "")) {
                     verifyCode = result.get("code") + "";
                 } else {
-                    ToastUtils.showToast(Registered.this, status.getError());
+                    ToastUtils.showToast(Register.this, status.getError());
                 }
             }
         });
