@@ -119,7 +119,7 @@ public class PastCourse extends BaseActivity implements BGARefreshLayout.BGARefr
         if (!isRefreshing  && !isLoading){
             showLoadingDialog();
         }
-        String url = Mark.getServerIp()+ "/api/v1/course/getOpenCourse";
+        String url = Mark.getServerIp()+ "/api/v1/course/getPastOpenCourse";
         param.put("pageNumber", pageNumber);
         aq.transformer(new MapTransformer()).ajax(url, param, Map.class, new AjaxCallback<Map>() {
             @Override
