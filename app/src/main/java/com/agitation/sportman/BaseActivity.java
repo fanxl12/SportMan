@@ -2,7 +2,6 @@ package com.agitation.sportman;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -15,13 +14,14 @@ import android.widget.TextView;
 
 import com.agitation.sportman.utils.DataHolder;
 import com.androidquery.AQuery;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by fanwl on 2015/10/25.
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AutoLayoutActivity {
 
     protected LinearLayout rootLayout;
     protected Toolbar toolbar;
