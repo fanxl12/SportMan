@@ -16,7 +16,9 @@ import android.widget.ListView;
 
 import com.agitation.sportman.BaseFragment;
 import com.agitation.sportman.R;
+import com.agitation.sportman.activity.CourseDetail;
 import com.agitation.sportman.activity.CourseSubCatalog;
+import com.agitation.sportman.activity.PastCourse;
 import com.agitation.sportman.activity.WebActivity;
 import com.agitation.sportman.adapter.CourseAdapter;
 import com.agitation.sportman.utils.DataHolder;
@@ -38,12 +40,13 @@ import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
 /**
  * Created by fanwl on 2015/10/25.
  */
-public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, View.OnClickListener {
 
     private View rootView;
     private ListView course_lv;
     private CourseAdapter courseAdapter;
     private List<Map<String,Object>> parentCatalogsList;
+    private List<Map<String, Object>> pastCourses;
     private AQuery aq;
     private DataHolder dataHolder;
     private BGARefreshLayout mRefreshLayout;
@@ -93,14 +96,24 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
 
 
                 Intent intent = new Intent(getContext(), CourseSubCatalog.class);
-                intent.putExtra("parentCatalogId",parentCatalogsList.get(position).get("id")+"");
-                intent.putExtra("subTitle",parentCatalogsList.get(position).get("name")+"");
+                intent.putExtra("parentCatalogId", parentCatalogsList.get(position).get("id") + "");
+                intent.putExtra("subTitle", parentCatalogsList.get(position).get("name") + "");
                 startActivity(intent);
             }
         });
         imageLoader = ImageLoader.getInstance();
-
-
+        course_iv_past = (ImageView) footer.findViewById(R.id.course_iv_past);
+        course_iv_one = (ImageView) footer.findViewById(R.id.course_iv_past_one);
+        course_iv_two = (ImageView) footer.findViewById(R.id.course_iv_past_two);
+        course_iv_three = (ImageView) footer.findViewById(R.id.course_iv_past_three);
+        course_iv_four = (ImageView) footer.findViewById(R.id.course_iv_past_four);
+        course_iv_five = (ImageView) footer.findViewById(R.id.course_iv_past_five);
+        course_iv_past.setOnClickListener(this);
+        course_iv_one.setOnClickListener(this);
+        course_iv_two.setOnClickListener(this);
+        course_iv_three.setOnClickListener(this);
+        course_iv_four.setOnClickListener(this);
+        course_iv_five.setOnClickListener(this);
     }
 
     private void initView() {
@@ -127,25 +140,82 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
         String url = Mark.getServerIp()+"/api/v1/course/getCourseParentCatalog";
         aq.transformer(new MapTransformer()).auth(dataHolder.getBasicHandle()).ajax(url, Map.class,
                 new AjaxCallback<Map>() {
-            @Override
-            public void callback(String url, Map info, AjaxStatus status) {
-                if (!isAutomaticRefresh) mActivity.dismissLoadingDialog();
-                if (info != null) {
-                    if (Boolean.parseBoolean(info.get("result") + "")) {
-                        Map<String, Object> retData = (Map<String, Object>) info.get("retData");
-                        dataHolder.setImageProfix(retData.get("imageProfix") + "");
-                        parentCatalogsList = (List<Map<String, Object>>) retData.get("parentCatalogs");
-                        List<Map<String, Object>> adversitementsList = (List<Map<String, Object>>) retData.get("adversitements");
-                        courseAdapter.setData(parentCatalogsList);
-                        if (isAutomaticRefresh) {
-                            refreshHandler.sendEmptyMessageDelayed(Mark.DATA_REFRESH_SUCCEED, 1000);
+                    @Override
+                    public void callback(String url, Map info, AjaxStatus status) {
+                        if (!isAutomaticRefresh) mActivity.dismissLoadingDialog();
+                        if (info != null) {
+                            if (Boolean.parseBoolean(info.get("result") + "")) {
+                                Map<String, Object> retData = (Map<String, Object>) info.get("retData");
+                                dataHolder.setImageProfix(retData.get("imageProfix") + "");
+                                parentCatalogsList = (List<Map<String, Object>>) retData.get("parentCatalogs");
+                                List<Map<String, Object>> adversitementsList = (List<Map<String, Object>>) retData.get("adversitements");
+                                pastCourses = (List<Map<String, Object>>) retData.get("pastCourses");
+                                courseAdapter.setData(parentCatalogsList);
+                                if (isAutomaticRefresh) {
+                                    refreshHandler.sendEmptyMessageDelayed(Mark.DATA_REFRESH_SUCCEED, 1000);
+                                }
+                                addCarouselView(adversitementsList);
+                                setCourseFooterInfo();
+                            }
                         }
-                        addCarouselView(adversitementsList);
                     }
-                }
-            }
-        });
+                });
     }
+
+    private void setCourseFooterInfo() {
+        if (pastCourses.size()==1){
+            course_iv_past.setVisibility(View.VISIBLE);
+            course_iv_one.setVisibility(View.INVISIBLE);
+            course_iv_two.setVisibility(View.INVISIBLE);
+            course_iv_three.setVisibility(View.INVISIBLE);
+            course_iv_four.setVisibility(View.INVISIBLE);
+            course_iv_five.setVisibility(View.INVISIBLE);
+        }
+        if (pastCourses.size()==2){
+            course_iv_past.setVisibility(View.VISIBLE);
+            course_iv_one.setVisibility(View.VISIBLE);
+            course_iv_two.setVisibility(View.INVISIBLE);
+            course_iv_three.setVisibility(View.INVISIBLE);
+            course_iv_four.setVisibility(View.INVISIBLE);
+            course_iv_five.setVisibility(View.INVISIBLE);
+
+        }
+        if (pastCourses.size()==3){
+            course_iv_past.setVisibility(View.VISIBLE);
+            course_iv_one.setVisibility(View.VISIBLE);
+            course_iv_two.setVisibility(View.VISIBLE);
+            course_iv_three.setVisibility(View.INVISIBLE);
+            course_iv_four.setVisibility(View.INVISIBLE);
+            course_iv_five.setVisibility(View.INVISIBLE);
+
+        }
+        if (pastCourses.size()==4){
+            course_iv_past.setVisibility(View.VISIBLE);
+            course_iv_one.setVisibility(View.VISIBLE);
+            course_iv_two.setVisibility(View.VISIBLE);
+            course_iv_three.setVisibility(View.VISIBLE);
+            course_iv_four.setVisibility(View.INVISIBLE);
+            course_iv_five.setVisibility(View.INVISIBLE);
+        }
+        if (pastCourses.size()==5){
+            course_iv_past.setVisibility(View.VISIBLE);
+            course_iv_one.setVisibility(View.VISIBLE);
+            course_iv_two.setVisibility(View.VISIBLE);
+            course_iv_three.setVisibility(View.VISIBLE);
+            course_iv_four.setVisibility(View.VISIBLE);
+            course_iv_five.setVisibility(View.INVISIBLE);
+        }
+        if (pastCourses.size()>=6){
+            course_iv_past.setVisibility(View.VISIBLE);
+            course_iv_one.setVisibility(View.VISIBLE);
+            course_iv_two.setVisibility(View.VISIBLE);
+            course_iv_three.setVisibility(View.VISIBLE);
+            course_iv_four.setVisibility(View.VISIBLE);
+            course_iv_five.setVisibility(View.VISIBLE);
+        }
+
+    }
+
     /**
      * 添加轮播广告数据
      * @param datas
@@ -186,5 +256,36 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout bgaRefreshLayout) {
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getContext(), CourseDetail.class);
+        intent.putExtra("showPayBtn", false);
+        switch (v.getId()){
+            case R.id.course_iv_past:
+                startActivity(new Intent(getActivity(), PastCourse.class));
+            break;
+            case R.id.course_iv_past_one:
+                intent.putExtra("courseId", pastCourses.get(1).get("id") + "");
+                startActivity(intent);
+            break;
+            case R.id.course_iv_past_two:
+                intent.putExtra("courseId", pastCourses.get(2).get("id") + "");
+                startActivity(intent);
+            break;
+            case R.id.course_iv_past_three:
+                intent.putExtra("courseId", pastCourses.get(3).get("id") + "");
+                startActivity(intent);
+            break;
+            case R.id.course_iv_past_four:
+                intent.putExtra("courseId", pastCourses.get(4).get("id") + "");
+                startActivity(intent);
+            break;
+            case R.id.course_iv_past_five:
+                intent.putExtra("courseId", pastCourses.get(5).get("id") + "");
+                startActivity(intent);
+            break;
+        }
     }
 }

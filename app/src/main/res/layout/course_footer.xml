@@ -121,7 +121,7 @@
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center|bottom"
-                android:text="01"
+                android:text="02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -147,7 +147,7 @@
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center|bottom"
-                android:text="01"
+                android:text="04"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <com.agitation.sportman.widget.CircleImageView
-            android:id="@+id/course_iv_five"
+            android:id="@+id/course_iv_past_five"
             style="@style/course_footer_image"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />

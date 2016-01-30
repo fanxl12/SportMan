@@ -1,6 +1,7 @@
 package com.agitation.sportman.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,7 +49,6 @@ public class PastCourse extends BaseActivity implements BGARefreshLayout.BGARefr
         initVarible();
         processLogic();
         getOpenCourse();
-
     }
 
     private void initVarible() {
@@ -62,7 +62,10 @@ public class PastCourse extends BaseActivity implements BGARefreshLayout.BGARefr
         past_course_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(PastCourse.this, CourseDetail.class);
+                intent.putExtra("showPayBtn", false);
+                intent.putExtra("courseId", datas.get(position).get("id") + "");
+                startActivity(intent);
             }
         });
     }
@@ -126,7 +129,7 @@ public class PastCourse extends BaseActivity implements BGARefreshLayout.BGARefr
             public void callback(String url, Map info, AjaxStatus status) {
                 if (info != null) {
                     Map<String, Object> retData = (Map<String, Object>) info.get("retData");
-                    List<Map<String, Object>> courses = (List<Map<String, Object>>) retData.get("courseList");
+                    List<Map<String, Object>> courses = (List<Map<String, Object>>) retData.get("pastCourses");
                     if (courses!=null){
                         if (isLoading){
                             datas.addAll(courses);

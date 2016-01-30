@@ -84,6 +84,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
     private TextView course_advices;
     private View footer;
     private TextView advice_tv_num;
+    private boolean showPayBtn = true;
 
 
     //分享操作
@@ -121,6 +122,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.course_detail);
         Intent intent = getIntent();
         courseId = intent.getStringExtra("courseId");
+        showPayBtn = intent.getBooleanExtra("showPayBtn", true);
         initToolbar();
         initVarible();
         initView();
@@ -190,6 +192,9 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
         teacher_honor = (TextView) findViewById(R.id.teacher_honor);
 
         bt_enrolled = (Button) findViewById(R.id.bt_enrolled);
+        if (!showPayBtn){
+            bt_enrolled.setVisibility(View.GONE);
+        }
         bt_enrolled.setOnClickListener(this);
 
         //快速支付的popupWindow
