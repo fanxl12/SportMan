@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.agitation.sportman.BaseFragment;
@@ -86,15 +85,14 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
         parentCatalogsList = new ArrayList<>();
         courseAdapter = new CourseAdapter(getActivity(), parentCatalogsList, R.layout.course_item);
 
-        LinearLayout footer = (LinearLayout) View.inflate(getActivity(), R.layout.course_footer, null);
+        View footer = View.inflate(getActivity(), R.layout.course_footer, null);
+
         course_lv.addFooterView(footer, null, false);
 
         course_lv.setAdapter(courseAdapter);
         course_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                 Intent intent = new Intent(getContext(), CourseSubCatalog.class);
                 intent.putExtra("parentCatalogId", parentCatalogsList.get(position).get("id") + "");
                 intent.putExtra("subTitle", parentCatalogsList.get(position).get("name") + "");
