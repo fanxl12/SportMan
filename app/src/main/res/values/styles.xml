@@ -214,4 +214,11 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <style name="course_footer_ll_ll">
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
 </resources>

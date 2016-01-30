@@ -49,6 +49,7 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
     private BGARefreshLayout mRefreshLayout;
     private boolean isAutomaticRefresh = false;
     private ImageLoader imageLoader;
+    private ImageView course_iv_past, course_iv_one, course_iv_two, course_iv_three,course_iv_four,course_iv_five;
 
 
     private Handler refreshHandler  = new Handler(){
@@ -83,13 +84,14 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
         courseAdapter = new CourseAdapter(getActivity(), parentCatalogsList, R.layout.course_item);
 
         LinearLayout footer = (LinearLayout) View.inflate(getActivity(), R.layout.course_footer, null);
-
-        course_lv.addFooterView(footer);
+        course_lv.addFooterView(footer, null, false);
 
         course_lv.setAdapter(courseAdapter);
         course_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
                 Intent intent = new Intent(getContext(), CourseSubCatalog.class);
                 intent.putExtra("parentCatalogId",parentCatalogsList.get(position).get("id")+"");
                 intent.putExtra("subTitle",parentCatalogsList.get(position).get("name")+"");
@@ -97,6 +99,8 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
             }
         });
         imageLoader = ImageLoader.getInstance();
+
+
     }
 
     private void initView() {
