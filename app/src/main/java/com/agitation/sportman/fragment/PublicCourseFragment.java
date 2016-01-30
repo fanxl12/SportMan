@@ -70,7 +70,7 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
            ViewGroup parent = (ViewGroup) rootView.getParent();
            if (parent!=null)parent.removeView(rootView);
        }else {
-           rootView = inflater.inflate(R.layout.public_course_fragment,container,false);
+           rootView = inflater.inflate(R.layout.public_course_fragment, container,false);
            initVarible();
            initView();
            processLogic();
@@ -292,17 +292,22 @@ public class PublicCourseFragment extends BaseFragment implements BGARefreshLayo
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
-        isRefreshing = true;
-        pageNumber = 1;
-        getOpenCourse();
+        if (!isRefreshing){
+            isRefreshing = true;
+            pageNumber = 1;
+            getOpenCourse();
+        }
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout bgaRefreshLayout) {
-        pageNumber++;
-        isLoading = true;
-        getOpenCourse();
-        return true;
+        if (!isLoading){
+            pageNumber++;
+            isLoading = true;
+            getOpenCourse();
+            return true;
+        }
+        return false;
     }
 
     /**

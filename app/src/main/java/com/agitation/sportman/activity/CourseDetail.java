@@ -31,7 +31,6 @@ import com.agitation.sportman.BaseActivity;
 import com.agitation.sportman.R;
 import com.agitation.sportman.adapter.CommentAdapter;
 import com.agitation.sportman.utils.DataHolder;
-import com.agitation.sportman.utils.ImageOptHelper;
 import com.agitation.sportman.utils.MapTransformer;
 import com.agitation.sportman.utils.Mark;
 import com.agitation.sportman.utils.ToastUtils;
@@ -536,8 +535,10 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
         teacher_honor.setText("" + item.get("honor"));
 
-        String headUrl = dataHolder.getImageProfix()+item.get("coachUrl")+"";
-        imageLoader.displayImage(headUrl, coach_head, ImageOptHelper.getAvatarOptions());
+//        if (item.get("coachUrl")!=null){
+//            String headUrl = dataHolder.getImageProfix()+item.get("coachUrl")+"";
+//            imageLoader.displayImage(headUrl, coach_head, ImageOptHelper.getAvatarOptions());
+//        }
     }
 
 
@@ -554,7 +555,7 @@ public class CourseDetail extends BaseActivity implements View.OnClickListener {
 
     private void pay(double payMoney, String orderId, String name){
 
-        payType = CHANNEL_ALIPAY;
+//        payType = CHANNEL_ALIPAY;
 
         String body = "订单号:"+orderId+", "+name+", 价格:"+payMoney;
 
