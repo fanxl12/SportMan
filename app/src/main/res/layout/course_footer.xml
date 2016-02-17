@@ -1,87 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
     <LinearLayout
         style="@style/course_footer_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.agitation.sportman.widget.CircleImageView
-            style="@style/course_footer_image"
             android:id="@+id/course_iv_past"
+            style="@style/course_footer_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:visibility="invisible"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             style="@style/course_footer_ll_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
+
             <TextView
-                android:layout_gravity="center"
-                android:text="01"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="8sp"
+                android:text="01"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:lines="1"
                 android:text="Lorem ipsum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="8sp"/>
         </LinearLayout>
+
         <com.agitation.sportman.widget.CircleImageView
             android:id="@+id/course_iv_past_two"
             style="@style/course_footer_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:visibility="invisible"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             style="@style/course_footer_ll_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
+
             <TextView
-                android:layout_gravity="center|bottom"
-                android:text="03"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:text="03"/>
+
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="8sp"
                 android:lines="1"
                 android:text="Lorem ipsum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="8sp"/>
         </LinearLayout>
+
         <com.agitation.sportman.widget.CircleImageView
             android:id="@+id/course_iv_past_four"
             style="@style/course_footer_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:visibility="invisible"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             style="@style/course_footer_ll_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
+
             <TextView
-                android:layout_gravity="center|bottom"
-                android:text="05"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:text="05"/>
+
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="8sp"
                 android:lines="1"
                 android:text="Lorem ipsum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="8sp"/>
         </LinearLayout>
 
     </LinearLayout>
 
     <View
-        android:background="@color/divier_color"
         android:layout_width="match_parent"
-        android:layout_height="5px" />
+        android:layout_height="5px"
+        android:background="@color/divier_color"/>
 
     <LinearLayout
         style="@style/course_footer_ll"
@@ -89,80 +103,90 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <TextView
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center|bottom"
-                android:text="往期回顾"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="10dp"
+                android:text="往期回顾"/>
+
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:lines="1"
-                android:text="HIGH"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="HIGH"/>
         </LinearLayout>
 
         <com.agitation.sportman.widget.CircleImageView
             android:id="@+id/course_iv_past_one"
             style="@style/course_footer_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:visibility="invisible"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center|bottom"
-                android:text="02"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="10dp"
+                android:text="02"/>
+
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="8sp"
                 android:lines="1"
                 android:text="Lorem ipsum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="8sp"/>
         </LinearLayout>
 
         <com.agitation.sportman.widget.CircleImageView
             android:id="@+id/course_iv_past_three"
             style="@style/course_footer_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:visibility="invisible"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center|bottom"
-                android:text="04"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="10dp"
+                android:text="04"/>
+
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="8sp"
                 android:lines="1"
                 android:text="Lorem ipsum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="8sp"/>
         </LinearLayout>
+
         <com.agitation.sportman.widget.CircleImageView
             android:id="@+id/course_iv_past_five"
             style="@style/course_footer_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:visibility="invisible"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </LinearLayout>

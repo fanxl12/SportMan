@@ -63,6 +63,8 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
         }
     };
 
+    private View footer;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +76,7 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
             initView();
             initVarble();
             processLogic();
+            course_lv.removeFooterView(footer);
             CourseParentCatalog();
         }
         return rootView;
@@ -85,9 +88,9 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
         parentCatalogsList = new ArrayList<>();
         courseAdapter = new CourseAdapter(getActivity(), parentCatalogsList, R.layout.course_item);
 
-        View footer = View.inflate(getActivity(), R.layout.course_footer, null);
+        footer = View.inflate(getActivity(), R.layout.course_footer, null);
 
-        course_lv.addFooterView(footer, null, false);
+        course_lv.addFooterView(footer);
 
         course_lv.setAdapter(courseAdapter);
         course_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -161,57 +164,29 @@ public class Course extends BaseFragment implements BGARefreshLayout.BGARefreshL
     }
 
     private void setCourseFooterInfo() {
-        if (pastCourses.size()==1){
-            course_iv_past.setVisibility(View.VISIBLE);
-            course_iv_one.setVisibility(View.INVISIBLE);
-            course_iv_two.setVisibility(View.INVISIBLE);
-            course_iv_three.setVisibility(View.INVISIBLE);
-            course_iv_four.setVisibility(View.INVISIBLE);
-            course_iv_five.setVisibility(View.INVISIBLE);
-        }
-        if (pastCourses.size()==2){
-            course_iv_past.setVisibility(View.VISIBLE);
-            course_iv_one.setVisibility(View.VISIBLE);
-            course_iv_two.setVisibility(View.INVISIBLE);
-            course_iv_three.setVisibility(View.INVISIBLE);
-            course_iv_four.setVisibility(View.INVISIBLE);
-            course_iv_five.setVisibility(View.INVISIBLE);
 
-        }
-        if (pastCourses.size()==3){
-            course_iv_past.setVisibility(View.VISIBLE);
-            course_iv_one.setVisibility(View.VISIBLE);
-            course_iv_two.setVisibility(View.VISIBLE);
-            course_iv_three.setVisibility(View.INVISIBLE);
-            course_iv_four.setVisibility(View.INVISIBLE);
-            course_iv_five.setVisibility(View.INVISIBLE);
-
-        }
-        if (pastCourses.size()==4){
-            course_iv_past.setVisibility(View.VISIBLE);
-            course_iv_one.setVisibility(View.VISIBLE);
-            course_iv_two.setVisibility(View.VISIBLE);
-            course_iv_three.setVisibility(View.VISIBLE);
-            course_iv_four.setVisibility(View.INVISIBLE);
-            course_iv_five.setVisibility(View.INVISIBLE);
-        }
-        if (pastCourses.size()==5){
-            course_iv_past.setVisibility(View.VISIBLE);
-            course_iv_one.setVisibility(View.VISIBLE);
-            course_iv_two.setVisibility(View.VISIBLE);
-            course_iv_three.setVisibility(View.VISIBLE);
-            course_iv_four.setVisibility(View.VISIBLE);
-            course_iv_five.setVisibility(View.INVISIBLE);
-        }
-        if (pastCourses.size()>=6){
-            course_iv_past.setVisibility(View.VISIBLE);
-            course_iv_one.setVisibility(View.VISIBLE);
-            course_iv_two.setVisibility(View.VISIBLE);
-            course_iv_three.setVisibility(View.VISIBLE);
-            course_iv_four.setVisibility(View.VISIBLE);
-            course_iv_five.setVisibility(View.VISIBLE);
+        if (pastCourses==null || pastCourses.size()==0){
+            return;
         }
 
+        course_lv.addFooterView(footer);
+        courseAdapter.notifyDataSetChanged();
+
+        course_iv_past.setVisibility(View.VISIBLE);
+
+        switch (pastCourses.size()){
+            case 5:
+                course_iv_five.setVisibility(View.VISIBLE);
+            case 4:
+                course_iv_four.setVisibility(View.VISIBLE);
+            case 3:
+                course_iv_three.setVisibility(View.VISIBLE);
+            case 2:
+                course_iv_two.setVisibility(View.VISIBLE);
+            case 1:
+                course_iv_one.setVisibility(View.VISIBLE);
+
+        }
     }
 
     /**
